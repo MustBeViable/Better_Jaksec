@@ -4,7 +4,7 @@
 
 **Frontend**
 
-1. JavaFX
+1. React
 
 Decision reasons:
   - Web application first approach reaches more users and less limitations
