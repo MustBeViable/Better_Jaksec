@@ -5,7 +5,6 @@
 **Frontend**
 
 1. JavaFX
-2. React
 
 Decision reasons:
   - Web application first approach reaches more users and less limitations
@@ -19,7 +18,7 @@ Decision reasons:
 2. Spring Data JPA
 
 Decision reasons:
-  - Spring Boot enables to use only one language at the backend and creating REST API
+  - Spring Boot enables to use only one language at the backend and creating REST APIful authentication support, and seamless integration with the database.
   - Spring Data JPA enables to use modular API to database connection
 
 -----------------------------------
@@ -29,13 +28,15 @@ Decision reasons:
 1. MariaDB
 
 Decision reasons:
-  - SQL based realtional database to store information
+  - SQL based relational database to store information
 
 -----------------------------------
 
 **Additional APIs, Framework etc**
 
 1. [QR code API](https://goqr.me/api/)
+2. [Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt)
 
 Decision reasons:
-  - QR code reader enables us to create robust and secure attendance loggin
+  - QR code API for QR code generation for attendance sessions
+  - JJWT for authentication and authorization (JWT-based authentication)
