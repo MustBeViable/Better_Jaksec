@@ -6,52 +6,36 @@
 
 1. JavaFX
 2. React
-3. Tech 3
-4. Tech 4
-5. tech 5
 
 Decision reasons:
   - Web application first approach reaches more users and less limitations
-  - reason 2
+  - React enables us to create reactive web application
 
 -----------------------------------
 
 **Backend**
 
-1. Tech 1
-2. Tech 2
-3. Tech 3
-4. Tech 4
-5. tech 5
+1. Spring Boot for Rest API
+2. Spring Data JPA
 
 Decision reasons:
-  - reason 1
-  - reason 2
+  - Spring Boot enables to use only one language at the backend and creating REST API
+  - Spring Data JPA enables to use modular API to database connection
 
 -----------------------------------
 
 **Database**
 
 1. MariaDB
-2. Tech 2
-3. Tech 3
-4. Tech 4
-5. tech 5
 
 Decision reasons:
-  - reason 1
-  - reason 2
+  - SQL based realtional database to store information
 
 -----------------------------------
 
 **Additional APIs, Framework etc**
 
 1. [QR code API](https://goqr.me/api/)
-2. Tech 2
-3. Tech 3
-4. Tech 4
-5. tech 5
 
 Decision reasons:
-  - reason 1
-  - reason 2
+  - QR code reader enables us to create robust and secure attendance loggin
