@@ -18,7 +18,7 @@ Decision reasons:
 2. Spring Data JPA
 
 Decision reasons:
-  - Spring Boot enables to use only one language at the backend and creating REST APIful authentication support, and seamless integration with the database.
+  - Spring Boot enables to use only one language at the backend and creating RESTful API authentication support, and seamless integration with the database.
   - Spring Data JPA enables to use modular API to database connection
 
 -----------------------------------
