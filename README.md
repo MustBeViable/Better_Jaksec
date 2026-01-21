@@ -5,10 +5,12 @@
 **Frontend**
 
 1. React
+2. Vanilla CSS
 
 Decision reasons:
   - Web application first approach reaches more users and less limitations
   - React enables us to create reactive web application
+  - Vanilla css limits our dependecies.
 
 -----------------------------------
 
@@ -25,10 +27,11 @@ Decision reasons:
 
 **Database**
 
-1. MariaDB
+1. MariaDB/HeidiSQL
 
 Decision reasons:
   - SQL based relational database to store information
+  - MariaDB provides enough types
 
 -----------------------------------
 
