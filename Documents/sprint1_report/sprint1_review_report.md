@@ -28,6 +28,8 @@
 
 ------------------------------------------------------------
 
+***Completed in first Sprint***
+
 **Set up project tools**
 
 - [trello](https://trello.com/w/usertyotila64449059/home)
@@ -41,6 +43,8 @@
 **Made product vision, plan and finished preparation for [presentation](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/presentation/Koodin%20luonti%20AI_n%20avulla_%20Tuottavuuden%20tehostaja%20vai%20tekninen%20velka_.pdf)**
 - Created product [backlog](https://trello.com/b/NImxPprN/to-be-announced-prokkis) 
 - Created initial [low fidelity wireframe](https://www.figma.com/design/o0aGmeemZQrOMVFLy9aPOk/Better-jaksec?node-id=0-1&p=f&t=Q2MM4PCKu5qdBZGZ-0) for the front end/UI
+
+**Draft first edition for [use case diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/use_case/K%C3%A4ytt%C3%B6kaavio_Better_jaksec.pdf)**
 
 ------------------------------------------------------------
 
