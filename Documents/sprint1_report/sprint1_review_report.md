@@ -64,6 +64,7 @@
 - Design and implement relational database of our product
 - Create final wireframe for our project frontend
   - Create first UI prototype
+- Start implementing JUnit tests
 
 ------------------------------------------------------------
 
@@ -72,7 +73,7 @@
 | Team member         | Hours |
 |---------------------|-------|
 | Elias Rinne         | 30    |
-| Leevi Laune         | 23    |
+| Leevi Laune         | 24    |
 | Sakari Honkavaara   | 16    |
 | Juho Molin          | 11    |
 | **Total**           | **80** |
