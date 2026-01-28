@@ -75,7 +75,7 @@
 | Elias Rinne         | 30    |
 | Leevi Laune         | 24    |
 | Sakari Honkavaara   | 16    |
-| Juho Molin          | 11    |
-| **Total**           | **80** |
+| Juho Molin          | 18    |
+| **Total**           | **90** |
 
 [Link](https://docs.google.com/spreadsheets/d/1HFDWiWYRwTxyEjorwcDlE9QLuKnTcRi-xflHvprkv5E/edit?gid=0#gid=0) to the google sheet
