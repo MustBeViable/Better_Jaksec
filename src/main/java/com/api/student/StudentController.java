@@ -1,4 +1,4 @@
-package com.api.contoller;
+package com.api.student;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * For routing it seems to be enough to have @RequestMapping notation to be like this
  */
 @RestController
-@RequestMapping("/api/admin")
-public class AdminController {
-
+@RequestMapping("/api/student")
+public class StudentController {
     @GetMapping
     public String adminMain() {
-        return "Nyt oot adminissa";
+        return "Nyt oot studentissa";
     }
 }
