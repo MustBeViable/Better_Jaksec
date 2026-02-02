@@ -1,9 +1,12 @@
+DROP DATABASE IF EXISTS attendance_test;
+CREATE DATABASE IF NOT EXISTS attendance_test;
+USE attendance_test;
 CREATE TABLE STUDENT
 (
-  StudentID INT NOT NULL,
-  Email INT NOT NULL,
-  Name INT NOT NULL,
-  Password INT NOT NULL,
+  StudentID INT NOT NULL AUTO_INCREMENT,
+  Email VARCHAR(32) NOT NULL,
+  Name VARCHAR(32) NOT NULL,
+  Password VARCHAR(32) NOT NULL,
   PRIMARY KEY (StudentID)
 );
 

@@ -1,0 +1,18 @@
+package com.api.common.error;
+
+import java.time.Instant;
+
+public class ErrorResponse {
+    private final Instant timestamp = Instant.now();
+    private final int status;
+    private final String error;
+
+    public ErrorResponse(int status, String error) {
+        this.status = status;
+        this.error = error;
+    }
+
+    public Instant getTimestamp() { return timestamp; }
+    public int getStatus() { return status; }
+    public String getError() { return error; }
+}

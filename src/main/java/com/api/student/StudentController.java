@@ -1,8 +1,9 @@
 package com.api.student;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.api.student.dto.CreateStudentRequest;
+import com.api.student.dto.StudentDto;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @RestController notates method to be REST API controller (like in express)
@@ -11,8 +12,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/student")
 public class StudentController {
+    private final StudentService studentService;
+
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
     @GetMapping
-    public String adminMain() {
-        return "Nyt oot studentissa";
+    public void getStudent(int studentID) {
+    }
+
+    @PostMapping
+    public StudentDto postStudent(@Valid @RequestBody CreateStudentRequest request) {
+        return studentService.create(request);
     }
 }
