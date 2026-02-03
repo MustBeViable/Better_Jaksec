@@ -1,0 +1,30 @@
+### Create student
+POST http://localhost:8081/api/student
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Test userhttp2",
+  "email": "test.userhttp2@example.com",
+  "password": "secretpassword"
+}
+
+> {%
+  client.global.set("studentID", response.body.studentID);
+%}
+
+### Get student
+GET http://localhost:8081/api/student/{{studentID}}
+Accept: application/json
+
+### Update student
+PUT http://localhost:8081/api/student/{{studentID}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Test UserUpdate2"
+}
+
+### Delete student
+DELETE http://localhost:8081/api/student/{{studentID}}
