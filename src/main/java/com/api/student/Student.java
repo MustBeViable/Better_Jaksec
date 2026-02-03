@@ -12,7 +12,6 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StudentID")
     private int studentID;
-    //vaihda long jos halutaan käyttää longia
 
     @Column(name = "Name", nullable = false)
     private String name;

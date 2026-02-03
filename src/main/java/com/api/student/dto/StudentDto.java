@@ -1,5 +1,9 @@
 package com.api.student.dto;
 
+/**
+ * DTO = Data Transfer Object
+ */
+
 public class StudentDto {
     private int studentID;
     private String name;
