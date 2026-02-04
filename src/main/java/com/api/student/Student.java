@@ -11,7 +11,7 @@ public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StudentID")
-    private int studentID;
+    private Integer studentID;
 
     @Column(name = "Name", nullable = false)
     private String name;
@@ -28,7 +28,7 @@ public class Student {
         this.password = password;
     }
 
-    public int getStudentID() {
+    public Integer getStudentID() {
         return this.studentID;
     }
 
