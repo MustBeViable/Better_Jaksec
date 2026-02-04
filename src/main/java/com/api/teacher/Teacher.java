@@ -1,6 +1,12 @@
 package com.api.teacher;
 
+import com.api.assignment.Assignment;
+import com.api.course.Course;
+import com.api.lesson.Lesson;
 import jakarta.persistence.*;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
@@ -19,7 +25,14 @@ public class Teacher {
     @Column(name = "password", nullable = false)
     private String password;
     @Column(name = "isAdmin", nullable = false)
-    private boolean isAdmin;
+    private Boolean isAdmin;
+
+    @ManyToMany(mappedBy = "teachers")
+    private Set<Lesson> lessons = new HashSet<>();
+    @ManyToMany
+    private Set<Course> courses = new HashSet<>();
+
+    public Teacher(){}
 
     public Integer getTeacherID() {
         return teacherID;
@@ -67,5 +80,21 @@ public class Teacher {
 
     public void setAdmin(Boolean admin) {
         isAdmin = admin;
+    }
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
+    }
+
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

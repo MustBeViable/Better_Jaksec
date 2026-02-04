@@ -1,5 +1,6 @@
 package com.api.assignment;
 
+import com.api.course.Course;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,6 +17,11 @@ public class Assignment {
 
     @Column(name = "assignmentDescription")
     private String assignmentDescription;
+
+    @ManyToOne
+    private Course course;
+
+    public Assignment(){}
 
     public Long getAssignmentID() {
         return assignmentID;
