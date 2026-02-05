@@ -5,17 +5,17 @@ package com.api.student.dto;
  */
 
 public class StudentDto {
-    private int studentID;
+    private Integer studentID;
     private String name;
     private String email;
 
-    public StudentDto(int studentID, String name, String email) {
+    public StudentDto(Integer studentID, String name, String email) {
         this.studentID = studentID;
         this.name = name;
         this.email = email;
     }
 
-    public int getStudentID() {
+    public Integer getStudentID() {
         return studentID;
     }
 
