@@ -52,7 +52,7 @@ class JpaRelationshipTest {
     @Test
     void createLesson() {
         Instant date = Instant.parse("2026-02-04T10:00:00Z"); // specific instant
-        Lesson lesson = new Lesson();
+        Lesson lesson = new Lesson("lesson", date);
         lesson.setLessonName("Databases");
         lesson.setDate(date);
         em.persist(lesson);
