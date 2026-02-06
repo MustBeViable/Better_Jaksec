@@ -15,11 +15,11 @@ Accept: application/json
 %}
 
 ### Get student
-GET http://localhost:8081/api/student/{{studentID}}
+GET {{baseUrl}}/api/student/{{studentID}}
 Accept: application/json
 
 ### Update student
-PUT http://localhost:8081/api/student/{{studentID}}
+PUT {{baseUrl}}/api/student/{{studentID}}
 Content-Type: application/json
 Accept: application/json
 
@@ -29,4 +29,4 @@ Accept: application/json
 }
 
 ### Delete student
-DELETE http://localhost:8081/api/student/{{studentID}}
+DELETE {{baseUrl}}/api/student/{{studentID}}

@@ -1,5 +1,5 @@
 ### Create teacher
-POST http://localhost:8081/api/teacher
+POST {{baseUrl}}/api/teacher
 Content-Type: application/json
 Accept: application/json
 
@@ -16,11 +16,11 @@ Accept: application/json
 %}
 
 ### Get teacher
-GET http://localhost:8081/api/teacher/{{teacherID}}
+GET {{baseUrl}}/api/teacher/{{teacherID}}
 Accept: application/json
 
 ### Update teacher
-PUT http://localhost:8081/api/teacher/{{teacherID}}
+PUT {{baseUrl}}/api/teacher/{{teacherID}}
 Content-Type: application/json
 Accept: application/json
 
@@ -31,4 +31,4 @@ Accept: application/json
 }
 
 ### Delete teacher
-DELETE http://localhost:8081/api/teacher/{{teacherID}}
+DELETE {{baseUrl}}/api/teacher/{{teacherID}}
