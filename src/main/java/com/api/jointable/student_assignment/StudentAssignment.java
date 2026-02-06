@@ -1,12 +1,12 @@
-package com.api.jointable;
+package com.api.jointable.student_assignment;
 
-import com.api.course.Course;
+import com.api.assignment.Assignment;
 import com.api.student.Student;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courseGrade")
-public class StudentCourse {
+@Table(name = "assignmentGrade")
+public class StudentAssignment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,10 +14,10 @@ public class StudentCourse {
     @ManyToOne
     private Student student;
     @ManyToOne
-    private Course assignment;
+    private Assignment assignment;
     private Integer grade;
 
-    public StudentCourse(){}
+    public StudentAssignment(){}
 
     public Long getId() {
         return id;
@@ -35,11 +35,11 @@ public class StudentCourse {
         this.student = student;
     }
 
-    public Course getAssignment() {
+    public Assignment getAssignment() {
         return assignment;
     }
 
-    public void setAssignment(Course assignment) {
+    public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
 

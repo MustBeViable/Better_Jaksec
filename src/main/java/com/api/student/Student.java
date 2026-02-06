@@ -1,8 +1,8 @@
 package com.api.student;
 
-import com.api.jointable.StudentAssignment;
-import com.api.jointable.StudentCourse;
-import com.api.jointable.StudentLesson;
+import com.api.jointable.student_assignment.StudentAssignment;
+import com.api.jointable.student_course.StudentCourse;
+import com.api.jointable.student_lesson.StudentLesson;
 import jakarta.persistence.*;
 
 import java.util.HashSet;

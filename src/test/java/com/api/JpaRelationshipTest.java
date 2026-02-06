@@ -2,7 +2,7 @@ package com.api;
 
 import com.api.course.Course;
 import com.api.assignment.Assignment;
-import com.api.jointable.StudentLesson;
+import com.api.jointable.student_lesson.StudentLesson;
 import com.api.lesson.Lesson;
 import com.api.teacher.Teacher;
 import com.api.student.Student;

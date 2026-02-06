@@ -1,4 +1,4 @@
-package com.api.jointable;
+package com.api.jointable.student_lesson;
 
 import com.api.lesson.Lesson;
 import com.api.student.Student;

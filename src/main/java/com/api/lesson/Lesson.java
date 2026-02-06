@@ -1,7 +1,7 @@
 package com.api.lesson;
 
 import com.api.course.Course;
-import com.api.jointable.StudentLesson;
+import com.api.jointable.student_lesson.StudentLesson;
 import com.api.teacher.Teacher;
 import jakarta.persistence.*;
 
