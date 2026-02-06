@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 /**
  * This is the main method for API for now it doesn't need anything else to run
  * see @Link AdminController.java for example for routing.
- * After starting the method api works in http://localhost:8080/api/admin for example
+ * After starting the method api works in http://localhost:8081/api/admin for example
  */
 @SpringBootApplication
 public class ApiMain {
