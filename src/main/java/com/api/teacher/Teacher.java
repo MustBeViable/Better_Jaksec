@@ -24,8 +24,8 @@ public class Teacher {
     private String email;
     @Column(name = "password", nullable = false)
     private String password;
-    @Column(name = "isAdmin", nullable = false)
-    private Boolean isAdmin;
+    @Column(name = "is_admin", nullable = false)
+    private boolean isAdmin = false;
 
     @ManyToMany(mappedBy = "teachers")
     private Set<Lesson> lessons = new HashSet<>();
