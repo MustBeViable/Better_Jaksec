@@ -43,7 +43,7 @@ public class StudentService {
             throw new BadRequestException("Student doesn't exists.");
         }
 
-        Student student = studentRepository.getReferenceById((long) studentID);
+        Student student = studentRepository.getReferenceById(studentID);
 
         return studentMapper.toStudentDto(student);
     }
@@ -58,7 +58,7 @@ public class StudentService {
     @Transactional
     public StudentDto update(int studentID, UpdateStudentRequest request) {
 
-        Student student = studentRepository.findById((long) studentID)
+        Student student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
 
 
@@ -70,7 +70,7 @@ public class StudentService {
 
     @Transactional
     public void delete(int studentID) {
-        Student student = studentRepository.findById((long) studentID)
+        Student student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
 
         studentRepository.delete(student);

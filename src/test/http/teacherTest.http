@@ -1,0 +1,34 @@
+### Create teacher
+POST http://localhost:8081/api/teacher
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "Test",
+  "lastName": "teacher",
+  "email": "test.teacher@example.com",
+  "password": "secretpassword",
+  "isAdmin": true
+}
+
+> {%
+    client.global.set("teacherID", response.body.teacherID);
+%}
+
+### Get teacher
+GET http://localhost:8081/api/teacher/{{teacherID}}
+Accept: application/json
+
+### Update teacher
+PUT http://localhost:8081/api/teacher/{{teacherID}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "firstName": "updated",
+  "lastName": "teacher",
+  "isAdmin": false
+}
+
+### Delete teacher
+DELETE http://localhost:8081/api/teacher/{{teacherID}}

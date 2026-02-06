@@ -32,7 +32,8 @@ class JpaRelationshipTest {
     @Test
     void createStudent() {
         Student student = new Student();
-        student.setName("Alice");
+        student.setFirstName("Alice");
+        student.setLastName("Wonderland");
         student.setEmail("alice@student.com");
         student.setPassword("pw123");
         em.persist(student);
@@ -40,7 +41,8 @@ class JpaRelationshipTest {
         em.clear();
 
         Student found = em.find(Student.class, student.getStudentID());
-        assertEquals("Alice", found.getName());
+        assertEquals("Alice", found.getFirstName());
+        assertEquals("Wonderland", found.getLastName());
         assertEquals("alice@student.com", found.getEmail());
     }
 
@@ -121,7 +123,8 @@ class JpaRelationshipTest {
     void studentAttendsLesson() {
         // Create and persist student
         Student student = new Student();
-        student.setName("Alice");
+        student.setFirstName("Alice");
+        student.setLastName("Wonderland");
         student.setEmail("alice@student.com");
         student.setPassword("pw123");
         em.persist(student);
@@ -147,7 +150,7 @@ class JpaRelationshipTest {
         // Fetch the join table entity
         StudentLesson found = em.find(StudentLesson.class, attendance.getId());
         assertNotNull(found);
-        assertEquals("Alice", found.getStudent().getName());
+        assertEquals("Alice", found.getStudent().getFirstName());
         assertEquals("Databases", found.getLesson().getLessonName());
         assertTrue(found.getPresent());
         assertNull(found.getReasonForAbsence());

@@ -6,12 +6,14 @@ package com.api.student.dto;
 
 public class StudentDto {
     private Integer studentID;
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
 
-    public StudentDto(Integer studentID, String name, String email) {
+    public StudentDto(Integer studentID, String firstName, String lastName, String email) {
         this.studentID = studentID;
-        this.name = name;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
     }
 
@@ -19,8 +21,12 @@ public class StudentDto {
         return studentID;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {

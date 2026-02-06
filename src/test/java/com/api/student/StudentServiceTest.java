@@ -19,49 +19,44 @@ class StudentServiceTest {
     private StudentMapper mapper;
     private StudentService service;
 
-    //Creates mock classes for testing
     @BeforeEach
     void setUp() {
         repository = mock(StudentRepository.class);
         mapper = mock(StudentMapper.class);
         service = new StudentService(repository, mapper);
     }
+
     @Test
     @DisplayName("Test same email exception")
     void create_throwsIfEmailExists() {
         CreateStudentRequest request = new CreateStudentRequest();
+        request.setFirstName("Test");
+        request.setLastName("Name");
         request.setEmail("existing.email@example.com");
-        request.setName("Test Name");
         request.setPassword("secret");
 
-        // when/then mockito behavior: https://www.baeldung.com/mockito-behavior
-        // basically tells to mockito to do something when something happens instead of the default behavior
-        // -> mocks real code behavior but do not initiate any object creation etc
         when(repository.existsByEmailIgnoreCase("existing.email@example.com")).thenReturn(true);
 
-        //asserting BadRequestException when trying to create duplicate email user
         assertThrows(BadRequestException.class, () -> service.create(request));
 
-        // verify method tests if the repo object were called. If not -> false test result
-        // -> fails the test instead that gives false results.
         verify(repository, never()).save(any());
     }
+
     @Test
     @DisplayName("Successfull creation")
     void create_savesEntity_returnsDto() {
         CreateStudentRequest request = new CreateStudentRequest();
+        request.setFirstName("New");
+        request.setLastName("Guy");
         request.setEmail("new.guy@example.com");
-        request.setName("New Guy");
         request.setPassword("kissa123");
 
-        Student studentEntity = new Student("New Guy", "new.guy@example.com", "kissa123");
-        Student createdStudent = new Student("New Guy", "new.guy@example.com", "kissa123");
-        StudentDto studentDto = new StudentDto(1, "New Guy", "new.guy@example.com");
+        Student studentEntity = new Student("New", "Guy", "new.guy@example.com", "kissa123");
+        Student createdStudent = new Student("New", "Guy", "new.guy@example.com", "kissa123");
+        StudentDto studentDto = new StudentDto(1, "New", "Guy", "new.guy@example.com");
 
-        //making sure exception doesnt fail the test
         when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
 
-        //making sure we get correct creation in mock tests
         when(mapper.toStudentEntity(request)).thenReturn(studentEntity);
         when(repository.save(studentEntity)).thenReturn(createdStudent);
         when(mapper.toStudentDto(createdStudent)).thenReturn(studentDto);
@@ -69,6 +64,9 @@ class StudentServiceTest {
         StudentDto response = service.create(request);
 
         assertEquals(1, response.getStudentID());
+        assertEquals("New", response.getFirstName());
+        assertEquals("Guy", response.getLastName());
+        assertEquals("new.guy@example.com", response.getEmail());
         verify(repository).save(studentEntity);
     }
 
@@ -77,27 +75,28 @@ class StudentServiceTest {
     void read() {
         when(repository.existsByStudentID(5)).thenReturn(true);
 
-        Student student = new Student("Name", "test@test.fi", "word");
-        when(repository.getReferenceById((long) 5)).thenReturn(student);
+        Student student = new Student("Name", "Surname", "test@test.fi", "word");
+        when(repository.getReferenceById(5)).thenReturn(student);
 
-        StudentDto studentDto = new StudentDto(5, "Name", "test@test.fi");
+        StudentDto studentDto = new StudentDto(5, "Name", "Surname", "test@test.fi");
         when(mapper.toStudentDto(student)).thenReturn(studentDto);
 
         StudentDto res = service.read(5);
 
-        assertEquals("Name", res.getName());
-        verify(repository).getReferenceById((long) 5);
+        assertEquals("Name", res.getFirstName());
+        assertEquals("Surname", res.getLastName());
+        verify(repository).getReferenceById(5);
     }
 
     @Test
     @DisplayName("Successfull update")
     void update() {
-        Student existing = new Student("Old", "old@example.com", "pw");
-        // optional is more controllable null (IDEA provided this info)
-        when(repository.findById((long) 5)).thenReturn(Optional.of(existing));
+        Student existing = new Student("Old", "Student", "old@example.com", "pw");
+        when(repository.findById(5)).thenReturn(Optional.of(existing));
 
         UpdateStudentRequest request = new UpdateStudentRequest();
-        StudentDto studentDto = new StudentDto(5, "New", "old@example.com");
+
+        StudentDto studentDto = new StudentDto(5, "Old", "Student", "old@example.com");
         when(mapper.toStudentDto(existing)).thenReturn(studentDto);
 
         StudentDto res = service.update(5, request);
@@ -110,8 +109,8 @@ class StudentServiceTest {
     @Test
     @DisplayName("Succesfull deletion")
     void delete() {
-        Student existing = new Student("namename", "namename@metropolia.fi", "veripassword");
-        when(repository.findById((long) 5)).thenReturn(Optional.of(existing));
+        Student existing = new Student("name", "name", "namename@metropolia.fi", "veripassword");
+        when(repository.findById(5)).thenReturn(Optional.of(existing));
 
         service.delete(5);
 
