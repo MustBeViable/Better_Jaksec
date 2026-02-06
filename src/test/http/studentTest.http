@@ -4,7 +4,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Test userhttp2",
+  "firstName": "Test",
+  "lastName": "student",
   "email": "test.userhttp2@example.com",
   "password": "secretpassword"
 }
@@ -23,7 +24,8 @@ Content-Type: application/json
 Accept: application/json
 
 {
-  "name": "Test UserUpdate2"
+  "firstName": "updated",
+  "lastName": "name"
 }
 
 ### Delete student

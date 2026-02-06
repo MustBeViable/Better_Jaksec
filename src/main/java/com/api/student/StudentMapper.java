@@ -13,16 +13,17 @@ import org.springframework.stereotype.Component;
 public class StudentMapper {
 
     public Student toStudentEntity(CreateStudentRequest request) {
-        return new Student(request.getName(), request.getEmail(), request.getPassword());
+        return new Student(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
     }
 
     public void updateStudentEntity(Student student, UpdateStudentRequest request) {
-        if (request.getName() != null) student.setName(request.getName());
+        if (request.getFirstName() != null) student.setFirstName(request.getFirstName());
+        if (request.getLastName() != null) student.setLastName(request.getLastName());
         if (request.getEmail() != null) student.setEmail(request.getEmail());
         if (request.getPassword() != null) student.setPassword(request.getPassword());
     }
 
     public StudentDto toStudentDto(Student student) {
-        return new StudentDto(student.getStudentID(), student.getName(), student.getEmail());
+        return new StudentDto(student.getStudentID(), student.getFirstName(), student.getLastName(), student.getEmail());
     }
 }

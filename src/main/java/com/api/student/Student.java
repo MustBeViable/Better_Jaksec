@@ -19,8 +19,10 @@ public class Student {
     @Column(name = "StudentID")
     private Integer studentID;
 
-    @Column(name = "Name", nullable = false)
-    private String name;
+    @Column(name = "FirstName", nullable = false)
+    private String firstName;
+    @Column(name = "LasttName", nullable = false)
+    private String lastName;
     @Column(name = "Email", nullable = false)
     private String email;
     @Column(name = "Password", nullable = false)
@@ -37,8 +39,9 @@ public class Student {
 
     public Student() {}
 
-    public Student(String name, String email, String password) {
-        this.name = name;
+    public Student(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.password = password;
     }
@@ -55,12 +58,20 @@ public class Student {
         this.email = email;
     }
 
-    public String getName() {
-        return this.name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     //These are here for now in testing purposes

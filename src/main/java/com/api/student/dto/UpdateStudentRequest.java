@@ -6,12 +6,17 @@ package com.api.student.dto;
 
 public class UpdateStudentRequest {
 
-    private String name;
+    private String firstName;
+    private String lastName;
     private String email;
     private String password;
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getEmail() {
@@ -22,8 +27,13 @@ public class UpdateStudentRequest {
         return password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public void setEmail(String email) {

@@ -6,7 +6,6 @@ import com.api.student.dto.UpdateStudentRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,23 +21,25 @@ class StudentMapperTest {
     @DisplayName("Test for toStudentEntity() method does not mutate values")
     void toStudentEntity() {
         CreateStudentRequest request = new CreateStudentRequest();
-        request.setName("Test name");
-        request.setEmail("Test.email@email.com");
+        request.setFirstName("Test");
+        request.setLastName("Name");
+        request.setEmail("test.email@email.com");
         request.setPassword("testPassword");
 
         Student student = mapper.toStudentEntity(request);
 
         assertAll(
-                () -> assertEquals("Test name", student.getName()),
-                () -> assertEquals("Test.email@email.com", student.getEmail()),
+                () -> assertEquals("Test", student.getFirstName()),
+                () -> assertEquals("Name", student.getLastName()),
+                () -> assertEquals("test.email@email.com", student.getEmail()),
                 () -> assertEquals("testPassword", student.getPassword())
-                );
+        );
     }
 
     @Test
     @DisplayName("Tests for update method in student mapper, partially, completely and if no updates it wont crash")
     void updateStudentEntity() {
-        Student student = new Student("Old name",
+        Student student = new Student("Old", "Name",
                 "old.email@email.com",
                 "oldpassword");
 
@@ -46,25 +47,28 @@ class StudentMapperTest {
         UpdateStudentRequest requestCompletely = new UpdateStudentRequest();
         UpdateStudentRequest requestNoChange = new UpdateStudentRequest();
 
-        requestPartial.setName("New name");
+        requestPartial.setFirstName("New");
         requestPartial.setEmail("new.email@email.com");
 
-        requestCompletely.setName("Complete");
+        requestCompletely.setFirstName("Complete");
+        requestCompletely.setLastName("Update");
         requestCompletely.setEmail("complete@email.com");
         requestCompletely.setPassword("Complete");
 
         mapper.updateStudentEntity(student, requestPartial);
 
         assertAll(
-                () -> assertEquals("New name", student.getName()),
+                () -> assertEquals("New", student.getFirstName()),
+                () -> assertEquals("Name", student.getLastName()), // unchanged
                 () -> assertEquals("new.email@email.com", student.getEmail()),
-                () -> assertEquals("oldpassword", student.getPassword())
+                () -> assertEquals("oldpassword", student.getPassword()) // unchanged
         );
 
         mapper.updateStudentEntity(student, requestCompletely);
 
         assertAll(
-                () -> assertEquals("Complete", student.getName()),
+                () -> assertEquals("Complete", student.getFirstName()),
+                () -> assertEquals("Update", student.getLastName()),
                 () -> assertEquals("complete@email.com", student.getEmail()),
                 () -> assertEquals("Complete", student.getPassword())
         );
@@ -72,21 +76,22 @@ class StudentMapperTest {
         mapper.updateStudentEntity(student, requestNoChange);
 
         assertAll(
-                () -> assertEquals("Complete", student.getName()),
+                () -> assertEquals("Complete", student.getFirstName()),
+                () -> assertEquals("Update", student.getLastName()),
                 () -> assertEquals("complete@email.com", student.getEmail()),
                 () -> assertEquals("Complete", student.getPassword())
         );
-
     }
 
     @Test
     @DisplayName("toStudentDto mapping test")
     void toStudentDto() {
-        Student student = new Student("Name", "email@example.com", "pw");
+        Student student = new Student("Name", "Surname", "email@example.com", "pw");
         StudentDto studentDto = mapper.toStudentDto(student);
 
         assertAll(
-                () -> assertEquals("Name", studentDto.getName()),
+                () -> assertEquals("Name", studentDto.getFirstName()),
+                () -> assertEquals("Surname", studentDto.getLastName()),
                 () -> assertEquals("email@example.com", studentDto.getEmail())
         );
     }
