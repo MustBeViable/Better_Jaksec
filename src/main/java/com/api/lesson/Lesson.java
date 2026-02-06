@@ -31,6 +31,13 @@ public class Lesson {
     @OneToMany(mappedBy = "lesson")
     private Set<StudentLesson> students = new HashSet<>();
 
+    public Lesson() {}
+
+    public Lesson(String lessonName, Instant date) {
+        this.lessonName = lessonName;
+        this.date = date;
+    }
+
     public Long getLessonID() {
         return lessonID;
     }
