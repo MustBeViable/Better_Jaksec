@@ -4,8 +4,6 @@ import com.api.common.error.BadRequestException;
 import com.api.lesson.dto.CreateLessonRequest;
 import com.api.lesson.dto.LessonDto;
 import com.api.lesson.dto.UpdateLessonRequest;
-import com.api.student.Student;
-import com.api.student.dto.StudentDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
