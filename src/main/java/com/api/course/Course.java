@@ -27,6 +27,13 @@ public class Course {
 
     public Course(){}
 
+    public Course(String courseName, Set<Lesson> lessons, Set<Assignment> assignments, Set<Teacher> teachers) {
+        this.courseName = courseName;
+        this.lessons = lessons;
+        this.assignments = assignments;
+        this.teachers = teachers;
+    }
+
     public Long getCourseID() {
         return courseID;
     }
