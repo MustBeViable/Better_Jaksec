@@ -23,6 +23,12 @@ public class Assignment {
 
     public Assignment(){}
 
+    public Assignment(String assignmentName, String assignmentDescription, Course course) {
+        this.assignmentName = assignmentName;
+        this.assignmentDescription = assignmentDescription;
+        this.course = course;
+    }
+
     public Long getAssignmentID() {
         return assignmentID;
     }

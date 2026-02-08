@@ -1,7 +1,7 @@
 package com.api.course;
 
 import com.api.assignment.Assignment;
-import com.api.assignment.AssignmentRespository;
+import com.api.assignment.AssignmentRepository;
 import com.api.common.error.BadRequestException;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
@@ -23,21 +23,21 @@ public class CourseService {
     private final CourseRepository courseRepository;
     private final LessonRepository lessonRepository;
     private final TeacherRepository teacherRepository;
-    private final AssignmentRespository assignmentRespository;
+    private final AssignmentRepository assignmentRepository;
     private final CourseMapper mapper;
 
-    public CourseService(CourseRepository courseRespository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRespository assignmentRespository, CourseMapper mapper) {
-        this.courseRepository = courseRespository;
+    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRepository assignmentRespository, CourseMapper mapper) {
+        this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
         this.teacherRepository = teacherRepository;
-        this.assignmentRespository = assignmentRespository;
+        this.assignmentRepository = assignmentRespository;
         this.mapper = mapper;
     }
     @Transactional
     public CourseDto create(CreateCourseRequest request){
         Course course = this.mapper.toEmptyCourseEntity(request);
 
-        course.setAssignments(new HashSet<>(this.assignmentRespository.findAllById(request.getAssignmentIds())));
+        course.setAssignments(new HashSet<>(this.assignmentRepository.findAllById(request.getAssignmentIds())));
         course.setLessons(new HashSet<>(this.lessonRepository.findAllById(request.getLessonIds())));
         course.setTeachers(new HashSet<>(this.teacherRepository.findAllById(request.getTeacherIds())));
 
@@ -75,7 +75,7 @@ public class CourseService {
         }
 
         if (request.getAssignmentIds() != null) {
-            Set<Assignment> assignments = new HashSet<>(this.assignmentRespository.findAllById(request.getAssignmentIds()));
+            Set<Assignment> assignments = new HashSet<>(this.assignmentRepository.findAllById(request.getAssignmentIds()));
 
             for (Assignment assignment : course.getAssignments()) {
                 assignment.setCourse(null);

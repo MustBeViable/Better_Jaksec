@@ -1,7 +1,7 @@
 package com.api.course;
 
 import com.api.assignment.Assignment;
-import com.api.assignment.AssignmentRespository;
+import com.api.assignment.AssignmentRepository;
 import com.api.common.error.BadRequestException;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
@@ -24,7 +24,7 @@ class CourseServiceTest {
     private CourseRepository courseRepository;
     private LessonRepository lessonRepository;
     private TeacherRepository teacherRepository;
-    private AssignmentRespository assignmentRespository;
+    private AssignmentRepository assignmentRespository;
     private CourseMapper mapper;
     private CourseService service;
 
@@ -33,7 +33,7 @@ class CourseServiceTest {
         courseRepository = mock(CourseRepository.class);
         lessonRepository = mock(LessonRepository.class);
         teacherRepository = mock(TeacherRepository.class);
-        assignmentRespository = mock(AssignmentRespository.class);
+        assignmentRespository = mock(AssignmentRepository.class);
         mapper = mock(CourseMapper.class);
         service = new CourseService(courseRepository, lessonRepository, teacherRepository, assignmentRespository, mapper);
     }
