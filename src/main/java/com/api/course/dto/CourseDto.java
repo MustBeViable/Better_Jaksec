@@ -1,14 +1,15 @@
 package com.api.course.dto;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CourseDto {
 
     private Long id;
     private String name;
-    private Set<Long> lessonIds;
-    private Set<Long> assignmentIds;
-    private Set<Integer> teacherIds;
+    private Set<Long> lessonIds = new HashSet<>();
+    private Set<Long> assignmentIds = new HashSet<>();
+    private Set<Integer> teacherIds = new HashSet<>();
 
     public CourseDto() {}
 

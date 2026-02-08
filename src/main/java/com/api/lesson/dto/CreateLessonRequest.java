@@ -1,6 +1,7 @@
 package com.api.lesson.dto;
 
 
+import com.api.course.Course;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -12,6 +13,7 @@ public class CreateLessonRequest {
 
     @NotNull
     private Instant date;
+    private Long courseId;
 
     public String getLessonName() {
         return lessonName;
@@ -27,5 +29,13 @@ public class CreateLessonRequest {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Long getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }

@@ -3,6 +3,7 @@ package com.api.course.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class CreateCourseRequest {
@@ -10,9 +11,9 @@ public class CreateCourseRequest {
     @NotBlank
     private String courseName;
 
-    private Set<Long> lessonIds;
-    private Set<Long> assignmentIds;
-    private Set<Integer> teacherIds;
+    private Set<Long> lessonIds = new HashSet<>();
+    private Set<Long> assignmentIds = new HashSet<>();
+    private Set<Integer> teacherIds = new HashSet<>();
 
     public String getCourseName() {
         return courseName;

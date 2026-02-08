@@ -34,17 +34,31 @@ public class CourseService {
         this.mapper = mapper;
     }
     @Transactional
-    public CourseDto create(CreateCourseRequest request){
-        Course course = this.mapper.toEmptyCourseEntity(request);
+    public CourseDto create(CreateCourseRequest request) {
+        Course course = mapper.toEmptyCourseEntity(request);
 
-        course.setAssignments(new HashSet<>(this.assignmentRepository.findAllById(request.getAssignmentIds())));
-        course.setLessons(new HashSet<>(this.lessonRepository.findAllById(request.getLessonIds())));
-        course.setTeachers(new HashSet<>(this.teacherRepository.findAllById(request.getTeacherIds())));
+        Set<Lesson> lessons = new HashSet<>(lessonRepository.findAllById(request.getLessonIds()));
+        for (Lesson lesson : lessons) {
+            lesson.setCourse(course);
+        }
+        course.setLessons(lessons);
 
-        this.courseRepository.save(course);
-        return this.mapper.toCourseDto(course);
+        Set<Assignment> assignments = new HashSet<>(assignmentRepository.findAllById(request.getAssignmentIds()));
+        for (Assignment assignment : assignments) {
+            assignment.setCourse(course);
+        }
+        course.setAssignments(assignments);
+
+        Set<Teacher> teachers = new HashSet<>(teacherRepository.findAllById(request.getTeacherIds()));
+        course.setTeachers(teachers);
+        for (Teacher teacher : teachers) {
+            teacher.getCourses().add(course);
+        }
+
+        course = courseRepository.save(course);
+
+        return mapper.toCourseDto(course);
     }
-
     @Transactional
     public CourseDto read(Long courseId){
         Course course =  this.courseRepository.findById(courseId)

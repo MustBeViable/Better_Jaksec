@@ -18,6 +18,6 @@ public class LessonMapper {
     }
 
     public LessonDto toLessonDto(Lesson lesson) {
-        return new LessonDto(lesson.getLessonID(), lesson.getLessonName(), lesson.getDate());
+        return new LessonDto(lesson.getLessonID(), lesson.getLessonName(), lesson.getDate(), lesson.getCourse().getCourseID());
     }
 }

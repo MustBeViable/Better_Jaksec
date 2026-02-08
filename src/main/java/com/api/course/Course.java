@@ -16,13 +16,13 @@ public class Course {
     private Long courseID;
     private String courseName;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Lesson> lessons;
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Assignment> assignments = new HashSet<>();
 
-    @OneToMany(mappedBy = "courses")
+    @ManyToMany(mappedBy = "courses")
     private Set<Teacher> teachers = new HashSet<>();
 
     public Course(){}
