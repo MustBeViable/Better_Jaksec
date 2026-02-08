@@ -101,7 +101,7 @@ public class CourseService {
 
             course.setTeachers(teachers);
         }
-
+        this.courseRepository.save(course);
         return this.mapper.toCourseDto(course);
     }
 
