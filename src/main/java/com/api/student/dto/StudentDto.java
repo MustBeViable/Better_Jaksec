@@ -1,5 +1,6 @@
 package com.api.student.dto;
 
+import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 
 import java.util.Set;
@@ -14,6 +15,7 @@ public class StudentDto {
     private String lastName;
     private String email;
     private Set<StudentLessonDto> attendance;
+    private Set<StudentCourseDto> grades;
 
     public StudentDto(Integer studentID, String firstName, String lastName, String email) {
         this.studentID = studentID;
@@ -44,5 +46,13 @@ public class StudentDto {
 
     public void setAttendance(Set<StudentLessonDto> attendance) {
         this.attendance = attendance;
+    }
+
+    public Set<StudentCourseDto> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Set<StudentCourseDto> grades) {
+        this.grades = grades;
     }
 }

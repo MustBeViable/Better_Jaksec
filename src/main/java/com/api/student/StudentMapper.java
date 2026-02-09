@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
@@ -36,6 +37,8 @@ public class StudentMapper {
         );
 
         if (student.getLessons() != null) {
+            System.out.println("toStudentDto"+student.getLessons());
+
             Set<StudentLessonDto> attendance = student.getLessons()
                     .stream()
                     .map(sl -> new StudentLessonDto(
@@ -43,9 +46,21 @@ public class StudentMapper {
                             sl.getLesson().getLessonID(),
                             sl.getStudent().getStudentID(),
                             sl.getLesson().getDate()
-                    ))
-                    .collect(Collectors.toSet());
+                    )).collect(Collectors.toSet());
             dto.setAttendance(attendance);
+        }
+
+        if(student.getCourses() != null){
+            System.out.println("toStudentDto"+student.getCourses());
+            Set<StudentCourseDto> grades = student.getCourses()
+                    .stream()
+                    .map(g -> new StudentCourseDto(
+                            g.getStudent().getStudentID(),
+                            g.getCourse().getCourseID(),
+                            g.getGrade()
+                    )).collect(Collectors.toSet());
+            dto.setGrades(grades);
+            System.out.println("toStudentDto" + grades);
         }
 
         return dto;
