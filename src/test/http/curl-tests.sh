@@ -104,6 +104,28 @@ fi
 echo "Assignment created: $assignmentID"
 
 # -------------------------
+# MARK STUDENT ATTENDANCE
+# -------------------------
+# -------------------------
+# MARK STUDENT ATTENDANCE
+# -------------------------
+echo "Marking Student Attendance..."
+attendance_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"lessonId\": $lessonID,
+        \"present\": false,
+        \"reason\": \"\"
+      }")
+
+attendanceID=$(echo "$attendance_resp" | jq '.id')
+if [[ "$attendanceID" == "null" ]]; then
+    echo "Error marking attendance: $attendance_resp"
+    exit 1
+fi
+echo "Attendance marked: $attendanceID"
+
+# -------------------------
 # GET ALL ENTITIES
 # -------------------------
 echo "Fetching all entities..."

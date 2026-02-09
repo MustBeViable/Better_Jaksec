@@ -152,7 +152,7 @@ class JpaRelationshipTest {
         assertNotNull(found);
         assertEquals("Alice", found.getStudent().getFirstName());
         assertEquals("Databases", found.getLesson().getLessonName());
-        assertTrue(found.getPresent());
+        assertTrue(found.isPresent());
         assertNull(found.getReasonForAbsence());
     }
     // -------------------------

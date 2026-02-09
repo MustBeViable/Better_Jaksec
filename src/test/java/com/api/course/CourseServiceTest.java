@@ -35,7 +35,13 @@ class CourseServiceTest {
         teacherRepository = mock(TeacherRepository.class);
         assignmentRespository = mock(AssignmentRepository.class);
         mapper = mock(CourseMapper.class);
-        service = new CourseService(courseRepository, lessonRepository, teacherRepository, assignmentRespository, mapper);
+        service = new CourseService(
+                courseRepository,
+                lessonRepository,
+                teacherRepository,
+                assignmentRespository,
+                mapper
+        );
     }
 
     @Test
@@ -52,16 +58,28 @@ class CourseServiceTest {
 
         Lesson l1 = new Lesson(); l1.setLessonID(1L);
         Lesson l2 = new Lesson(); l2.setLessonID(2L);
-        when(lessonRepository.findAllById(request.getLessonIds())).thenReturn(List.of(l1, l2));
+        when(lessonRepository.findAllById(request.getLessonIds()))
+                .thenReturn(List.of(l1, l2));
 
         Assignment a1 = new Assignment(); a1.setAssignmentID(10L);
-        when(assignmentRespository.findAllById(request.getAssignmentIds())).thenReturn(List.of(a1));
+        when(assignmentRespository.findAllById(request.getAssignmentIds()))
+                .thenReturn(List.of(a1));
 
-        Teacher t1 = new Teacher(); t1.setTeacherID(100);
-        when(teacherRepository.findAllById(request.getTeacherIds())).thenReturn(List.of(t1));
+        Teacher t1 = new Teacher();
+        t1.setTeacherID(100);
+        t1.setFirstName("John");
+        t1.setLastName("Doe");
+        when(teacherRepository.findAllById(request.getTeacherIds()))
+                .thenReturn(List.of(t1));
 
-        CourseDto dto = new CourseDto(1L, "Math 101",
-                Set.of(1L, 2L), Set.of(10L), Set.of(100));
+        CourseDto dto = new CourseDto(
+                1L,
+                "Math 101",
+                Set.of(1L, 2L),
+                Set.of(10L),
+                Set.of("John Doe")
+        );
+
         when(courseRepository.save(courseEntity)).thenReturn(courseEntity);
         when(mapper.toCourseDto(courseEntity)).thenReturn(dto);
 
@@ -71,7 +89,7 @@ class CourseServiceTest {
                 () -> assertEquals("Math 101", result.getName()),
                 () -> assertEquals(Set.of(1L, 2L), result.getLessonIds()),
                 () -> assertEquals(Set.of(10L), result.getAssignmentIds()),
-                () -> assertEquals(Set.of(100), result.getTeacherIds())
+                () -> assertEquals(Set.of("John Doe"), result.getTeacherNames())
         );
 
         verify(courseRepository).save(courseEntity);
@@ -83,10 +101,13 @@ class CourseServiceTest {
         Course course = new Course();
         course.setCourseID(1L);
 
-        CourseDto dto = new CourseDto(1L, "Physics 101",
+        CourseDto dto = new CourseDto(
+                1L,
+                "Physics 101",
                 Collections.emptySet(),
                 Collections.emptySet(),
-                Collections.emptySet());
+                Collections.emptySet()
+        );
 
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
         when(mapper.toCourseDto(course)).thenReturn(dto);
@@ -110,13 +131,21 @@ class CourseServiceTest {
         Course course = new Course();
         course.setCourseID(1L);
 
-        Lesson oldLesson = new Lesson(); oldLesson.setLessonID(1L); oldLesson.setCourse(course);
+        Lesson oldLesson = new Lesson();
+        oldLesson.setLessonID(1L);
+        oldLesson.setCourse(course);
         course.setLessons(new HashSet<>(Set.of(oldLesson)));
 
-        Assignment oldAssignment = new Assignment(); oldAssignment.setAssignmentID(10L); oldAssignment.setCourse(course);
+        Assignment oldAssignment = new Assignment();
+        oldAssignment.setAssignmentID(10L);
+        oldAssignment.setCourse(course);
         course.setAssignments(new HashSet<>(Set.of(oldAssignment)));
 
-        Teacher oldTeacher = new Teacher(); oldTeacher.setTeacherID(100); oldTeacher.getCourses().add(course);
+        Teacher oldTeacher = new Teacher();
+        oldTeacher.setTeacherID(100);
+        oldTeacher.setFirstName("Old");
+        oldTeacher.setLastName("Teacher");
+        oldTeacher.getCourses().add(course);
         course.setTeachers(new HashSet<>(Set.of(oldTeacher)));
 
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
@@ -126,19 +155,30 @@ class CourseServiceTest {
         request.setAssignmentIds(Set.of(20L));
         request.setTeacherIds(Set.of(200));
 
-        Lesson newLesson = new Lesson(); newLesson.setLessonID(2L);
-        when(lessonRepository.findAllById(request.getLessonIds())).thenReturn(List.of(newLesson));
+        Lesson newLesson = new Lesson();
+        newLesson.setLessonID(2L);
+        when(lessonRepository.findAllById(request.getLessonIds()))
+                .thenReturn(List.of(newLesson));
 
-        Assignment newAssignment = new Assignment(); newAssignment.setAssignmentID(20L);
-        when(assignmentRespository.findAllById(request.getAssignmentIds())).thenReturn(List.of(newAssignment));
+        Assignment newAssignment = new Assignment();
+        newAssignment.setAssignmentID(20L);
+        when(assignmentRespository.findAllById(request.getAssignmentIds()))
+                .thenReturn(List.of(newAssignment));
 
-        Teacher newTeacher = new Teacher(); newTeacher.setTeacherID(200);
-        when(teacherRepository.findAllById(request.getTeacherIds())).thenReturn(List.of(newTeacher));
+        Teacher newTeacher = new Teacher();
+        newTeacher.setTeacherID(200);
+        newTeacher.setFirstName("New");
+        newTeacher.setLastName("Teacher");
+        when(teacherRepository.findAllById(request.getTeacherIds()))
+                .thenReturn(List.of(newTeacher));
 
-        CourseDto dto = new CourseDto(1L, "Updated Course",
+        CourseDto dto = new CourseDto(
+                1L,
+                "Updated Course",
                 Set.of(2L),
                 Set.of(20L),
-                Set.of(200));
+                Set.of("New Teacher")
+        );
         when(mapper.toCourseDto(course)).thenReturn(dto);
 
         CourseDto updated = service.update(1L, request);
@@ -146,7 +186,7 @@ class CourseServiceTest {
         assertAll(
                 () -> assertEquals(Set.of(2L), updated.getLessonIds()),
                 () -> assertEquals(Set.of(20L), updated.getAssignmentIds()),
-                () -> assertEquals(Set.of(200), updated.getTeacherIds())
+                () -> assertEquals(Set.of("New Teacher"), updated.getTeacherNames())
         );
 
         verify(mapper).updateCourseEntity(course, request);

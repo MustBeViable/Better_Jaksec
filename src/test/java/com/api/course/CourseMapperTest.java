@@ -81,7 +81,7 @@ class CourseMapperTest {
     }
 
     @Test
-    @DisplayName("toCourseDto() maps all IDs correctly")
+    @DisplayName("toCourseDto() maps all relations correctly")
     void toCourseDtoMapsAllRelations() {
         Course course = new Course();
         course.setCourseID(1L);
@@ -95,8 +95,16 @@ class CourseMapperTest {
         Assignment a2 = new Assignment(); a2.setAssignmentID(200L);
         course.setAssignments(new HashSet<>(Set.of(a1, a2)));
 
-        Teacher t1 = new Teacher(); t1.setTeacherID(1000);
-        Teacher t2 = new Teacher(); t2.setTeacherID(2000);
+        Teacher t1 = new Teacher();
+        t1.setTeacherID(1000);
+        t1.setFirstName("John");
+        t1.setLastName("Doe");
+
+        Teacher t2 = new Teacher();
+        t2.setTeacherID(2000);
+        t2.setFirstName("Jane");
+        t2.setLastName("Smith");
+
         course.setTeachers(new HashSet<>(Set.of(t1, t2)));
 
         CourseDto dto = mapper.toCourseDto(course);
@@ -106,7 +114,7 @@ class CourseMapperTest {
                 () -> assertEquals("History 101", dto.getName()),
                 () -> assertEquals(Set.of(10L, 20L), dto.getLessonIds()),
                 () -> assertEquals(Set.of(100L, 200L), dto.getAssignmentIds()),
-                () -> assertEquals(Set.of(1000, 2000), dto.getTeacherIds())
+                () -> assertEquals(Set.of("John Doe", "Jane Smith"), dto.getTeacherNames())
         );
     }
 }
