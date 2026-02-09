@@ -1,5 +1,6 @@
 package com.api.course;
 import com.api.assignment.Assignment;
+import com.api.jointable.student_course.StudentCourse;
 import com.api.lesson.Lesson;
 import com.api.teacher.Teacher;
 import jakarta.persistence.*;
@@ -17,13 +18,16 @@ public class Course {
     private String courseName;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Lesson> lessons;
+    private Set<Lesson> lessons = new HashSet<>();
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Assignment> assignments = new HashSet<>();
 
     @ManyToMany(mappedBy = "courses")
     private Set<Teacher> teachers = new HashSet<>();
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<StudentCourse> grades = new HashSet<>();
 
     public Course(){}
 
@@ -72,5 +76,13 @@ public class Course {
 
     public void setTeachers(Set<Teacher> teachers) {
         this.teachers = teachers;
+    }
+
+    public Set<StudentCourse> getGrades() {
+        return grades;
+    }
+
+    public void setGrades(Set<StudentCourse> grades) {
+        this.grades = grades;
     }
 }
