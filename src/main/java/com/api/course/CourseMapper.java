@@ -45,7 +45,7 @@ public class CourseMapper {
                         .collect(Collectors.toSet()),
                 course.getTeachers()
                         .stream()
-                        .map(Teacher::getTeacherID)
+                        .map(t -> t.getFirstName() + " " + t.getLastName())
                         .collect(Collectors.toSet())
         );
     }
