@@ -5,7 +5,6 @@ import com.api.student.Student;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courseGrade")
 public class StudentCourse {
 
     @Id

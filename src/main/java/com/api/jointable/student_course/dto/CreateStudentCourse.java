@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateStudentCourse {
 
+    @NotNull
     private Integer studentId;
     @NotNull
     private Long courseId;
@@ -14,7 +15,7 @@ public class CreateStudentCourse {
         return studentId;
     }
 
-    public void setStudentId(Integer studentId) {
+    public void setStudentId(@NotNull Integer studentId) {
         this.studentId = studentId;
     }
 

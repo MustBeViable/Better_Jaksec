@@ -20,20 +20,19 @@ public class StudentCourseController {
     }
 
     @PostMapping
-    public StudentCourseDto postAttendance(
+    public StudentCourseDto postGrade(
             @PathVariable Integer studentID,
             @Valid @RequestBody CreateStudentCourse request) {
-        request.setStudentId(studentID);
         return studentCourseService.create(request);
     }
 
     @GetMapping("{gradeId}")
-    public StudentCourseDto getAttendance(@PathVariable Long gradeId) {
+    public StudentCourseDto getGrade(@PathVariable Long gradeId) {
         return studentCourseService.read(gradeId);
     }
 
     @PutMapping("{gradeId}")
-    public StudentCourseDto putAttendance(
+    public StudentCourseDto putGrade(
             @PathVariable Long gradeId,
             @Valid @RequestBody UpdateStudentCourse request) {
         return studentCourseService.update(gradeId, request);
