@@ -28,14 +28,14 @@ public class Student {
     @Column(name = "Password", nullable = false)
     private String password;
 
-    @ManyToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<StudentAssignment> assignments  = new HashSet<>();
 
-    @ManyToMany(mappedBy = "student")
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<StudentCourse> courses = new HashSet<>();
 
-    @OneToMany(mappedBy = "student")
-    private Set<StudentLesson> lessons;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<StudentLesson> lessons = new HashSet<>();
 
     public Student() {}
 

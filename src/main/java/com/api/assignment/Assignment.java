@@ -23,6 +23,12 @@ public class Assignment {
 
     public Assignment(){}
 
+    public Assignment(String assignmentName, String assignmentDescription, Course course) {
+        this.assignmentName = assignmentName;
+        this.assignmentDescription = assignmentDescription;
+        this.course = course;
+    }
+
     public Long getAssignmentID() {
         return assignmentID;
     }
@@ -45,5 +51,13 @@ public class Assignment {
 
     public void setAssignmentDescription(String assignmentDescription) {
         this.assignmentDescription = assignmentDescription;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 }

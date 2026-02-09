@@ -7,3 +7,4 @@ target
 
 src/test/http/http-client.env.json
 http.client.env.json
+/.mvn/

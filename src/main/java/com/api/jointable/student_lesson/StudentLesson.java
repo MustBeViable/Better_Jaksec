@@ -44,7 +44,7 @@ public class StudentLesson {
         this.lesson = lesson;
     }
 
-    public Boolean getPresent() {
+    public Boolean isPresent() {
         return isPresent;
     }
 

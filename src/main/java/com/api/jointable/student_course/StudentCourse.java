@@ -5,7 +5,6 @@ import com.api.student.Student;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "courseGrade")
 public class StudentCourse {
 
     @Id
@@ -14,7 +13,7 @@ public class StudentCourse {
     @ManyToOne
     private Student student;
     @ManyToOne
-    private Course assignment;
+    private Course course;
     private Integer grade;
 
     public StudentCourse(){}
@@ -35,12 +34,12 @@ public class StudentCourse {
         this.student = student;
     }
 
-    public Course getAssignment() {
-        return assignment;
+    public Course getCourse() {
+        return course;
     }
 
-    public void setAssignment(Course assignment) {
-        this.assignment = assignment;
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     public Integer getGrade() {
