@@ -4,26 +4,26 @@ import java.time.Instant;
 
 public class StudentLessonDto {
 
-    private Boolean isPresent;
+    private Boolean present;
     private Long lessonId;
     private Integer studentId;
     private Instant lessonDate;
 
     public StudentLessonDto(){}
 
-    public StudentLessonDto(Boolean isPresent, Long lessonId, Integer studentId, Instant lessonDate) {
-        this.isPresent = isPresent;
+    public StudentLessonDto(Boolean present, Long lessonId, Integer studentId, Instant lessonDate) {
+        this.present = present;
         this.lessonId = lessonId;
         this.studentId = studentId;
         this.lessonDate = lessonDate;
     }
 
     public Boolean getPresent() {
-        return isPresent;
+        return present;
     }
 
     public void setPresent(Boolean present) {
-        isPresent = present;
+        this.present = present;
     }
 
     public Long getLessonId() {

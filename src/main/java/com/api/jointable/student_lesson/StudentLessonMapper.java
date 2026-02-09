@@ -12,14 +12,14 @@ public class StudentLessonMapper {
 
     public StudentLesson toEntity(CreateStudentLesson request){
         StudentLesson studentLesson = new StudentLesson();
-        studentLesson.setPresent(request.getAbsent());
+        studentLesson.setPresent(request.getPresent());
         studentLesson.setReasonForAbsence(request.getReason());
 
         return studentLesson;
     }
 
     public void updateEntity(StudentLesson entity, UpdateStudentLesson request){
-        if(request.getAbsent() != null) entity.setPresent(request.getAbsent());
+        if(request.getPresent() != null) entity.setPresent(request.getPresent());
         if(request.getReason() != null) entity.setReasonForAbsence(request.getReason());
     }
 

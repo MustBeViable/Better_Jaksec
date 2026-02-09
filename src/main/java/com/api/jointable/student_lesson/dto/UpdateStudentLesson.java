@@ -4,15 +4,16 @@ import jakarta.validation.constraints.NotNull;
 
 public class UpdateStudentLesson {
 
-    private Boolean absent;
+    @NotNull
+    private Boolean present;
     private String reason;
 
-    public Boolean getAbsent() {
-        return absent;
+    public Boolean getPresent() {
+        return present;
     }
 
-    public void setAbsent(Boolean absent) {
-        this.absent = absent;
+    public void setPresent(Boolean present) {
+        this.present = present;
     }
 
     public String getReason() {

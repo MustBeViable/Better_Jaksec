@@ -4,12 +4,11 @@ import jakarta.validation.constraints.NotNull;
 
 public class CreateStudentLesson {
 
-    @NotNull
     private Integer studentId;
     @NotNull
     private Long lessonId;
     @NotNull
-    private Boolean absent;
+    private Boolean present;
     private String reason;
 
     public Integer getStudentId() {
@@ -28,12 +27,12 @@ public class CreateStudentLesson {
         this.lessonId = lessonId;
     }
 
-    public Boolean getAbsent() {
-        return absent;
+    public Boolean getPresent() {
+        return present;
     }
 
-    public void setAbsent(Boolean absent) {
-        this.absent = absent;
+    public void setPresent(Boolean present) {
+        this.present = present;
     }
 
     public String getReason() {
