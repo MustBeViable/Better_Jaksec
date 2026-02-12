@@ -3,6 +3,7 @@ package com.api.student;
 import com.api.jointable.student_assignment.StudentAssignment;
 import com.api.jointable.student_course.StudentCourse;
 import com.api.jointable.student_lesson.StudentLesson;
+import com.api.login.User;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -13,7 +14,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "student")
-public class Student {
+public class Student extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "StudentID")
@@ -44,6 +45,16 @@ public class Student {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    @Override
+    public String getRole() {
+        return "student";
+    }
+
+    @Override
+    public Integer getId() {
+        return this.studentID;
     }
 
     public Integer getStudentID() {

@@ -39,6 +39,8 @@ student_resp=$(curl -s -X POST "$BASE_URL/student" \
 
 echo "$student_resp" | jq
 studentID=$(echo "$student_resp" | jq -r '.studentID')
+studentPass="password123"
+studentEmail="bob.johnson@example.com"
 echo "Student created with ID: $studentID"
 echo "-----------------------------------"
 
@@ -154,6 +156,16 @@ curl -s -X PUT "$BASE_URL/student/$studentID/grade/$gradeID" \
 echo "-----------------------------------"
 
 
+echo "Logging In User..."
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"$studentEmail\",
+        \"password\": \"$studentPass\"
+      }")
+
+
+echo "$login_resp" | jq
 # -------------------------
 # FINAL FETCH
 # -------------------------

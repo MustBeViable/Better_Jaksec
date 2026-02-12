@@ -3,6 +3,7 @@ package com.api.teacher;
 import com.api.assignment.Assignment;
 import com.api.course.Course;
 import com.api.lesson.Lesson;
+import com.api.login.User;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -10,7 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "teacher")
-public class Teacher {
+public class Teacher extends User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "teacherID")
@@ -33,6 +34,19 @@ public class Teacher {
     private Set<Course> courses = new HashSet<>();
 
     public Teacher(){}
+
+    @Override
+    public String getRole() {
+        if(this.isAdmin){
+            return "admin";
+        }
+        return "teacher";
+    }
+
+    @Override
+    public Integer getId() {
+        return this.teacherID;
+    }
 
     public Integer getTeacherID() {
         return teacherID;
