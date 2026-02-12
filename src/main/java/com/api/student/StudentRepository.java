@@ -2,6 +2,8 @@ package com.api.student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.Optional;
+
 /**
  * Jakarta persistence goes here. Creates interface for repository which lets us use
  * multiple existong methods like existsByEmailIgoneCase
@@ -10,4 +12,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface StudentRepository extends JpaRepository<Student, Integer> {
     boolean existsByEmailIgnoreCase(String email);
     boolean existsByStudentID(int studentID);
+    Optional<Student> findByEmailIgnoreCase(String email);
+
 }

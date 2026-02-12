@@ -1,6 +1,6 @@
 package com.api.jointable.student_lesson;
 
-import com.api.common.error.BadRequestException;
+import com.api.common.error.exceptions.BadRequestException;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;

@@ -1,6 +1,6 @@
 package com.api.teacher;
 
-import com.api.common.error.BadRequestException;
+import com.api.common.error.exceptions.BadRequestException;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
