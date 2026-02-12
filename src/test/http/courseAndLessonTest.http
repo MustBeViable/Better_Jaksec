@@ -1,0 +1,78 @@
+### Create course (needed for lesson)
+POST {{baseUrl}}/api/course
+Content-Type: application/json
+Accept: application/json
+
+{
+  "courseName": "Test course for lesson",
+  "lessonIds": [],
+  "assignmentIds": [],
+  "teacherIds": []
+}
+
+> {%
+    const cid = response.body.id || response.body.courseID || response.body.courseId;
+    client.global.set("courseID", cid);
+%}
+
+### Get course
+GET {{baseUrl}}/api/course/{{courseID}}
+Accept: application/json
+
+### Update course
+PUT {{baseUrl}}/api/course/{{courseID}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "courseName": "Updated course name"
+}
+
+### Get course (after update)
+GET {{baseUrl}}/api/course/{{courseID}}
+Accept: application/json
+
+
+### Create lesson (linked to course)
+POST {{baseUrl}}/api/lesson
+Content-Type: application/json
+Accept: application/json
+
+{
+  "lessonName": "Intro lesson",
+  "date": "2026-02-06T08:00:00Z",
+  "courseId": {{courseID}}
+}
+
+> {%
+    const lid = response.body.id || response.body.lessonID || response.body.lessonId;
+    client.global.set("lessonID", lid);
+%}
+
+### Get lesson
+GET {{baseUrl}}/api/lesson/{{lessonID}}
+Accept: application/json
+
+### Update lesson
+PUT {{baseUrl}}/api/lesson/{{lessonID}}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "lessonName": "Updated lesson name",
+  "date": "2026-02-07T08:00:00Z",
+  "courseId": {{courseID}}
+}
+
+### Get lesson (after update)
+GET {{baseUrl}}/api/lesson/{{lessonID}}
+Accept: application/json
+
+
+### Delete lesson
+DELETE {{baseUrl}}/api/lesson/{{lessonID}}
+Accept: application/json
+
+### Delete course
+DELETE {{baseUrl}}/api/course/{{courseID}}
+Accept: application/json
