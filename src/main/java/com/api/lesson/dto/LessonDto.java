@@ -5,10 +5,12 @@ import com.api.course.Course;
 import java.time.Instant;
 
 public class LessonDto {
-    private final Long lessonID;
-    private final String lessonName;
-    private final Instant date;
-    private final Long courseId;
+    private Long lessonID;
+    private String lessonName;
+    private Instant date;
+    private Long courseId;
+
+    public LessonDto(){}
 
     public LessonDto(Long lessonID, String lessonName, Instant date, Long courseId) {
         this.lessonID = lessonID;
@@ -31,5 +33,21 @@ public class LessonDto {
 
     public Long getCourseId() {
         return courseId;
+    }
+
+    public void setLessonID(Long lessonID) {
+        this.lessonID = lessonID;
+    }
+
+    public void setLessonName(String lessonName) {
+        this.lessonName = lessonName;
+    }
+
+    public void setDate(Instant date) {
+        this.date = date;
+    }
+
+    public void setCourseId(Long courseId) {
+        this.courseId = courseId;
     }
 }

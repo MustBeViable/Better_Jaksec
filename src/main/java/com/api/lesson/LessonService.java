@@ -2,6 +2,7 @@ package com.api.lesson;
 
 import com.api.assignment.Assignment;
 import com.api.common.error.BadRequestException;
+import com.api.course.Course;
 import com.api.course.CourseRepository;
 import com.api.lesson.dto.CreateLessonRequest;
 import com.api.lesson.dto.LessonDto;
@@ -26,9 +27,14 @@ public class LessonService {
     public LessonDto create(CreateLessonRequest request) {
         //Checkers here if needed (like if unique lesson names)
         Lesson lesson = this.lessonMapper.toLessonEntity(request);
-        if(this.courseRepository.findById(request.getCourseId()).isPresent()){
-            lesson.setCourse(this.courseRepository.findById(request.getCourseId()).get());
+        System.out.println("LessonService.create:"+request.getCourseId());
+        if (request.getCourseId() != null) {
+            Course course = this.courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new BadRequestException("Course not found"));
+
+            lesson.setCourse(course);
         }
+        System.out.println("LessonService.create:"+lesson.getCourse());
         lesson = this.lessonRepository.save(lesson);
         return this.lessonMapper.toLessonDto(lesson);
     }
