@@ -7,6 +7,7 @@ echo "===== START API TEST ====="
 # -------------------------
 # CREATE TEACHER
 # -------------------------
+echo "Creating Teacher..."
 teacher_resp=$(curl -s -X POST "$BASE_URL/teacher" \
   -H "Content-Type: application/json" \
   -d '{
@@ -17,12 +18,16 @@ teacher_resp=$(curl -s -X POST "$BASE_URL/teacher" \
         "isAdmin": true
       }')
 
-teacherID=$(echo "$teacher_resp" | jq '.teacherID')
-echo "Teacher created: $teacherID"
+echo "$teacher_resp" | jq
+teacherID=$(echo "$teacher_resp" | jq -r '.teacherID')
+echo "Teacher created with ID: $teacherID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # CREATE STUDENT
 # -------------------------
+echo "Creating Student..."
 student_resp=$(curl -s -X POST "$BASE_URL/student" \
   -H "Content-Type: application/json" \
   -d '{
@@ -32,12 +37,16 @@ student_resp=$(curl -s -X POST "$BASE_URL/student" \
         "password": "password123"
       }')
 
-studentID=$(echo "$student_resp" | jq '.studentID')
-echo "Student created: $studentID"
+echo "$student_resp" | jq
+studentID=$(echo "$student_resp" | jq -r '.studentID')
+echo "Student created with ID: $studentID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # CREATE COURSE
 # -------------------------
+echo "Creating Course..."
 course_resp=$(curl -s -X POST "$BASE_URL/course" \
   -H "Content-Type: application/json" \
   -d "{
@@ -47,12 +56,16 @@ course_resp=$(curl -s -X POST "$BASE_URL/course" \
         \"teacherIds\": [$teacherID]
       }")
 
-courseID=$(echo "$course_resp" | jq '.id')   # ✅ Correct field
-echo "Course created: $courseID"
+echo "$course_resp" | jq
+courseID=$(echo "$course_resp" | jq -r '.id')
+echo "Course created with ID: $courseID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # CREATE LESSON
 # -------------------------
+echo "Creating Lesson..."
 lesson_resp=$(curl -s -X POST "$BASE_URL/lesson" \
   -H "Content-Type: application/json" \
   -d "{
@@ -61,12 +74,16 @@ lesson_resp=$(curl -s -X POST "$BASE_URL/lesson" \
         \"date\": \"2026-02-08T12:00:00Z\"
       }")
 
-lessonID=$(echo "$lesson_resp" | jq '.lessonID')
-echo "Lesson created: $lessonID"
+echo "$lesson_resp" | jq
+lessonID=$(echo "$lesson_resp" | jq -r '.lessonID')
+echo "Lesson created with ID: $lessonID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # CREATE ASSIGNMENT
 # -------------------------
+echo "Creating Assignment..."
 assignment_resp=$(curl -s -X POST "$BASE_URL/assignment" \
   -H "Content-Type: application/json" \
   -d "{
@@ -75,12 +92,16 @@ assignment_resp=$(curl -s -X POST "$BASE_URL/assignment" \
         \"courseId\": $courseID
       }")
 
-assignmentID=$(echo "$assignment_resp" | jq '.id')
-echo "Assignment created: $assignmentID"
+echo "$assignment_resp" | jq
+assignmentID=$(echo "$assignment_resp" | jq -r '.id')
+echo "Assignment created with ID: $assignmentID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # MARK STUDENT ATTENDANCE
 # -------------------------
+echo "Marking Attendance..."
 attendance_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
   -H "Content-Type: application/json" \
   -d "{
@@ -89,12 +110,16 @@ attendance_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
         \"reason\": \"\"
       }")
 
-attendanceID=$(echo "$attendance_resp" | jq '.id')
-echo "Attendance marked: $attendanceID"
+echo "$attendance_resp" | jq
+attendanceID=$(echo "$attendance_resp" | jq -r '.id')
+echo "Attendance created with ID: $attendanceID"
+echo "-----------------------------------"
+
 
 # -------------------------
 # CREATE STUDENT COURSE GRADE
 # -------------------------
+echo "Creating Student Course Grade..."
 student_course_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/grade" \
   -H "Content-Type: application/json" \
   -d "{
@@ -103,27 +128,31 @@ student_course_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/grade" \
         \"grade\": 5
       }")
 
-echo "StudentCourse creation response:"
 echo "$student_course_resp" | jq
+gradeID=$(echo "$student_course_resp" | jq -r '.courseId')
+echo "Grade created for Course ID: $gradeID"
+echo "-----------------------------------"
 
-# Extract grade ID from response (if your DTO has no ID field, use courseId)
-gradeID=$(echo "$student_course_resp" | jq '.courseId')
-echo "Grade created for course ID: $gradeID"
 
 # -------------------------
 # FETCH STUDENT COURSE GRADE
 # -------------------------
 echo "Fetching StudentCourse Grade..."
 curl -s "$BASE_URL/student/$studentID/grade/$gradeID" | jq
+echo "-----------------------------------"
+
 
 # -------------------------
 # UPDATE STUDENT COURSE GRADE
 # -------------------------
+echo "Updating Grade..."
 curl -s -X PUT "$BASE_URL/student/$studentID/grade/$gradeID" \
   -H "Content-Type: application/json" \
   -d '{
         "grade": 4
       }' | jq
+echo "-----------------------------------"
+
 
 # -------------------------
 # FINAL FETCH

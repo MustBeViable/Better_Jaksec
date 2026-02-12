@@ -18,12 +18,9 @@ public class LessonMapper {
     }
 
     public LessonDto toLessonDto(Lesson lesson) {
-        LessonDto dto = new LessonDto();
-        dto.setLessonID(lesson.getLessonID());
-        if (lesson.getLessonName() != null) dto.setLessonName(lesson.getLessonName());
-        if (lesson.getCourse() != null) dto.setCourseId(lesson.getCourse().getCourseID());
-        if(lesson.getDate() != null) dto.setDate(lesson.getDate());
-
-        return dto;
+        return new LessonDto(lesson.getLessonID(),
+                lesson.getLessonName(),
+                lesson.getDate(),
+                lesson.getCourse().getCourseID());
     }
 }

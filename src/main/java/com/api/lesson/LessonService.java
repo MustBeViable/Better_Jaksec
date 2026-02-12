@@ -33,6 +33,8 @@ public class LessonService {
                     .orElseThrow(() -> new BadRequestException("Course not found"));
 
             lesson.setCourse(course);
+        }else{
+            throw new BadRequestException("Course id is missing");
         }
         System.out.println("LessonService.create:"+lesson.getCourse());
         lesson = this.lessonRepository.save(lesson);
