@@ -13,6 +13,7 @@ public class CreateLessonRequest {
 
     @NotNull
     private Instant date;
+    @NotNull
     private Long courseId;
 
     public String getLessonName() {
