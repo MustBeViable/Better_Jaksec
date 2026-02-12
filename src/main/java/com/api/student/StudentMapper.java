@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.common.util.HashUtils;
 import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.student.dto.CreateStudentRequest;
@@ -18,14 +19,14 @@ import java.util.stream.Collectors;
 public class StudentMapper {
 
     public Student toStudentEntity(CreateStudentRequest request) {
-        return new Student(request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
+        return new Student(request.getFirstName(), request.getLastName(), request.getEmail(), HashUtils.hash(request.getPassword()));
     }
 
     public void updateStudentEntity(Student student, UpdateStudentRequest request) {
         if (request.getFirstName() != null) student.setFirstName(request.getFirstName());
         if (request.getLastName() != null) student.setLastName(request.getLastName());
         if (request.getEmail() != null) student.setEmail(request.getEmail());
-        if (request.getPassword() != null) student.setPassword(request.getPassword());
+        if (request.getPassword() != null) student.setPassword(HashUtils.hash(request.getPassword()));
     }
 
     public StudentDto toStudentDto(Student student) {

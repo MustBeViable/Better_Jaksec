@@ -1,5 +1,6 @@
 package com.api.teacher;
 
+import com.api.common.util.HashUtils;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -13,7 +14,7 @@ public class TeacherMapper {
         teacher.setFirstName(request.getFirstName());
         teacher.setLastName(request.getLastName());
         teacher.setEmail(request.getEmail());
-        teacher.setPassword(request.getPassword());
+        teacher.setPassword(HashUtils.hash(request.getPassword()));
         teacher.setAdmin(request.isAdmin());
         return teacher;
     }
@@ -33,7 +34,7 @@ public class TeacherMapper {
         }
 
         if (request.getPassword() != null) {
-            teacher.setPassword(request.getPassword());
+            teacher.setPassword(HashUtils.hash(request.getPassword()));
         }
 
         if (request.getAdmin() != null) {
