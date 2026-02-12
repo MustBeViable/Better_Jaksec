@@ -25,6 +25,6 @@ public class LoginController {
 
     @GetMapping("/me/{token}")
     public UserDto getMe(@PathVariable String token){
-        return this.service.me(JwtUtils.parse(token));
+        return this.service.me(token);
     }
 }

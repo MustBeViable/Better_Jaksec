@@ -41,13 +41,17 @@ public class LoginService {
     }
 
     @Transactional
-    public UserDto me(String email){
+    public UserDto me(String token){
+        String email = JwtUtils.parse(token);
         User user = this.studentRepository.findByEmailIgnoreCase(email)
                 .map(student -> (User) student)
                 .or(() -> this.teacherRepository.findByEmailIgnoreCase(email)
                         .map(teacher -> (User) teacher))
                 .orElseThrow(() -> new UnauthorizedException("Invalid email"));
 
-        return this.userMapper.toDto(user);
+        UserDto self = this.userMapper.toDto(user);
+        self.setToken(token);
+
+        return self;
     }
 }
