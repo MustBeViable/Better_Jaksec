@@ -50,6 +50,16 @@
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>0.8.13</version>
 		</dependency>
+		<dependency>
+			<groupId>com.password4j</groupId>
+			<artifactId>password4j</artifactId>
+			<version>1.6.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.18.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
