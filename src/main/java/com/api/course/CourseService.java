@@ -2,7 +2,7 @@ package com.api.course;
 
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
-import com.api.common.error.BadRequestException;
+import com.api.common.error.exceptions.BadRequestException;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;

@@ -3,9 +3,8 @@ package com.api.assignment;
 import com.api.assignment.dto.AssignmentDto;
 import com.api.assignment.dto.CreateAssignmentRequest;
 import com.api.assignment.dto.UpdateAssignmentRequest;
-import com.api.common.error.BadRequestException;
+import com.api.common.error.exceptions.BadRequestException;
 import com.api.course.CourseRepository;
-import com.api.course.dto.CreateCourseRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

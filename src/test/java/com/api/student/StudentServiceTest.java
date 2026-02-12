@@ -1,6 +1,6 @@
 package com.api.student;
 
-import com.api.common.error.BadRequestException;
+import com.api.common.error.exceptions.BadRequestException;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
