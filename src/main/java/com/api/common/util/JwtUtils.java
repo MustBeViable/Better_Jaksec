@@ -2,6 +2,7 @@ package com.api.common.util;
 
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.login.dto.UserDto;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 import javax.crypto.SecretKey;
@@ -21,6 +22,17 @@ public class JwtUtils {
     public static String parse(String token){
         try {
             return Jwts.parser().verifyWith(key).build().parseSignedClaims(token).getPayload().getSubject();
+        } catch (Exception e) {
+            throw new UnauthorizedException("Invalid token");
+        }
+    }
+    public static Claims parseClaims(String token) {
+        try {
+            return Jwts.parser()
+                    .verifyWith(key)
+                    .build()
+                    .parseSignedClaims(token)
+                    .getPayload();
         } catch (Exception e) {
             throw new UnauthorizedException("Invalid token");
         }

@@ -20,9 +20,24 @@ teacher_resp=$(curl -s -X POST "$BASE_URL/teacher" \
 
 echo "$teacher_resp" | jq
 teacherID=$(echo "$teacher_resp" | jq -r '.teacherID')
+teacherPass="password123"
+teacherEmail="alice.smith@example.com"
+
 echo "Teacher created with ID: $teacherID"
 echo "-----------------------------------"
 
+echo "Logging In Teacher..."
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"$teacherEmail\",
+        \"password\": \"$teacherPass\"
+      }")
+
+echo "$login_resp" | jq
+
+teacher_token=$(echo "$login_resp" | jq -r '.token')
+echo "Teacher Token: $teacher_token"
 
 # -------------------------
 # CREATE STUDENT
@@ -37,10 +52,21 @@ student_resp=$(curl -s -X POST "$BASE_URL/student" \
         "password": "password123"
       }')
 
-echo "$student_resp" | jq
-studentID=$(echo "$student_resp" | jq -r '.studentID')
 studentPass="password123"
 studentEmail="bob.johnson@example.com"
+echo "Logging In Student..."
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"$studentEmail\",
+        \"password\": \"$studentPass\"
+      }")
+
+student_token=$(echo "$login_resp" | jq -r '.token')
+echo "Student Token: $student_token"
+
+echo "$student_resp" | jq
+studentID=$(echo "$student_resp" | jq -r '.studentID')
 echo "Student created with ID: $studentID"
 echo "-----------------------------------"
 
@@ -48,9 +74,10 @@ echo "-----------------------------------"
 # -------------------------
 # CREATE COURSE
 # -------------------------
-echo "Creating Course..."
+echo "Student Creating Course..."
 course_resp=$(curl -s -X POST "$BASE_URL/course" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $student_token" \
   -d "{
         \"courseName\": \"Backend Programming Advanced\",
         \"lessonIds\": [],
@@ -63,7 +90,21 @@ courseID=$(echo "$course_resp" | jq -r '.id')
 echo "Course created with ID: $courseID"
 echo "-----------------------------------"
 
+echo "Teacher Creating Course..."
+course_resp=$(curl -s -X POST "$BASE_URL/course" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $teacher_token" \
+  -d "{
+        \"courseName\": \"Backend Programming Advanced\",
+        \"lessonIds\": [],
+        \"assignmentIds\": [],
+        \"teacherIds\": [$teacherID]
+      }")
 
+echo "$course_resp" | jq
+courseID=$(echo "$course_resp" | jq -r '.id')
+echo "Course created with ID: $courseID"
+echo "-----------------------------------"
 # -------------------------
 # CREATE LESSON
 # -------------------------
@@ -164,6 +205,19 @@ login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
         \"password\": \"$studentPass\"
       }")
 
+student_token=$(echo "$login_resp" | jq -r '.token')
+echo "token: $student_token"
+
+# -------------------------
+# FETCH CURRENT USER (/auth/me)
+# -------------------------
+echo "Fetching Current Authenticated User..."
+me_resp=$(curl -s -X GET "$BASE_URL/auth/me" \
+  -H "Authorization: Bearer $student_token" \
+  -H "Content-Type: application/json")
+
+echo "$me_resp" | jq
+echo "-----------------------------------"
 
 echo "$login_resp" | jq
 # -------------------------
