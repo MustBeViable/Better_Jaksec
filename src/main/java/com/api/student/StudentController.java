@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.common.util.JwtUtils;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
@@ -26,8 +27,9 @@ public class StudentController {
     }
 
     @GetMapping("/{studentID}")
-    public StudentDto getStudent(@PathVariable int studentID) {
-        return studentService.read(studentID);
+    public StudentDto getStudent(@RequestHeader("Authorization") String token, @PathVariable int studentID) {
+        System.out.println("StudentController.getStudent.token: "+ token);
+        return studentService.read(studentID, JwtUtils.toAuth(token));
     }
 
     @PutMapping("/{studentID}")
@@ -40,6 +42,4 @@ public class StudentController {
     public void deleteStudent(@PathVariable int studentID) {
         studentService.delete(studentID);
     }
-
-
 }

@@ -41,14 +41,15 @@ public class LoginService {
     }
 
     @Transactional
-    public UserDto me(String email) {
-
-        User user = this.studentRepository.findByEmailIgnoreCase(email)
+    public UserDto me(Auth auth) {
+        System.out.println("LoginService.me.auth: "+auth);
+        User user = this.studentRepository.findByEmailIgnoreCase(auth.getEmail())
                 .map(student -> (User) student)
-                .or(() -> this.teacherRepository.findByEmailIgnoreCase(email)
+                .or(() -> this.teacherRepository.findByEmailIgnoreCase(auth.getEmail())
                         .map(teacher -> (User) teacher))
                 .orElseThrow(() -> new UnauthorizedException("Invalid email"));
 
         return this.userMapper.toDto(user);
     }
+
 }

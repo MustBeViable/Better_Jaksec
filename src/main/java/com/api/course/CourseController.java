@@ -8,7 +8,6 @@ import com.api.lesson.dto.LessonDto;
 import com.api.lesson.dto.UpdateLessonRequest;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,8 +21,7 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseDto postCourse(Authentication authentication,
-                                @Valid @RequestBody CreateCourseRequest request) {
+    public CourseDto postCourse(@Valid @RequestBody CreateCourseRequest request) {
         return this.courseService.create(request);
     }
 

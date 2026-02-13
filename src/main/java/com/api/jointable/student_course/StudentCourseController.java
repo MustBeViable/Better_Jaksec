@@ -10,7 +10,7 @@ import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/student/{studentID}/grade")
+@RequestMapping("/api/student/grade")
 public class StudentCourseController {
 
     private final StudentCourseService studentCourseService;
@@ -20,10 +20,8 @@ public class StudentCourseController {
     }
 
     @PostMapping
-    public StudentCourseDto postGrade(
-            @PathVariable Integer studentID,
-            @Valid @RequestBody CreateStudentCourse request) {
-        return studentCourseService.create(request);
+    public StudentCourseDto postGrade(@Valid @RequestBody CreateStudentCourse request) {
+        return this.studentCourseService.create(request);
     }
 
     @GetMapping("{gradeId}")

@@ -3,11 +3,14 @@ package com.api.course;
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.NotFoundException;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;
+import com.api.jointable.student_course.StudentCourse;
 import com.api.lesson.Lesson;
 import com.api.lesson.LessonRepository;
+import com.api.student.Student;
 import com.api.teacher.Teacher;
 import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
@@ -33,6 +36,27 @@ public class CourseService {
         this.assignmentRepository = assignmentRespository;
         this.mapper = mapper;
     }
+
+    public boolean isStudentInCourse(Long courseId, String studentEmail){
+        this.courseRepository.findById(courseId)
+                .map(course -> course.getGrades()
+                        .stream()
+                        .map(StudentCourse::getStudent)
+                        .anyMatch(student -> student.getEmail().equals(studentEmail))
+                ).orElseThrow(()-> new NotFoundException("Course not found"));
+        return false;
+    }
+
+    public boolean isTeacherOfCourse(Long courseId, String email){
+        System.out.println("CourseService.isTeacherOfCourse.email: " + email);
+        this.courseRepository.findById(courseId)
+                .map(course -> course.getTeachers()
+                        .stream()
+                        .anyMatch(teacher -> teacher.getEmail().equals(email))
+                ).orElseThrow(()-> new NotFoundException("Course not found"));
+        return false;
+    }
+
     @Transactional
     public CourseDto create(CreateCourseRequest request) {
         Course course = mapper.toEmptyCourseEntity(request);

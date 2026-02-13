@@ -1,5 +1,7 @@
 package com.api.student;
 
+import com.api.common.error.exceptions.UnauthorizedException;
+import com.api.login.Auth;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.common.error.exceptions.BadRequestException;
@@ -38,13 +40,15 @@ public class StudentService {
     }
 
     @Transactional
-    public StudentDto read(int studentID) {
-        if (!studentRepository.existsByStudentID(studentID)) {
-            throw new BadRequestException("Student doesn't exists.");
+    public StudentDto read(int studentID, Auth auth) {
+        System.out.println("StudentService.read.auth: "+auth);
+
+        Student student = this.studentRepository.findById(studentID)
+                .orElseThrow(() -> new BadRequestException("Student doesn't exists."));
+
+        if(!auth.getEmail().equals(student.getEmail()) && !auth.getRole().equalsIgnoreCase("student")){
+            throw new UnauthorizedException("Unauthorized");
         }
-
-        Student student = studentRepository.getReferenceById(studentID);
-
         return studentMapper.toStudentDto(student);
     }
 

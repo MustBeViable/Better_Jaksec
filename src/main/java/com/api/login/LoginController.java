@@ -7,7 +7,6 @@ import com.api.login.dto.LoginRequest;
 import com.api.login.dto.UserDto;
 import com.api.login.mapper.UserMapper;
 import jakarta.validation.Valid;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,7 +25,7 @@ public class LoginController {
     }
 
     @GetMapping("/me")
-    public UserDto getMe(Authentication authentication) {
-        return service.me(authentication.getName());
+    public UserDto getMe(@RequestHeader("Authorization") String token) {
+        return this.service.me(JwtUtils.toAuth(token));
     }
 }
