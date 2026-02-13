@@ -227,7 +227,7 @@ echo "-----------------------------------"
 # -------------------------
 echo "Fetching Current Authenticated User..."
 me_resp=$(curl -s -X GET "$BASE_URL/auth/me" \
-  -H "Authorization: Bearer $student_token" \
+  -H "Authorization: Bearer $student2_token" \
   -H "Content-Type: application/json")
 
 echo "$me_resp" | jq
@@ -241,8 +241,15 @@ echo "===== FINAL ENTITY STATE ====="
 curl -s "$BASE_URL/student/$studentID" \
   -H "Authorization: Bearer $student_token" | jq
 
+echo "Unauthorized student fetches course"
+curl -s "$BASE_URL/course/$courseID" \
+  -H "Authorization: Bearer $student2_token" | jq
+
+echo "Authorized student fetches course"
 curl -s "$BASE_URL/course/$courseID" \
   -H "Authorization: Bearer $student_token" | jq
 
-
+echo "Admin teacher fetches course"
+curl -s "$BASE_URL/course/$courseID" \
+  -H "Authorization: Bearer $teacher_token" | jq
 echo "===== API TEST COMPLETE ====="

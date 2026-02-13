@@ -1,5 +1,6 @@
 package com.api.course;
 
+import com.api.common.util.JwtUtils;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;
@@ -21,13 +22,13 @@ public class CourseController {
     }
 
     @PostMapping
-    public CourseDto postCourse(@Valid @RequestBody CreateCourseRequest request) {
-        return this.courseService.create(request);
+    public CourseDto postCourse(@RequestHeader("Authorization") String token, @Valid @RequestBody CreateCourseRequest request) {
+        return this.courseService.create(request, JwtUtils.toAuth(token));
     }
 
     @GetMapping("{courseID}")
-    public CourseDto getCourse(@PathVariable Long courseID) {
-        return this.courseService.read(courseID);
+    public CourseDto getCourse(@PathVariable Long courseID, @RequestHeader("Authorization") String token) {
+        return this.courseService.read(courseID, JwtUtils.toAuth(token));
     }
 
     @PutMapping("{courseID}")
