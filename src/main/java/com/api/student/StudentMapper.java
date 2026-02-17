@@ -18,18 +18,18 @@ import java.util.stream.Collectors;
 @Component
 public class StudentMapper {
 
-    public Student toStudentEntity(CreateStudentRequest request) {
+    public Student toEntity(CreateStudentRequest request) {
         return new Student(request.getFirstName(), request.getLastName(), request.getEmail(), HashUtils.hash(request.getPassword()));
     }
 
-    public void updateStudentEntity(Student student, UpdateStudentRequest request) {
+    public void updateEntity(Student student, UpdateStudentRequest request) {
         if (request.getFirstName() != null) student.setFirstName(request.getFirstName());
         if (request.getLastName() != null) student.setLastName(request.getLastName());
         if (request.getEmail() != null) student.setEmail(request.getEmail());
         if (request.getPassword() != null) student.setPassword(HashUtils.hash(request.getPassword()));
     }
 
-    public StudentDto toStudentDto(Student student) {
+    public StudentDto toDto(Student student) {
         StudentDto dto = new StudentDto(
                 student.getStudentID(),
                 student.getFirstName(),

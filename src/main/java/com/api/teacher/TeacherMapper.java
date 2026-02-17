@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TeacherMapper {
 
-    public Teacher toTeacherEntity(CreateTeacherRequest request) {
+    public Teacher toEntity(CreateTeacherRequest request) {
         Teacher teacher = new Teacher();
         teacher.setFirstName(request.getFirstName());
         teacher.setLastName(request.getLastName());
@@ -19,7 +19,7 @@ public class TeacherMapper {
         return teacher;
     }
 
-    public void updateTeacherEntity(Teacher teacher, UpdateTeacherRequest request) {
+    public void updateEntity(Teacher teacher, UpdateTeacherRequest request) {
 
         if (request.getFirstName() != null) {
             teacher.setFirstName(request.getFirstName());
@@ -42,7 +42,7 @@ public class TeacherMapper {
         }
     }
 
-    public TeacherDto toTeacherDto(Teacher teacher) {
+    public TeacherDto toDto(Teacher teacher) {
         return new TeacherDto(
                 teacher.getTeacherID(),
                 teacher.getFirstName(),

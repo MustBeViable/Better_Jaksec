@@ -19,14 +19,14 @@ class StudentMapperTest {
 
     @Test
     @DisplayName("Test for toStudentEntity() method does not mutate values")
-    void toStudentEntity() {
+    void toEntity() {
         CreateStudentRequest request = new CreateStudentRequest();
         request.setFirstName("Test");
         request.setLastName("Name");
         request.setEmail("test.email@email.com");
         request.setPassword("testPassword");
 
-        Student student = mapper.toStudentEntity(request);
+        Student student = mapper.toEntity(request);
 
         assertAll(
                 () -> assertEquals("Test", student.getFirstName()),
@@ -38,7 +38,7 @@ class StudentMapperTest {
 
     @Test
     @DisplayName("Tests for update method in student mapper, partially, completely and if no updates it wont crash")
-    void updateStudentEntity() {
+    void updateEntity() {
         Student student = new Student("Old", "Name",
                 "old.email@email.com",
                 "oldpassword");
@@ -55,7 +55,7 @@ class StudentMapperTest {
         requestCompletely.setEmail("complete@email.com");
         requestCompletely.setPassword("Complete");
 
-        mapper.updateStudentEntity(student, requestPartial);
+        mapper.updateEntity(student, requestPartial);
 
         assertAll(
                 () -> assertEquals("New", student.getFirstName()),
@@ -64,7 +64,7 @@ class StudentMapperTest {
                 () -> assertEquals("oldpassword", student.getPassword()) // unchanged
         );
 
-        mapper.updateStudentEntity(student, requestCompletely);
+        mapper.updateEntity(student, requestCompletely);
 
         assertAll(
                 () -> assertEquals("Complete", student.getFirstName()),
@@ -73,7 +73,7 @@ class StudentMapperTest {
                 () -> assertEquals("Complete", student.getPassword())
         );
 
-        mapper.updateStudentEntity(student, requestNoChange);
+        mapper.updateEntity(student, requestNoChange);
 
         assertAll(
                 () -> assertEquals("Complete", student.getFirstName()),
@@ -85,9 +85,9 @@ class StudentMapperTest {
 
     @Test
     @DisplayName("toStudentDto mapping test")
-    void toStudentDto() {
+    void toDto() {
         Student student = new Student("Name", "Surname", "email@example.com", "pw");
-        StudentDto studentDto = mapper.toStudentDto(student);
+        StudentDto studentDto = mapper.toDto(student);
 
         assertAll(
                 () -> assertEquals("Name", studentDto.getFirstName()),

@@ -4,8 +4,11 @@ import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.student.dto.UpdateStudentRequest;
+import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service layer handles business logic and ruling
@@ -33,8 +36,16 @@ public class StudentService {
             throw new BadRequestException("Studdent with this email already exists.");
         }
 
-        Student saved = studentRepository.save(studentMapper.toStudentEntity(request));
-        return studentMapper.toStudentDto(saved);
+        Student saved = studentRepository.save(studentMapper.toEntity(request));
+        return studentMapper.toDto(saved);
+    }
+
+    @Transactional
+    public List<StudentDto> readAll() {
+        return studentRepository.findAll()
+                .stream()
+                .map(studentMapper::toDto)
+                .toList();
     }
 
     @Transactional
@@ -45,7 +56,7 @@ public class StudentService {
 
         Student student = studentRepository.getReferenceById(studentID);
 
-        return studentMapper.toStudentDto(student);
+        return studentMapper.toDto(student);
     }
 
     /**
@@ -62,10 +73,10 @@ public class StudentService {
                 .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
 
 
-        studentMapper.updateStudentEntity(student, request);
+        studentMapper.updateEntity(student, request);
         studentRepository.save(student);
 
-        return studentMapper.toStudentDto(student);
+        return studentMapper.toDto(student);
     }
 
     @Transactional
