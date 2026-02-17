@@ -57,9 +57,9 @@ class StudentServiceTest {
 
         when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
 
-        when(mapper.toStudentEntity(request)).thenReturn(studentEntity);
+        when(mapper.toEntity(request)).thenReturn(studentEntity);
         when(repository.save(studentEntity)).thenReturn(createdStudent);
-        when(mapper.toStudentDto(createdStudent)).thenReturn(studentDto);
+        when(mapper.toDto(createdStudent)).thenReturn(studentDto);
 
         StudentDto response = service.create(request);
 
@@ -79,7 +79,7 @@ class StudentServiceTest {
         when(repository.getReferenceById(5)).thenReturn(student);
 
         StudentDto studentDto = new StudentDto(5, "Name", "Surname", "test@test.fi");
-        when(mapper.toStudentDto(student)).thenReturn(studentDto);
+        when(mapper.toDto(student)).thenReturn(studentDto);
 
         StudentDto res = service.read(5);
 
@@ -97,11 +97,11 @@ class StudentServiceTest {
         UpdateStudentRequest request = new UpdateStudentRequest();
 
         StudentDto studentDto = new StudentDto(5, "Old", "Student", "old@example.com");
-        when(mapper.toStudentDto(existing)).thenReturn(studentDto);
+        when(mapper.toDto(existing)).thenReturn(studentDto);
 
         StudentDto res = service.update(5, request);
 
-        verify(mapper).updateStudentEntity(existing, request);
+        verify(mapper).updateEntity(existing, request);
         verify(repository).save(existing);
         assertEquals(5, res.getStudentID());
     }

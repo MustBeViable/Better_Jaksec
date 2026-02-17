@@ -7,6 +7,8 @@ import com.api.teacher.dto.UpdateTeacherRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class TeacherService {
 
@@ -24,8 +26,16 @@ public class TeacherService {
             throw new BadRequestException("Teacher with this email already exists.");
         }
 
-        Teacher saved = teacherRepository.save(teacherMapper.toTeacherEntity(request));
-        return teacherMapper.toTeacherDto(saved);
+        Teacher saved = teacherRepository.save(teacherMapper.toEntity(request));
+        return teacherMapper.toDto(saved);
+    }
+
+    @Transactional
+    public List<TeacherDto> readAll() {
+       return teacherRepository.findAll()
+               .stream()
+               .map(teacherMapper::toDto)
+               .toList();
     }
 
     @Transactional
@@ -35,7 +45,7 @@ public class TeacherService {
         }
 
         Teacher teacher = teacherRepository.getReferenceById(teacherID);
-        return teacherMapper.toTeacherDto(teacher);
+        return teacherMapper.toDto(teacher);
     }
 
     @Transactional
@@ -43,10 +53,10 @@ public class TeacherService {
         Teacher teacher = teacherRepository.findById(teacherID)
                 .orElseThrow(() -> new BadRequestException("Teacher doesn't exist."));
 
-        teacherMapper.updateTeacherEntity(teacher, request);
+        teacherMapper.updateEntity(teacher, request);
         teacherRepository.save(teacher);
 
-        return teacherMapper.toTeacherDto(teacher);
+        return teacherMapper.toDto(teacher);
     }
 
     @Transactional

@@ -7,6 +7,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/teacher")
 public class TeacherController {
@@ -20,6 +23,12 @@ public class TeacherController {
     public TeacherDto postTeacher(@Valid @RequestBody CreateTeacherRequest request) {
         return teacherService.create(request);
     }
+
+    @GetMapping("/all")
+    public List<TeacherDto> getAllTeachers() {
+        return teacherService.readAll();
+    }
+
 
     @GetMapping("/{teacherID}")
     public TeacherDto getTeacher(@PathVariable int teacherID) {
