@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.common.util.HashUtils;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
@@ -32,7 +33,7 @@ class StudentMapperTest {
                 () -> assertEquals("Test", student.getFirstName()),
                 () -> assertEquals("Name", student.getLastName()),
                 () -> assertEquals("test.email@email.com", student.getEmail()),
-                () -> assertEquals("testPassword", student.getPassword())
+                () -> assertTrue(HashUtils.check("testPassword", student.getPassword()))
         );
     }
 
@@ -70,7 +71,7 @@ class StudentMapperTest {
                 () -> assertEquals("Complete", student.getFirstName()),
                 () -> assertEquals("Update", student.getLastName()),
                 () -> assertEquals("complete@email.com", student.getEmail()),
-                () -> assertEquals("Complete", student.getPassword())
+                () -> assertTrue(HashUtils.check("Complete", student.getPassword()))
         );
 
         mapper.updateEntity(student, requestNoChange);
@@ -79,7 +80,7 @@ class StudentMapperTest {
                 () -> assertEquals("Complete", student.getFirstName()),
                 () -> assertEquals("Update", student.getLastName()),
                 () -> assertEquals("complete@email.com", student.getEmail()),
-                () -> assertEquals("Complete", student.getPassword())
+                () -> assertTrue(HashUtils.check("Complete", student.getPassword()))
         );
     }
 

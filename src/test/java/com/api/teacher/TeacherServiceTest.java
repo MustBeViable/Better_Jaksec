@@ -1,6 +1,7 @@
 package com.api.teacher;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.LoginService;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -18,12 +19,14 @@ class TeacherServiceTest {
     private TeacherRepository repository;
     private TeacherMapper mapper;
     private TeacherService service;
+    private LoginService loginService;
 
     @BeforeEach
     void setUp() {
         repository = mock(TeacherRepository.class);
         mapper = mock(TeacherMapper.class);
-        service = new TeacherService(repository, mapper);
+        loginService = mock(LoginService.class);
+        service = new TeacherService(repository, mapper, loginService);
     }
 
     @Test
@@ -35,8 +38,8 @@ class TeacherServiceTest {
         request.setEmail("existing@example.com");
         request.setPassword("secret");
 
-        when(repository.existsByEmailIgnoreCase("existing@example.com")).thenReturn(true);
-
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
         assertThrows(BadRequestException.class, () -> service.create(request));
 
         verify(repository, never()).save(any());
@@ -67,7 +70,8 @@ class TeacherServiceTest {
 
         TeacherDto dto = new TeacherDto(1, "New", "Guy", "new.guy@example.com", null);
 
-        when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
         when(mapper.toEntity(request)).thenReturn(entity);
         when(repository.save(entity)).thenReturn(saved);
         when(mapper.toDto(saved)).thenReturn(dto);

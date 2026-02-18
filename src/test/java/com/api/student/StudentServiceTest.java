@@ -1,6 +1,7 @@
 package com.api.student;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.LoginService;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
@@ -18,12 +19,14 @@ class StudentServiceTest {
     private StudentRepository repository;
     private StudentMapper mapper;
     private StudentService service;
+    private LoginService loginService;
 
     @BeforeEach
     void setUp() {
         repository = mock(StudentRepository.class);
         mapper = mock(StudentMapper.class);
-        service = new StudentService(repository, mapper);
+        loginService = mock(LoginService.class);
+        service = new StudentService(repository, mapper, loginService);
     }
 
     @Test
@@ -55,8 +58,8 @@ class StudentServiceTest {
         Student createdStudent = new Student("New", "Guy", "new.guy@example.com", "kissa123");
         StudentDto studentDto = new StudentDto(1, "New", "Guy", "new.guy@example.com");
 
-        when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
-
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
         when(mapper.toEntity(request)).thenReturn(studentEntity);
         when(repository.save(studentEntity)).thenReturn(createdStudent);
         when(mapper.toDto(createdStudent)).thenReturn(studentDto);

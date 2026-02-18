@@ -18,6 +18,11 @@ public class LoginController {
     public LoginController(LoginService service) {
         this.service = service;
     }
+    @GetMapping("/email/{email}")
+    public String getEmailAvailable(@PathVariable String email){
+        return "{\"isAvailable\":"+service.isEmailAvailable(email)+"}";
+    }
+
     @PostMapping("/login")
     public UserDto postLogin(@Valid @RequestBody LoginRequest request){
         return this.service.login(request);

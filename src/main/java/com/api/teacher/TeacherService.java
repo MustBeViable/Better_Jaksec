@@ -1,6 +1,7 @@
 package com.api.teacher;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.LoginService;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -14,16 +15,18 @@ public class TeacherService {
 
     private final TeacherRepository teacherRepository;
     private final TeacherMapper teacherMapper;
+    private final LoginService loginService;
 
-    public TeacherService(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+    public TeacherService(TeacherRepository teacherRepository, TeacherMapper teacherMapper, LoginService loginService) {
         this.teacherRepository = teacherRepository;
         this.teacherMapper = teacherMapper;
+        this.loginService = loginService;
     }
 
     @Transactional
     public TeacherDto create(CreateTeacherRequest request) {
-        if (teacherRepository.existsByEmailIgnoreCase(request.getEmail())) {
-            throw new BadRequestException("Teacher with this email already exists.");
+        if (!loginService.isEmailAvailable(request.getEmail())) {
+            throw new BadRequestException("User with this email already exists.");
         }
 
         Teacher saved = teacherRepository.save(teacherMapper.toEntity(request));
