@@ -10,6 +10,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/course")
 public class CourseController {
@@ -23,6 +25,11 @@ public class CourseController {
     @PostMapping
     public CourseDto postCourse(@Valid @RequestBody CreateCourseRequest request) {
         return this.courseService.create(request);
+    }
+
+    @GetMapping
+    public List<CourseDto> getCourse() {
+        return this.courseService.readAll();
     }
 
     @GetMapping("{courseID}")
