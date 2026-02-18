@@ -27,7 +27,7 @@ public class CourseController {
         return this.courseService.create(request);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<CourseDto> getCourse() {
         return this.courseService.readAll();
     }
