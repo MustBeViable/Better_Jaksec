@@ -1,5 +1,6 @@
 package com.api.teacher;
 
+import com.api.common.util.HashUtils;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -33,7 +34,7 @@ class TeacherMapperTest {
                 () -> assertEquals("Test", teacher.getFirstName()),
                 () -> assertEquals("Teacher", teacher.getLastName()),
                 () -> assertEquals("test.teacher@email.com", teacher.getEmail()),
-                () -> assertEquals("secret", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("secret", teacher.getPassword()))
         );
     }
 
@@ -71,7 +72,7 @@ class TeacherMapperTest {
                 () -> assertEquals("Full", teacher.getFirstName()),
                 () -> assertEquals("Update", teacher.getLastName()),
                 () -> assertEquals("full@email.com", teacher.getEmail()),
-                () -> assertEquals("newpw", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("newpw", teacher.getPassword()))
         );
 
         UpdateTeacherRequest noChange = new UpdateTeacherRequest();
@@ -81,7 +82,7 @@ class TeacherMapperTest {
                 () -> assertEquals("Full", teacher.getFirstName()),
                 () -> assertEquals("Update", teacher.getLastName()),
                 () -> assertEquals("full@email.com", teacher.getEmail()),
-                () -> assertEquals("newpw", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("newpw", teacher.getPassword()))
         );
     }
 
