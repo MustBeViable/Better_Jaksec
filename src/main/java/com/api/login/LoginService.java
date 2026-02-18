@@ -11,6 +11,8 @@ import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class LoginService {
 
@@ -22,6 +24,14 @@ public class LoginService {
         this.studentRepository = studentRepository;
         this.teacherRepository = teacherRepository;
         this.userMapper = userMapper;
+    }
+
+    @Transactional
+    public boolean isEmailAvailable(String email){
+        return this.studentRepository.findByEmailIgnoreCase(email)
+                .map(student -> (User) student)
+                    .or(() -> this.teacherRepository.findByEmailIgnoreCase(email)
+                        .map(teacher -> (User) teacher)).isEmpty();
     }
 
     @Transactional

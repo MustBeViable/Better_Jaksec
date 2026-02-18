@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.login.LoginService;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.common.error.exceptions.BadRequestException;
@@ -19,10 +20,12 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final LoginService loginService;
 
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, LoginService loginService) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.loginService = loginService;
     }
 
     /**
@@ -32,8 +35,8 @@ public class StudentService {
      */
     @Transactional
     public StudentDto create(CreateStudentRequest request) {
-        if (studentRepository.existsByEmailIgnoreCase(request.getEmail())) {
-            throw new BadRequestException("Studdent with this email already exists.");
+        if (!loginService.isEmailAvailable(request.getEmail())) {
+            throw new BadRequestException("User with this email already exists.");
         }
 
         Student saved = studentRepository.save(studentMapper.toEntity(request));
