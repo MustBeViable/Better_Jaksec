@@ -34,8 +34,8 @@ public class CourseController {
     }
 
     @GetMapping("/{courseID}")
-    public CourseDto getCourse(@PathVariable Long courseID) {
-        return this.courseService.read(courseID);
+    public CourseDto getCourse(@RequestHeader("Authorization") String token,@PathVariable Long courseID) {
+        return this.courseService.read(courseID, JwtUtils.toAuth(token));
     }
 
     @PutMapping("/{courseID}")

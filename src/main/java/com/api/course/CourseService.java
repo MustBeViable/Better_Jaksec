@@ -73,6 +73,33 @@ public class CourseService {
     }
 
     @Transactional
+    public CourseDto create(CreateCourseRequest request) {
+        Course course = mapper.toEmptyCourseEntity(request);
+
+        Set<Lesson> lessons = new HashSet<>(lessonRepository.findAllById(request.getLessonIds()));
+        for (Lesson lesson : lessons) {
+            lesson.setCourse(course);
+        }
+        course.setLessons(lessons);
+
+        Set<Assignment> assignments = new HashSet<>(assignmentRepository.findAllById(request.getAssignmentIds()));
+        for (Assignment assignment : assignments) {
+            assignment.setCourse(course);
+        }
+        course.setAssignments(assignments);
+
+        Set<Teacher> teachers = new HashSet<>(teacherRepository.findAllById(request.getTeacherIds()));
+        course.setTeachers(teachers);
+        for (Teacher teacher : teachers) {
+            teacher.getCourses().add(course);
+        }
+
+        course = courseRepository.save(course);
+
+        return mapper.toCourseDto(course);
+    }
+
+    @Transactional
     public List<CourseDto> readAll() {
         return courseRepository
                 .findAll()
@@ -100,6 +127,13 @@ public class CourseService {
                     .toList().contains(auth.getEmail())){
             throw new UnauthorizedException("Only admins or teachers and students who belong to the course can see it");
         }
+        return this.mapper.toCourseDto(course);
+    }
+
+    @Transactional
+    public CourseDto read(Long courseId){
+        Course course =  this.courseRepository.findById(courseId)
+                .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
         return this.mapper.toCourseDto(course);
     }
 

@@ -1,6 +1,7 @@
 package com.api.student;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.Auth;
 import com.api.login.LoginService;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
@@ -84,7 +85,7 @@ class StudentServiceTest {
         StudentDto studentDto = new StudentDto(5, "Name", "Surname", "test@test.fi");
         when(mapper.toDto(student)).thenReturn(studentDto);
 
-        StudentDto res = service.read(5);
+        StudentDto res = service.read(5, new Auth("student", "test@test.fi"));
 
         assertEquals("Name", res.getFirstName());
         assertEquals("Surname", res.getLastName());
