@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -70,6 +71,16 @@ public class CourseService {
 
         return mapper.toCourseDto(course);
     }
+
+    @Transactional
+    public List<CourseDto> readAll() {
+        return courseRepository
+                .findAll()
+                .stream()
+                .map(mapper::toCourseDto)
+                .toList();
+    }
+
     @Transactional
     public CourseDto read(Long courseId, Auth auth){
         System.out.println("CourseService.read.auth: " + auth);

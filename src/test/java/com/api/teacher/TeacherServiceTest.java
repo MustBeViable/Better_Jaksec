@@ -1,6 +1,7 @@
 package com.api.teacher;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.LoginService;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -18,12 +19,14 @@ class TeacherServiceTest {
     private TeacherRepository repository;
     private TeacherMapper mapper;
     private TeacherService service;
+    private LoginService loginService;
 
     @BeforeEach
     void setUp() {
         repository = mock(TeacherRepository.class);
         mapper = mock(TeacherMapper.class);
-        service = new TeacherService(repository, mapper);
+        loginService = mock(LoginService.class);
+        service = new TeacherService(repository, mapper, loginService);
     }
 
     @Test
@@ -35,12 +38,12 @@ class TeacherServiceTest {
         request.setEmail("existing@example.com");
         request.setPassword("secret");
 
-        when(repository.existsByEmailIgnoreCase("existing@example.com")).thenReturn(true);
-
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
         assertThrows(BadRequestException.class, () -> service.create(request));
 
         verify(repository, never()).save(any());
-        verify(mapper, never()).toTeacherEntity(any());
+        verify(mapper, never()).toEntity(any());
     }
 
     @Test
@@ -67,10 +70,11 @@ class TeacherServiceTest {
 
         TeacherDto dto = new TeacherDto(1, "New", "Guy", "new.guy@example.com", null);
 
-        when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
-        when(mapper.toTeacherEntity(request)).thenReturn(entity);
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
+        when(mapper.toEntity(request)).thenReturn(entity);
         when(repository.save(entity)).thenReturn(saved);
-        when(mapper.toTeacherDto(saved)).thenReturn(dto);
+        when(mapper.toDto(saved)).thenReturn(dto);
 
         TeacherDto response = service.create(request);
 
@@ -99,7 +103,7 @@ class TeacherServiceTest {
         when(repository.getReferenceById(5)).thenReturn(teacher);
 
         TeacherDto dto = new TeacherDto(5, "A", "B", "a@b.com", null);
-        when(mapper.toTeacherDto(teacher)).thenReturn(dto);
+        when(mapper.toDto(teacher)).thenReturn(dto);
 
         TeacherDto res = service.read(5);
 
@@ -129,11 +133,11 @@ class TeacherServiceTest {
         request.setFirstName("New");
 
         TeacherDto dto = new TeacherDto(5, "New", "Teacher", "old@x.com", null);
-        when(mapper.toTeacherDto(existing)).thenReturn(dto);
+        when(mapper.toDto(existing)).thenReturn(dto);
 
         TeacherDto res = service.update(5, request);
 
-        verify(mapper).updateTeacherEntity(existing, request);
+        verify(mapper).updateEntity(existing, request);
         verify(repository).save(existing);
 
         assertEquals(5, res.getTeacherID());

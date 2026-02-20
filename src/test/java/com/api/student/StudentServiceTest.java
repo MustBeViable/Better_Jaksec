@@ -1,6 +1,7 @@
 package com.api.student;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.login.LoginService;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
@@ -18,12 +19,14 @@ class StudentServiceTest {
     private StudentRepository repository;
     private StudentMapper mapper;
     private StudentService service;
+    private LoginService loginService;
 
     @BeforeEach
     void setUp() {
         repository = mock(StudentRepository.class);
         mapper = mock(StudentMapper.class);
-        service = new StudentService(repository, mapper);
+        loginService = mock(LoginService.class);
+        service = new StudentService(repository, mapper, loginService);
     }
 
     @Test
@@ -55,11 +58,11 @@ class StudentServiceTest {
         Student createdStudent = new Student("New", "Guy", "new.guy@example.com", "kissa123");
         StudentDto studentDto = new StudentDto(1, "New", "Guy", "new.guy@example.com");
 
-        when(repository.existsByEmailIgnoreCase("new.guy@example.com")).thenReturn(false);
-
-        when(mapper.toStudentEntity(request)).thenReturn(studentEntity);
+        when(loginService.isEmailAvailable("new.guy@example.com"))
+                .thenReturn(true);
+        when(mapper.toEntity(request)).thenReturn(studentEntity);
         when(repository.save(studentEntity)).thenReturn(createdStudent);
-        when(mapper.toStudentDto(createdStudent)).thenReturn(studentDto);
+        when(mapper.toDto(createdStudent)).thenReturn(studentDto);
 
         StudentDto response = service.create(request);
 
@@ -79,7 +82,7 @@ class StudentServiceTest {
         when(repository.getReferenceById(5)).thenReturn(student);
 
         StudentDto studentDto = new StudentDto(5, "Name", "Surname", "test@test.fi");
-        when(mapper.toStudentDto(student)).thenReturn(studentDto);
+        when(mapper.toDto(student)).thenReturn(studentDto);
 
         StudentDto res = service.read(5);
 
@@ -97,11 +100,11 @@ class StudentServiceTest {
         UpdateStudentRequest request = new UpdateStudentRequest();
 
         StudentDto studentDto = new StudentDto(5, "Old", "Student", "old@example.com");
-        when(mapper.toStudentDto(existing)).thenReturn(studentDto);
+        when(mapper.toDto(existing)).thenReturn(studentDto);
 
         StudentDto res = service.update(5, request);
 
-        verify(mapper).updateStudentEntity(existing, request);
+        verify(mapper).updateEntity(existing, request);
         verify(repository).save(existing);
         assertEquals(5, res.getStudentID());
     }

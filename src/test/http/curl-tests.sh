@@ -93,6 +93,17 @@ student2ID=$(echo "$student_resp" | jq -r '.studentID')
 echo "Student created with ID: $studentID"
 echo "-----------------------------------"
 
+echo "Creating Student 2..."
+student_resp2=$(curl -s -X POST "$BASE_URL/student" \
+  -H "Content-Type: application/json" \
+  -d '{
+        "firstName": "Bobby",
+        "lastName": "Johnson",
+        "email": "bob.johnson@example.com",
+        "password": "password123"
+      }')
+
+echo "$student_resp2" | jq
 
 # -------------------------
 # CREATE COURSE

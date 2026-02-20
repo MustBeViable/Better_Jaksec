@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @RestController notates method to be REST API controller (like in express)
  * For routing it seems to be enough to have @RequestMapping notation to be like this
@@ -24,6 +26,11 @@ public class StudentController {
     @PostMapping
     public StudentDto postStudent(@Valid @RequestBody CreateStudentRequest request) {
         return studentService.create(request);
+    }
+
+    @GetMapping("/all")
+    public List<StudentDto> getAllStudents() {
+        return studentService.readAll();
     }
 
     @GetMapping("/{studentID}")

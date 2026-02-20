@@ -1,5 +1,6 @@
 package com.api.teacher;
 
+import com.api.common.util.HashUtils;
 import com.api.teacher.dto.CreateTeacherRequest;
 import com.api.teacher.dto.TeacherDto;
 import com.api.teacher.dto.UpdateTeacherRequest;
@@ -20,26 +21,26 @@ class TeacherMapperTest {
 
     @Test
     @DisplayName("toTeacherEntity maps CreateTeacherRequest -> Teacher without mutating values")
-    void toTeacherEntity() {
+    void toEntity() {
         CreateTeacherRequest request = new CreateTeacherRequest();
         request.setFirstName("Test");
         request.setLastName("Teacher");
         request.setEmail("test.teacher@email.com");
         request.setPassword("secret");
 
-        Teacher teacher = mapper.toTeacherEntity(request);
+        Teacher teacher = mapper.toEntity(request);
 
         assertAll(
                 () -> assertEquals("Test", teacher.getFirstName()),
                 () -> assertEquals("Teacher", teacher.getLastName()),
                 () -> assertEquals("test.teacher@email.com", teacher.getEmail()),
-                () -> assertEquals("secret", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("secret", teacher.getPassword()))
         );
     }
 
     @Test
     @DisplayName("updateTeacherEntity supports partial + full + no-change updates safely")
-    void updateTeacherEntity() {
+    void updateEntity() {
         Teacher teacher = new Teacher();
         teacher.setFirstName("Old");
         teacher.setLastName("Name");
@@ -50,7 +51,7 @@ class TeacherMapperTest {
         partial.setFirstName("New");
         partial.setEmail("new@email.com");
 
-        mapper.updateTeacherEntity(teacher, partial);
+        mapper.updateEntity(teacher, partial);
 
         assertAll(
                 () -> assertEquals("New", teacher.getFirstName()),
@@ -65,29 +66,29 @@ class TeacherMapperTest {
         full.setEmail("full@email.com");
         full.setPassword("newpw");
 
-        mapper.updateTeacherEntity(teacher, full);
+        mapper.updateEntity(teacher, full);
 
         assertAll(
                 () -> assertEquals("Full", teacher.getFirstName()),
                 () -> assertEquals("Update", teacher.getLastName()),
                 () -> assertEquals("full@email.com", teacher.getEmail()),
-                () -> assertEquals("newpw", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("newpw", teacher.getPassword()))
         );
 
         UpdateTeacherRequest noChange = new UpdateTeacherRequest();
-        mapper.updateTeacherEntity(teacher, noChange);
+        mapper.updateEntity(teacher, noChange);
 
         assertAll(
                 () -> assertEquals("Full", teacher.getFirstName()),
                 () -> assertEquals("Update", teacher.getLastName()),
                 () -> assertEquals("full@email.com", teacher.getEmail()),
-                () -> assertEquals("newpw", teacher.getPassword())
+                () -> assertTrue(HashUtils.check("newpw", teacher.getPassword()))
         );
     }
 
     @Test
     @DisplayName("toTeacherDto maps Teacher -> TeacherDto")
-    void toTeacherDto() {
+    void toDto() {
         Teacher teacher = new Teacher();
         teacher.setTeacherID(7);
         teacher.setFirstName("Ada");
@@ -95,7 +96,7 @@ class TeacherMapperTest {
         teacher.setEmail("ada@history.com");
         teacher.setPassword("pw"); // should not leak to DTO
 
-        TeacherDto dto = mapper.toTeacherDto(teacher);
+        TeacherDto dto = mapper.toDto(teacher);
 
         assertAll(
                 () -> assertEquals(7, dto.getTeacherID()),

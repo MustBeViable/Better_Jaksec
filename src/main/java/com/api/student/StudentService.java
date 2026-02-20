@@ -2,12 +2,16 @@ package com.api.student;
 
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.login.Auth;
+import com.api.login.LoginService;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.student.dto.UpdateStudentRequest;
+import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 /**
  * Service layer handles business logic and ruling
@@ -18,10 +22,12 @@ public class StudentService {
 
     private final StudentRepository studentRepository;
     private final StudentMapper studentMapper;
+    private final LoginService loginService;
 
-    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper) {
+    public StudentService(StudentRepository studentRepository, StudentMapper studentMapper, LoginService loginService) {
         this.studentRepository = studentRepository;
         this.studentMapper = studentMapper;
+        this.loginService = loginService;
     }
 
     /**
@@ -31,12 +37,20 @@ public class StudentService {
      */
     @Transactional
     public StudentDto create(CreateStudentRequest request) {
-        if (studentRepository.existsByEmailIgnoreCase(request.getEmail())) {
-            throw new BadRequestException("Studdent with this email already exists.");
+        if (!loginService.isEmailAvailable(request.getEmail())) {
+            throw new BadRequestException("User with this email already exists.");
         }
 
-        Student saved = studentRepository.save(studentMapper.toStudentEntity(request));
-        return studentMapper.toStudentDto(saved);
+        Student saved = studentRepository.save(studentMapper.toEntity(request));
+        return studentMapper.toDto(saved);
+    }
+
+    @Transactional
+    public List<StudentDto> readAll() {
+        return studentRepository.findAll()
+                .stream()
+                .map(studentMapper::toDto)
+                .toList();
     }
 
     @Transactional
@@ -49,7 +63,7 @@ public class StudentService {
         if(!auth.getEmail().equals(student.getEmail()) && !auth.getRole().equalsIgnoreCase("student")){
             throw new UnauthorizedException("Unauthorized");
         }
-        return studentMapper.toStudentDto(student);
+        return studentMapper.toDto(student);
     }
 
     /**
@@ -66,10 +80,10 @@ public class StudentService {
                 .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
 
 
-        studentMapper.updateStudentEntity(student, request);
+        studentMapper.updateEntity(student, request);
         studentRepository.save(student);
 
-        return studentMapper.toStudentDto(student);
+        return studentMapper.toDto(student);
     }
 
     @Transactional

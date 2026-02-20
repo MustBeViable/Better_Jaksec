@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/course")
 public class CourseController {
@@ -26,17 +28,23 @@ public class CourseController {
         return this.courseService.create(request, JwtUtils.toAuth(token));
     }
 
-    @GetMapping("{courseID}")
-    public CourseDto getCourse(@PathVariable Long courseID, @RequestHeader("Authorization") String token) {
-        return this.courseService.read(courseID, JwtUtils.toAuth(token));
+    @GetMapping("/all")
+    public List<CourseDto> getCourse() {
+        return this.courseService.readAll();
     }
 
-    @PutMapping("{courseID}")
-    public CourseDto putCourse(@PathVariable Long courseID, UpdateCourseRequest request) {
+    @GetMapping("/{courseID}")
+    public CourseDto getCourse(@PathVariable Long courseID) {
+        return this.courseService.read(courseID);
+    }
+
+    @PutMapping("/{courseID}")
+    public CourseDto putCourse(@PathVariable Long courseID,
+                               @Valid @RequestBody UpdateCourseRequest request) {
         return this.courseService.update(courseID, request);
     }
 
-    @DeleteMapping("{courseID}")
+    @DeleteMapping("/{courseID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Long courseID) {
         this.courseService.delete(courseID);
