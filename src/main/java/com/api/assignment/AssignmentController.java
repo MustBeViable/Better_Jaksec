@@ -35,7 +35,7 @@ public class AssignmentController {
     }
 
     @PutMapping("{assignmentID}")
-    public AssignmentDto putAssignment(@PathVariable Long assignmentID, UpdateAssignmentRequest request) {
+    public AssignmentDto putAssignment(@PathVariable Long assignmentID, @Valid @RequestBody UpdateAssignmentRequest request) {
         return this.assignmentService.update(assignmentID, request);
     }
 

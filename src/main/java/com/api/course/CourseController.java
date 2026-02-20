@@ -32,17 +32,18 @@ public class CourseController {
         return this.courseService.readAll();
     }
 
-    @GetMapping("{courseID}")
+    @GetMapping("/{courseID}")
     public CourseDto getCourse(@PathVariable Long courseID) {
         return this.courseService.read(courseID);
     }
 
-    @PutMapping("{courseID}")
-    public CourseDto putCourse(@PathVariable Long courseID, UpdateCourseRequest request) {
+    @PutMapping("/{courseID}")
+    public CourseDto putCourse(@PathVariable Long courseID,
+                               @Valid @RequestBody UpdateCourseRequest request) {
         return this.courseService.update(courseID, request);
     }
 
-    @DeleteMapping("{courseID}")
+    @DeleteMapping("/{courseID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteCourse(@PathVariable Long courseID) {
         this.courseService.delete(courseID);

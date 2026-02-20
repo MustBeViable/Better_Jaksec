@@ -27,7 +27,7 @@ public class LessonController {
     }
 
     @PutMapping("{lessonID}")
-    public LessonDto putLesson(@PathVariable Long lessonID, UpdateLessonRequest request) {
+    public LessonDto putLesson(@PathVariable Long lessonID, @Valid @RequestBody UpdateLessonRequest request) {
         return lessonService.update(lessonID, request);
     }
 
