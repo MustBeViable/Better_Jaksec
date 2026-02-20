@@ -3,11 +3,16 @@ package com.api.course;
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.NotFoundException;
+import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;
+import com.api.jointable.student_course.StudentCourse;
 import com.api.lesson.Lesson;
 import com.api.lesson.LessonRepository;
+import com.api.login.Auth;
+import com.api.student.Student;
 import com.api.teacher.Teacher;
 import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
@@ -34,8 +39,10 @@ public class CourseService {
         this.assignmentRepository = assignmentRespository;
         this.mapper = mapper;
     }
+
     @Transactional
-    public CourseDto create(CreateCourseRequest request) {
+    public CourseDto create(CreateCourseRequest request, Auth auth) {
+        System.out.println("CourseService.create.auth: " + auth);
         Course course = mapper.toEmptyCourseEntity(request);
 
         Set<Lesson> lessons = new HashSet<>(lessonRepository.findAllById(request.getLessonIds()));
@@ -58,6 +65,10 @@ public class CourseService {
 
         course = courseRepository.save(course);
 
+        if(!auth.getRole().equalsIgnoreCase("admin")){
+            throw new UnauthorizedException("Only admins can create courses");
+        }
+
         return mapper.toCourseDto(course);
     }
 
@@ -71,10 +82,24 @@ public class CourseService {
     }
 
     @Transactional
-    public CourseDto read(Long courseId){
+    public CourseDto read(Long courseId, Auth auth){
+        System.out.println("CourseService.read.auth: " + auth);
         Course course =  this.courseRepository.findById(courseId)
                 .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
-
+        course.getGrades().stream()
+                .map(StudentCourse::getStudent)
+                .map(Student::getEmail)
+                .toList().contains(auth.getEmail());
+        if(!auth.getRole().equalsIgnoreCase("admin") &&
+            !course.getTeachers().stream()
+                    .map(Teacher::getEmail)
+                    .toList().contains(auth.getEmail()) &&
+            !course.getGrades().stream()
+                    .map(StudentCourse::getStudent)
+                    .map(Student::getEmail)
+                    .toList().contains(auth.getEmail())){
+            throw new UnauthorizedException("Only admins or teachers and students who belong to the course can see it");
+        }
         return this.mapper.toCourseDto(course);
     }
 

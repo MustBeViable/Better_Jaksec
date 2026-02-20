@@ -1,5 +1,6 @@
 package com.api.login;
 
+import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.common.util.JwtUtils;
 import com.api.login.dto.LoginDto;
 import com.api.login.dto.LoginRequest;
@@ -28,8 +29,8 @@ public class LoginController {
         return this.service.login(request);
     }
 
-    @GetMapping("/me/{token}")
-    public UserDto getMe(@PathVariable String token){
-        return this.service.me(token);
+    @GetMapping("/me")
+    public UserDto getMe(@RequestHeader("Authorization") String token) {
+        return this.service.me(JwtUtils.toAuth(token));
     }
 }
