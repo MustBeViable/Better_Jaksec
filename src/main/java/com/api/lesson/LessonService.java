@@ -52,11 +52,14 @@ public class LessonService {
 
     @Transactional
     public LessonDto update(Long lessonID, UpdateLessonRequest request) {
-        Lesson lesson = lessonRepository.findById(lessonID)
-                .orElseThrow( () -> new BadRequestException("Lesson doesn't exists."));
-        if(this.courseRepository.findById(request.getCourseId()).isPresent()){
-            lesson.setCourse(this.courseRepository.findById(request.getCourseId()).get());
+        Lesson lesson = lessonRepository.getReferenceById(lessonID);
+
+        if (request.getCourseId() != null) {
+            Course course = courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new BadRequestException("Course not found"));
+            lesson.setCourse(course);
         }
+
         lessonMapper.updateLessonEntity(lesson, request);
         lessonRepository.save(lesson);
 

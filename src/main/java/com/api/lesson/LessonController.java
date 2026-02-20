@@ -21,17 +21,20 @@ public class LessonController {
         return lessonService.create(request);
     }
 
-    @GetMapping("{lessonID}")
+    @GetMapping("/{lessonID}")
     public LessonDto getLesson(@PathVariable Long lessonID) {
         return lessonService.read(lessonID);
     }
 
-    @PutMapping("{lessonID}")
-    public LessonDto putLesson(@PathVariable Long lessonID, @Valid @RequestBody UpdateLessonRequest request) {
+    @PutMapping("/{lessonID}")
+    public LessonDto putLesson(
+            @PathVariable Long lessonID,
+            @Valid @RequestBody UpdateLessonRequest request
+    ) {
         return lessonService.update(lessonID, request);
     }
 
-    @DeleteMapping("{lessonID}")
+    @DeleteMapping("/{lessonID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLesson(@PathVariable Long lessonID) {
         lessonService.delete(lessonID);
