@@ -29,8 +29,8 @@ public class CourseController {
     }
 
     @GetMapping("/all")
-    public List<CourseDto> getCourse() {
-        return this.courseService.readAll();
+    public List<CourseDto> getCourse(@RequestHeader("Authorization") String token) {
+        return this.courseService.readAll(JwtUtils.toAuth(token));
     }
 
     @GetMapping("/{courseID}")

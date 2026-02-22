@@ -263,4 +263,17 @@ curl -s "$BASE_URL/course/$courseID" \
 echo "Admin teacher fetches course"
 curl -s "$BASE_URL/course/$courseID" \
   -H "Authorization: Bearer $teacher_token" | jq
+
+echo "Student with courses gets all courses"
+curl -s "$BASE_URL/course/all" \
+  -H "Authorization: Bearer $student_token" | jq
+
+echo "Student without courses gets all courses"
+curl -s "$BASE_URL/course/all" \
+  -H "Authorization: Bearer $student2_token" | jq
+
+echo "Admin teachers gets all courses"
+curl -s "$BASE_URL/course/all" \
+  -H "Authorization: Bearer $teacher_token" | jq
+
 echo "===== API TEST COMPLETE ====="

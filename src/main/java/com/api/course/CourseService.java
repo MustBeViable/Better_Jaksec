@@ -100,12 +100,29 @@ public class CourseService {
     }
 
     @Transactional
-    public List<CourseDto> readAll() {
-        return courseRepository
-                .findAll()
-                .stream()
-                .map(mapper::toCourseDto)
-                .toList();
+    public List<CourseDto> readAll(Auth auth) {
+        if(auth.getRole().equalsIgnoreCase("admin")){
+            return courseRepository
+                    .findAll()
+                    .stream()
+                    .map(mapper::toCourseDto)
+                    .toList();
+        }else{
+            switch (auth.getRole()){
+                case "student":
+                    return courseRepository.findCoursesByStudentEmail(auth.getEmail())
+                            .stream()
+                            .map(mapper::toCourseDto)
+                            .toList();
+                case "teacher":
+                    return courseRepository.findCoursesByTeacherEmail(auth.getEmail())
+                            .stream()
+                            .map(mapper::toCourseDto)
+                            .toList();
+                default:
+                    throw new UnauthorizedException("Invalid token");
+            }
+        }
     }
 
     @Transactional
