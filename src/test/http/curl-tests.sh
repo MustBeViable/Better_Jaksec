@@ -4,12 +4,25 @@ BASE_URL="http://localhost:8081/api"
 
 echo "===== START API TEST ====="
 
+echo "Logging In Admin..."
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"admin@example.com\",
+        \"password\": \"adminpassword\"
+      }")
+
+echo "$login_resp" | jq
+
+admin_token=$(echo "$login_resp" | jq -r '.token')
+
 # -------------------------
 # CREATE TEACHER
 # -------------------------
 echo "Creating Teacher..."
 teacher_resp=$(curl -s -X POST "$BASE_URL/teacher" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
   -d '{
         "firstName": "Alice",
         "lastName": "Smith",
@@ -45,6 +58,7 @@ echo "Teacher Token: $teacher_token"
 echo "Creating Student..."
 student_resp=$(curl -s -X POST "$BASE_URL/student" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
   -d '{
         "firstName": "Bob",
         "lastName": "Johnson",
@@ -69,6 +83,7 @@ studentID=$(echo "$student_resp" | jq -r '.studentID')
 echo "Creating Student2..."
 student_resp=$(curl -s -X POST "$BASE_URL/student" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
   -d '{
         "firstName": "test",
         "lastName": "student",
@@ -96,6 +111,7 @@ echo "-----------------------------------"
 echo "Creating Student 2..."
 student_resp2=$(curl -s -X POST "$BASE_URL/student" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
   -d '{
         "firstName": "Bobby",
         "lastName": "Johnson",
@@ -180,9 +196,10 @@ echo "-----------------------------------"
 # -------------------------
 # MARK STUDENT ATTENDANCE
 # -------------------------
-echo "Marking Attendance..."
+echo "Marking Own Attendance..."
 attendance_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $student_token" \
   -d "{
         \"lessonId\": $lessonID,
         \"present\": false,
@@ -194,6 +211,20 @@ attendanceID=$(echo "$attendance_resp" | jq -r '.id')
 echo "Attendance created with ID: $attendanceID"
 echo "-----------------------------------"
 
+echo "Marking Others Attendance..."
+attendance_resp=$(curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $student2_token" \
+  -d "{
+        \"lessonId\": $lessonID,
+        \"present\": true,
+        \"reason\": \"\"
+      }")
+
+echo "$attendance_resp" | jq
+attendance2ID=$(echo "$attendance_resp" | jq -r '.id')
+echo "Attendance created with ID: $attendanceID"
+echo "-----------------------------------"
 
 # -------------------------
 # CREATE STUDENT COURSE GRADE
@@ -238,7 +269,7 @@ echo "-----------------------------------"
 # -------------------------
 echo "Fetching Current Authenticated User..."
 me_resp=$(curl -s -X GET "$BASE_URL/auth/me" \
-  -H "Authorization: Bearer $student2_token" \
+  -H "Authorization: Bearer $student_token" \
   -H "Content-Type: application/json")
 
 echo "$me_resp" | jq
