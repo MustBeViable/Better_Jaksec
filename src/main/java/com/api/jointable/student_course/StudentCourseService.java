@@ -32,7 +32,7 @@ public class StudentCourseService {
     public StudentCourseDto create(CreateStudentCourse request, Auth auth) {
 
         if(!auth.getRole().equalsIgnoreCase("admin")
-            || !auth.getRole().equalsIgnoreCase("teacher")){
+            && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can add students to course");
         }
         StudentCourse studentCourse = mapper.toEntity(request);
@@ -55,8 +55,8 @@ public class StudentCourseService {
         StudentCourse studentCourse = this.studentCourseRepository.findById(gradeId)
                 .orElseThrow(()-> new BadRequestException("Grade not found"));
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")
-                || !studentCourse.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
+                && !auth.getRole().equalsIgnoreCase("teacher")
+                && !studentCourse.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
             throw new UnauthorizedException("Only admins, teachers and students can read their own grade");
         }
         return this.mapper.toDto(studentCourse);
@@ -65,7 +65,7 @@ public class StudentCourseService {
     @Transactional
     public StudentCourseDto update(Long gradeId, UpdateStudentCourse request, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can update grades");
         }
         StudentCourse studentCourse = this.studentCourseRepository.findById(gradeId)
@@ -78,7 +78,7 @@ public class StudentCourseService {
     @Transactional
     public void delete(Long gradeId, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can update grades");
         }
         this.studentCourseRepository.deleteById(gradeId);
