@@ -1,6 +1,7 @@
 package com.api.student;
 
 import com.api.common.util.JwtUtils;
+import com.api.login.Auth;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;
@@ -24,29 +25,33 @@ public class StudentController {
     }
 
     @PostMapping
-    public StudentDto postStudent(@Valid @RequestBody CreateStudentRequest request) {
-        return studentService.create(request);
+    public StudentDto postStudent(@RequestHeader("Authorization") String token,
+                                  @Valid @RequestBody CreateStudentRequest request) {
+        return studentService.create(request,JwtUtils.toAuth(token));
     }
 
     @GetMapping("/all")
-    public List<StudentDto> getAllStudents() {
-        return studentService.readAll();
+    public List<StudentDto> getAllStudents(@RequestHeader("Authorization") String token) {
+        return studentService.readAll(JwtUtils.toAuth(token));
     }
 
     @GetMapping("/{studentID}")
-    public StudentDto getStudent(@RequestHeader("Authorization") String token, @PathVariable int studentID) {
+    public StudentDto getStudent(@RequestHeader("Authorization") String token,
+                                 @PathVariable int studentID) {
         System.out.println("StudentController.getStudent.token: "+ token);
         return studentService.read(studentID, JwtUtils.toAuth(token));
     }
 
     @PutMapping("/{studentID}")
-    public StudentDto modifyStudent(@PathVariable int studentID, UpdateStudentRequest request) {
-        return studentService.update(studentID, request);
+    public StudentDto modifyStudent(@RequestHeader("Authorization") String token,
+                                    @PathVariable int studentID, UpdateStudentRequest request) {
+        return studentService.update(studentID, request,JwtUtils.toAuth(token));
     }
 
     @DeleteMapping("/{studentID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteStudent(@PathVariable int studentID) {
-        studentService.delete(studentID);
+    public void deleteStudent(@RequestHeader("Authorization") String token,
+                              @PathVariable int studentID) {
+        studentService.delete(studentID,JwtUtils.toAuth(token));
     }
 }
