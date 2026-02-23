@@ -55,7 +55,7 @@ public class StudentLessonService {
     @Transactional
     public StudentLessonDto update(Long attendanceId, UpdateStudentLesson request, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can update attendance");
         }
         StudentLesson attendance = this.studentLessonRepository.findById(attendanceId)
@@ -68,7 +68,7 @@ public class StudentLessonService {
     @Transactional
     public void delete(Long attendanceId, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can delete attendance");
         }
         this.studentLessonRepository.deleteById(attendanceId);
