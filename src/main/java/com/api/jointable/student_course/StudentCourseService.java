@@ -11,6 +11,8 @@ import com.api.student.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class StudentCourseService {
 
@@ -42,6 +44,18 @@ public class StudentCourseService {
         this.studentCourseRepository.save(studentCourse);
 
         return mapper.toDto(studentCourse);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Integer> readStudentIdsByCourse(Long courseId) {
+        if (!courseRepository.existsById(courseId)) {
+            throw new BadRequestException("Invalid course id");
+        }
+
+        return studentCourseRepository.findAllByCourse_CourseID(courseId)
+                .stream()
+                .map(sc -> sc.getStudent().getStudentID())
+                .toList();
     }
 
     @Transactional

@@ -7,7 +7,10 @@ import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/student/grade")
@@ -24,6 +27,11 @@ public class StudentCourseController {
         return this.studentCourseService.create(request);
     }
 
+    @GetMapping("/course/{courseId}/students")
+    public List<Integer> getStudentsOnCourse(@PathVariable Long courseId) {
+        return studentCourseService.readStudentIdsByCourse(courseId);
+    }
+
     @GetMapping("{gradeId}")
     public StudentCourseDto getGrade(@PathVariable Long gradeId) {
         return studentCourseService.read(gradeId);
@@ -35,5 +43,4 @@ public class StudentCourseController {
             @Valid @RequestBody UpdateStudentCourse request) {
         return studentCourseService.update(gradeId, request);
     }
-
 }
