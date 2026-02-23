@@ -1,11 +1,13 @@
 package com.api.jointable.student_course;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
 import com.api.course.CourseRepository;
 import com.api.jointable.student_course.dto.CreateStudentCourse;
 import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_course.dto.UpdateStudentCourse;
+import com.api.login.Auth;
 import com.api.student.Student;
 import com.api.student.StudentRepository;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,12 @@ public class StudentCourseService {
     }
 
     @Transactional
-    public StudentCourseDto create(CreateStudentCourse request) {
+    public StudentCourseDto create(CreateStudentCourse request, Auth auth) {
 
+        if(!auth.getRole().equalsIgnoreCase("admin")
+            || !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can add students to course");
+        }
         StudentCourse studentCourse = mapper.toEntity(request);
 
         Student student = studentRepository.findById(request.getStudentId())
@@ -45,18 +51,36 @@ public class StudentCourseService {
     }
 
     @Transactional
-    public StudentCourseDto read(Long gradeId){
+    public StudentCourseDto read(Long gradeId, Auth auth){
         StudentCourse studentCourse = this.studentCourseRepository.findById(gradeId)
                 .orElseThrow(()-> new BadRequestException("Grade not found"));
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                || !auth.getRole().equalsIgnoreCase("teacher")
+                || !studentCourse.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
+            throw new UnauthorizedException("Only admins, teachers and students can read their own grade");
+        }
         return this.mapper.toDto(studentCourse);
     }
 
     @Transactional
-    public StudentCourseDto update(Long gradeId, UpdateStudentCourse request){
+    public StudentCourseDto update(Long gradeId, UpdateStudentCourse request, Auth auth){
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                || !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can update grades");
+        }
         StudentCourse studentCourse = this.studentCourseRepository.findById(gradeId)
                 .orElseThrow(()-> new BadRequestException("Grade not found"));
         this.mapper.updateEntity(studentCourse,request);
         studentCourse = this.studentCourseRepository.save(studentCourse);
         return this.mapper.toDto(studentCourse);
+    }
+
+    @Transactional
+    public void delete(Long gradeId, Auth auth){
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                || !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can update grades");
+        }
+        this.studentCourseRepository.deleteById(gradeId);
     }
 }
