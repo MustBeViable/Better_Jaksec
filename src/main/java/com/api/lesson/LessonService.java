@@ -27,7 +27,7 @@ public class LessonService {
     @Transactional
     public LessonDto create(CreateLessonRequest request, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-                ||!auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create lessons");
         }
         //Checkers here if needed (like if unique lesson names)
@@ -55,7 +55,7 @@ public class LessonService {
                 ||auth.getRole().equalsIgnoreCase("teacher")){
             Lesson lesson = lessonRepository.getReferenceById(lessonID);
             return lessonMapper.toLessonDto(lesson);
-        }else if(!this.lessonRepository.findLessonsByStudentEmail(auth.getEmail()).isEmpty()){
+        }else if(this.lessonRepository.isStudentEnrolledInLesson(auth.getEmail(),lessonID)){
             return this.lessonMapper.toLessonDto(lessonRepository.getReferenceById(lessonID));
         }else {
             throw new UnauthorizedException("IDK what you broke, this isnt supposed to be thrown");
@@ -65,7 +65,7 @@ public class LessonService {
     @Transactional
     public LessonDto update(Long lessonID, UpdateLessonRequest request, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admin and teacher can update lesson");
         }
 
@@ -85,7 +85,7 @@ public class LessonService {
     @Transactional
     public void delete(Long lessonID, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-                || !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admin and teacher can delete lesson");
         }
         Lesson lesson = lessonRepository.findById(lessonID)

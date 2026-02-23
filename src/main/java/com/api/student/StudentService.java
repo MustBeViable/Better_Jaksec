@@ -87,7 +87,7 @@ public class StudentService {
         Student student = studentRepository.findById(studentID)
                 .orElseThrow(() -> new NotFoundException("Student doesn't exist."));
         if(!auth.getRole().equalsIgnoreCase("admin")
-            || !auth.getEmail().equalsIgnoreCase(student.getEmail())){
+            && !auth.getEmail().equalsIgnoreCase(student.getEmail())){
             throw new UnauthorizedException("Only admin and self can update student");
         }
         studentMapper.updateEntity(student, request);
