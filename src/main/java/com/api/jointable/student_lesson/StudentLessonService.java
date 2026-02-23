@@ -1,10 +1,12 @@
 package com.api.jointable.student_lesson;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
 import com.api.lesson.LessonRepository;
+import com.api.login.Auth;
 import com.api.student.StudentRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,31 +27,51 @@ public class StudentLessonService {
     }
 
     @Transactional
-    public StudentLessonDto create(CreateStudentLesson request){
-        StudentLesson entity = this.mapper.toEntity(request);
+    public StudentLessonDto create(CreateStudentLesson request, Auth auth){
+        StudentLesson attendance = this.mapper.toEntity(request);
         if(this.studentRepository.findById(request.getStudentId()).isPresent())
-            entity.setStudent(this.studentRepository.findById(request.getStudentId()).get());
+            attendance.setStudent(this.studentRepository.findById(request.getStudentId()).get());
         if(this.lessonRepository.findById(request.getLessonId()).isPresent())
-            entity.setLesson(this.lessonRepository.findById(request.getLessonId()).get());
-        this.studentLessonRepository.save(entity);
-        return this.mapper.toDto(entity);
+            attendance.setLesson(this.lessonRepository.findById(request.getLessonId()).get());
+        if(auth.getRole().equalsIgnoreCase("student")
+                && !attendance.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
+            throw new UnauthorizedException("Students can only mark their own attendance");
+        }
+        this.studentLessonRepository.save(attendance);
+        return this.mapper.toDto(attendance);
     }
 
     @Transactional
-    public StudentLessonDto read(Long attendanceId){
-        StudentLesson entity = this.studentLessonRepository.findById(attendanceId)
+    public StudentLessonDto read(Long attendanceId, Auth auth){
+        StudentLesson attendance = this.studentLessonRepository.findById(attendanceId)
                 .orElseThrow(() -> new BadRequestException("Attendance record doesnt exist"));
-        return this.mapper.toDto(entity);
+        if(auth.getRole().equalsIgnoreCase("student")
+                && !attendance.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
+            throw new UnauthorizedException("Students can only read their own attendance");
+        }
+        return this.mapper.toDto(attendance);
     }
 
     @Transactional
-    public StudentLessonDto update(Long attendanceId, UpdateStudentLesson request){
-        StudentLesson entity = this.studentLessonRepository.findById(attendanceId)
+    public StudentLessonDto update(Long attendanceId, UpdateStudentLesson request, Auth auth){
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                || !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can update attendance");
+        }
+        StudentLesson attendance = this.studentLessonRepository.findById(attendanceId)
                 .orElseThrow(() -> new BadRequestException("Attendance record doesnt exist"));
-        this.mapper.updateEntity(entity,request);
-        entity = this.studentLessonRepository.save(entity);
-        return this.mapper.toDto(entity);
+        this.mapper.updateEntity(attendance,request);
+        attendance = this.studentLessonRepository.save(attendance);
+        return this.mapper.toDto(attendance);
     }
 
+    @Transactional
+    public void delete(Long attendanceId, Auth auth){
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                || !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can delete attendance");
+        }
+        this.studentLessonRepository.deleteById(attendanceId);
+    }
 
 }
