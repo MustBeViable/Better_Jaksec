@@ -60,10 +60,22 @@ public class StudentService {
         Student student = this.studentRepository.findById(studentID)
                 .orElseThrow(() -> new BadRequestException("Student doesn't exists."));
 
-        if(!auth.getEmail().equals(student.getEmail()) && !auth.getRole().equalsIgnoreCase("student")){
-            throw new UnauthorizedException("Unauthorized");
+        String role = auth.getRole() == null ? "" : auth.getRole().toLowerCase();
+
+        switch (role) {
+            case "admin":
+            case "teacher":
+                return studentMapper.toDto(student);
+
+            case "student":
+                if (!auth.getEmail().equalsIgnoreCase(student.getEmail())) {
+                    throw new UnauthorizedException("Unauthorized");
+                }
+                return studentMapper.toDto(student);
+
+            default:
+                throw new UnauthorizedException("Invalid token");
         }
-        return studentMapper.toDto(student);
     }
 
     /**
