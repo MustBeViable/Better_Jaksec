@@ -3,7 +3,7 @@
 ## Course
 
 -   **POST** `/course`\
-    auth: admin (frontissa opettaja voi luoda kutssin)
+    auth: admin + teacher
 
 -   **GET** `/course/all`\
     auth: admin + self
@@ -12,10 +12,10 @@
     auth: admin + self
 
 -   **PUT** `/course/:id`\
-    auth: admin (Sama ku post)
+    auth: admin + teacher
 
 -   **DELETE** `/course/:id`\
-    auth: admin (Sama ku post)
+    auth: admin + teacher
 
 ## StudentCourse / Grade
 
