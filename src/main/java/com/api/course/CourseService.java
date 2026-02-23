@@ -43,7 +43,7 @@ public class CourseService {
     @Transactional
     public CourseDto create(CreateCourseRequest request, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-            ||!auth.getRole().equalsIgnoreCase("teacher")){
+            && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create courses");
         }
 
@@ -155,7 +155,7 @@ public class CourseService {
     public CourseDto update(Long courseId, UpdateCourseRequest request, Auth auth) {
 
         if(!auth.getRole().equalsIgnoreCase("admin")
-                ||!auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers cant edit courses");
         }
 
@@ -217,7 +217,7 @@ public class CourseService {
     public void delete(Long courseId, Auth auth){
 
         if(!auth.getRole().equalsIgnoreCase("admin")
-                ||!auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers cant edit courses");
         }
 
