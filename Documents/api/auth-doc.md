@@ -28,7 +28,7 @@
 -   **PUT** `/grade/:id`\
     auth: admin + teacher
 
--   **DELETE** `/grade/:id` **TODO**\
+-   **DELETE** `/grade/:id`\
     auth: admin\
     
 ## Lesson
@@ -51,6 +51,9 @@
 ## StudentLesson / Attendance
 
 -   **POST** `/attendance`\
+    auth: any
+
+-   **GET** `/attendance/:id`\
     auth: any
 
 -   **GET** `/attendance/all` **TODO**\
