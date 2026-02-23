@@ -23,7 +23,7 @@
     auth: admin + teacher
 
 -   **GET** `/grade/:id`\
-    auth: admin + self
+    auth: any
 
 -   **PUT** `/grade/:id`\
     auth: admin + teacher
