@@ -1,11 +1,13 @@
 package com.api.jointable.student_course;
 
+import com.api.common.util.JwtUtils;
 import com.api.jointable.student_course.dto.CreateStudentCourse;
 import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_course.dto.UpdateStudentCourse;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
+import com.api.login.Auth;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,8 +25,9 @@ public class StudentCourseController {
     }
 
     @PostMapping
-    public StudentCourseDto postGrade(@Valid @RequestBody CreateStudentCourse request) {
-        return this.studentCourseService.create(request);
+    public StudentCourseDto postGrade(@RequestHeader("Authorization") String token,
+                                      @Valid @RequestBody CreateStudentCourse request) {
+        return this.studentCourseService.create(request, JwtUtils.toAuth(token));
     }
 
     @GetMapping("/course/{courseId}/students")
@@ -33,14 +36,21 @@ public class StudentCourseController {
     }
 
     @GetMapping("{gradeId}")
-    public StudentCourseDto getGrade(@PathVariable Long gradeId) {
-        return studentCourseService.read(gradeId);
+    public StudentCourseDto getGrade(@RequestHeader("Authorization") String token,
+                                     @PathVariable Long gradeId) {
+        return studentCourseService.read(gradeId, JwtUtils.toAuth(token));
     }
 
     @PutMapping("{gradeId}")
-    public StudentCourseDto putGrade(
+    public StudentCourseDto putGrade(@RequestHeader("Authorization") String token,
             @PathVariable Long gradeId,
             @Valid @RequestBody UpdateStudentCourse request) {
-        return studentCourseService.update(gradeId, request);
+        return studentCourseService.update(gradeId, request, JwtUtils.toAuth(token));
+    }
+
+    @DeleteMapping("{gradeId}")
+    public void deleteGrade(@RequestHeader("Authorization") String token,
+                            @PathVariable Long gradeId){
+        this.studentCourseService.delete(gradeId, JwtUtils.toAuth(token));
     }
 }

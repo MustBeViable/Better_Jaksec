@@ -1,5 +1,6 @@
 package com.api.lesson;
 
+import com.api.common.util.JwtUtils;
 import com.api.lesson.dto.CreateLessonRequest;
 import com.api.lesson.dto.LessonDto;
 import com.api.lesson.dto.UpdateLessonRequest;
@@ -17,27 +18,29 @@ public class LessonController {
     }
 
     @PostMapping
-    public LessonDto postLesson(@Valid @RequestBody CreateLessonRequest request) {
-        return lessonService.create(request);
+    public LessonDto postLesson(@RequestHeader("Authorization") String token,
+                                @Valid @RequestBody CreateLessonRequest request) {
+        return lessonService.create(request, JwtUtils.toAuth(token));
     }
 
     @GetMapping("/{lessonID}")
-    public LessonDto getLesson(@PathVariable Long lessonID) {
-        return lessonService.read(lessonID);
+    public LessonDto getLesson(@RequestHeader("Authorization") String token,
+                               @PathVariable Long lessonID) {
+        return lessonService.read(lessonID,JwtUtils.toAuth(token));
     }
 
     @PutMapping("/{lessonID}")
-    public LessonDto putLesson(
+    public LessonDto putLesson(@RequestHeader("Authorization") String token,
             @PathVariable Long lessonID,
-            @Valid @RequestBody UpdateLessonRequest request
-    ) {
-        return lessonService.update(lessonID, request);
+            @Valid @RequestBody UpdateLessonRequest request) {
+        return lessonService.update(lessonID, request,JwtUtils.toAuth(token));
     }
 
     @DeleteMapping("/{lessonID}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteLesson(@PathVariable Long lessonID) {
-        lessonService.delete(lessonID);
+    public void deleteLesson(@RequestHeader("Authorization") String token,
+            @PathVariable Long lessonID) {
+        lessonService.delete(lessonID,JwtUtils.toAuth(token));
     }
 
 }

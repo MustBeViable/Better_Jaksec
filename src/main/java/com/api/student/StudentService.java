@@ -1,5 +1,6 @@
 package com.api.student;
 
+import com.api.common.error.exceptions.NotFoundException;
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.login.Auth;
 import com.api.login.LoginService;
@@ -33,10 +34,14 @@ public class StudentService {
     /**
      *
      * @param request
+     * @param auth
      * @return
      */
     @Transactional
-    public StudentDto create(CreateStudentRequest request) {
+    public StudentDto create(CreateStudentRequest request, Auth auth) {
+        if(!auth.getRole().equalsIgnoreCase("admin")){
+            throw new UnauthorizedException("Only admin can create a student");
+        }
         if (!loginService.isEmailAvailable(request.getEmail())) {
             throw new BadRequestException("User with this email already exists.");
         }
@@ -46,7 +51,10 @@ public class StudentService {
     }
 
     @Transactional
-    public List<StudentDto> readAll() {
+    public List<StudentDto> readAll(Auth auth) {
+        if(!auth.getRole().equalsIgnoreCase("admin")){
+            throw new UnauthorizedException("Only admin can fetch all students");
+        }
         return studentRepository.findAll()
                 .stream()
                 .map(studentMapper::toDto)
@@ -86,12 +94,14 @@ public class StudentService {
      */
 
     @Transactional
-    public StudentDto update(int studentID, UpdateStudentRequest request) {
+    public StudentDto update(int studentID, UpdateStudentRequest request, Auth auth) {
 
         Student student = studentRepository.findById(studentID)
-                .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
-
-
+                .orElseThrow(() -> new NotFoundException("Student doesn't exist."));
+        if(!auth.getRole().equalsIgnoreCase("admin")
+            && !auth.getEmail().equalsIgnoreCase(student.getEmail())){
+            throw new UnauthorizedException("Only admin and self can update student");
+        }
         studentMapper.updateEntity(student, request);
         studentRepository.save(student);
 
@@ -99,10 +109,12 @@ public class StudentService {
     }
 
     @Transactional
-    public void delete(int studentID) {
+    public void delete(int studentID, Auth auth) {
+        if(!auth.getRole().equalsIgnoreCase("admin")){
+            throw new UnauthorizedException("Only admin can delete student");
+        }
         Student student = studentRepository.findById(studentID)
-                .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
-
+                .orElseThrow(() -> new NotFoundException("Student doesn't exist."));
         studentRepository.delete(student);
     }
 }

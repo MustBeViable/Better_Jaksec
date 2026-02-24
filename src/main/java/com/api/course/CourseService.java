@@ -42,6 +42,11 @@ public class CourseService {
 
     @Transactional
     public CourseDto create(CreateCourseRequest request, Auth auth) {
+        if(!auth.getRole().equalsIgnoreCase("admin")
+            && !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers can create courses");
+        }
+
         System.out.println("CourseService.create.auth: " + auth);
         Course course = mapper.toEmptyCourseEntity(request);
 
@@ -64,10 +69,6 @@ public class CourseService {
         }
 
         course = courseRepository.save(course);
-
-        if(!auth.getRole().equalsIgnoreCase("admin")){
-            throw new UnauthorizedException("Only admins can create courses");
-        }
 
         return mapper.toCourseDto(course);
     }
@@ -108,20 +109,17 @@ public class CourseService {
                     .map(mapper::toCourseDto)
                     .toList();
         }else{
-            switch (auth.getRole()){
-                case "student":
-                    return courseRepository.findCoursesByStudentEmail(auth.getEmail())
-                            .stream()
-                            .map(mapper::toCourseDto)
-                            .toList();
-                case "teacher":
-                    return courseRepository.findCoursesByTeacherEmail(auth.getEmail())
-                            .stream()
-                            .map(mapper::toCourseDto)
-                            .toList();
-                default:
-                    throw new UnauthorizedException("Invalid token");
-            }
+            return switch (auth.getRole()) {
+                case "student" -> courseRepository.findCoursesByStudentEmail(auth.getEmail())
+                        .stream()
+                        .map(mapper::toCourseDto)
+                        .toList();
+                case "teacher" -> courseRepository.findCoursesByTeacherEmail(auth.getEmail())
+                        .stream()
+                        .map(mapper::toCourseDto)
+                        .toList();
+                default -> throw new UnauthorizedException("Invalid token");
+            };
         }
     }
 
@@ -154,10 +152,19 @@ public class CourseService {
         return this.mapper.toCourseDto(course);
     }
 
-    public CourseDto update(Long courseId, UpdateCourseRequest request) {
+    public CourseDto update(Long courseId, UpdateCourseRequest request, Auth auth) {
+
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                && !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers cant edit courses");
+        }
 
         Course course = this.courseRepository.findById(courseId)
                 .orElseThrow(() -> new BadRequestException("Course not found"));
+
+        if(course.getTeachers().stream().filter(t -> t.getEmail().equalsIgnoreCase(auth.getEmail())).toList().isEmpty()){
+            throw new UnauthorizedException("Only teachers of this course can modify it");
+        }
 
         this.mapper.updateCourseEntity(course, request);
 
@@ -207,9 +214,18 @@ public class CourseService {
     }
 
     @Transactional
-    public void delete(Long courseId){
-        this.courseRepository.findById(courseId)
+    public void delete(Long courseId, Auth auth){
+
+        if(!auth.getRole().equalsIgnoreCase("admin")
+                && !auth.getRole().equalsIgnoreCase("teacher")){
+            throw new UnauthorizedException("Only admins and teachers cant edit courses");
+        }
+
+        Course course = this.courseRepository.findById(courseId)
                 .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
+        if(course.getTeachers().stream().filter(t -> t.getEmail().equalsIgnoreCase(auth.getEmail())).toList().isEmpty()){
+            throw new UnauthorizedException("Only teachers of this course can delete it");
+        }
         this.courseRepository.deleteById(courseId);
     }
 }
