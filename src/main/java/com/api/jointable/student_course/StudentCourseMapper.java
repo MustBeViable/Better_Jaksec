@@ -22,7 +22,8 @@ public class StudentCourseMapper {
     }
 
     public StudentCourseDto toDto(StudentCourse entity){
-        return new StudentCourseDto(entity.getStudent().getStudentID(),
+        return new StudentCourseDto(entity.getId(),
+                entity.getStudent().getStudentID(),
                 entity.getCourse().getCourseID(),
                 entity.getGrade());
     }

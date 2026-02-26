@@ -5,16 +5,26 @@ import com.api.student.Student;
 
 public class StudentCourseDto {
 
+    private Long gradeId;
     private Integer studentId;
     private Long courseId;
     private Integer grade;
 
     public StudentCourseDto(){}
 
-    public StudentCourseDto(Integer studentId, Long courseId, Integer grade) {
+    public StudentCourseDto(Long gradeId,Integer studentId, Long courseId, Integer grade) {
+        this.gradeId = gradeId;
         this.studentId = studentId;
         this.courseId = courseId;
         this.grade = grade;
+    }
+
+    public Long getGradeId() {
+        return gradeId;
+    }
+
+    public void setGradeId(Long gradeId) {
+        this.gradeId = gradeId;
     }
 
     public Integer getStudentId() {
