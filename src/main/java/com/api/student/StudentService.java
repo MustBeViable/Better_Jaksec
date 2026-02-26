@@ -52,13 +52,16 @@ public class StudentService {
 
     @Transactional
     public List<StudentDto> readAll(Auth auth) {
-        if(!auth.getRole().equalsIgnoreCase("admin")){
+        if(auth.getRole().equalsIgnoreCase("admin") || auth.getRole().equalsIgnoreCase("teacher")){
+            return studentRepository.findAll()
+                    .stream()
+                    .map(studentMapper::toDto)
+                    .toList();
+
+        }
+        else {
             throw new UnauthorizedException("Only admin can fetch all students");
         }
-        return studentRepository.findAll()
-                .stream()
-                .map(studentMapper::toDto)
-                .toList();
     }
 
     @Transactional
