@@ -5,11 +5,13 @@ import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
 import com.api.course.CourseRepository;
 import com.api.jointable.student_course.dto.CreateStudentCourse;
+import com.api.jointable.student_course.dto.DeleteFromCourseRequest;
 import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_course.dto.UpdateStudentCourse;
 import com.api.login.Auth;
 import com.api.student.Student;
 import com.api.student.StudentRepository;
+import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,11 +92,11 @@ public class StudentCourseService {
     }
 
     @Transactional
-    public void delete(Long gradeId, Auth auth){
+    public void delete(DeleteFromCourseRequest request, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
                 && !auth.getRole().equalsIgnoreCase("teacher")){
-            throw new UnauthorizedException("Only admins and teachers can update grades");
+            throw new UnauthorizedException("Only admins and teachers can delete from course");
         }
-        this.studentCourseRepository.deleteById(gradeId);
+        this.studentCourseRepository.deleteFromCourse(request.getStudentId(),request.getCourseId());
     }
 }

@@ -224,4 +224,15 @@ echo "Fetching Course as Teacher..."
 curl -s "$BASE_URL/course/$courseID" \
   -H "Authorization: Bearer $teacher_token" | jq
 
+echo "Admin deleting grade (should succeed)..."
+admin_delete_resp=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE "$BASE_URL/student/grade" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
+  -d "{
+        \"studentId\": $studentID,
+        \"courseId\": $courseID
+      }")
+
+echo "Admin delete HTTP status: $admin_delete_resp"
+
 echo "===== API TEST COMPLETE ====="
