@@ -8,8 +8,10 @@ import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
 import com.api.lesson.LessonRepository;
 import com.api.login.Auth;
 import com.api.student.StudentRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Service
 public class StudentLessonService {
@@ -66,6 +68,7 @@ public class StudentLessonService {
     }
 
     @Transactional
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(Long attendanceId, Auth auth){
         if(!auth.getRole().equalsIgnoreCase("admin")
                 && !auth.getRole().equalsIgnoreCase("teacher")){
