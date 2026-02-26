@@ -50,6 +50,7 @@ public class StudentCourseController {
     }
 
     @DeleteMapping("")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteGrade(@RequestHeader("Authorization") String token,
                             @Valid @RequestBody DeleteFromCourseRequest request){
         this.studentCourseService.delete(request, JwtUtils.toAuth(token));
