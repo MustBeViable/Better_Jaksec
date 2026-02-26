@@ -55,7 +55,7 @@ public class StudentMapper {
             System.out.println("toStudentDto"+student.getCourses());
             Set<StudentCourseDto> grades = student.getCourses()
                     .stream()
-                    .map(g -> new StudentCourseDto(
+                    .map(g -> new StudentCourseDto(g.getId(),
                             g.getStudent().getStudentID(),
                             g.getCourse().getCourseID(),
                             g.getGrade()
