@@ -8,16 +8,19 @@ RUN mvn -B -q -e -DskipTests dependency:go-offline
 
 # Copy source
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn clean package -Dmaven.test.skip=true
 
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-
+# Install MariaDB client
+RUN apt-get update && apt-get install -y mariadb-client && rm -rf /var/lib/apt/lists/*
 # Copy jar from builder
 COPY --from=builder /app/target/*.jar app.jar
+COPY wait-for-db.sh wait-for-db.sh
+RUN chmod +x wait-for-db.sh
 
 # Expose Spring port
 EXPOSE 8080
 
 # Run app
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["./wait-for-db.sh", "db", "java", "-jar", "app.jar"]
