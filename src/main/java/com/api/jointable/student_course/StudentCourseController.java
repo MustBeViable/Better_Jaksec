@@ -2,6 +2,7 @@ package com.api.jointable.student_course;
 
 import com.api.common.util.JwtUtils;
 import com.api.jointable.student_course.dto.CreateStudentCourse;
+import com.api.jointable.student_course.dto.DeleteFromCourseRequest;
 import com.api.jointable.student_course.dto.StudentCourseDto;
 import com.api.jointable.student_course.dto.UpdateStudentCourse;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
@@ -48,9 +49,9 @@ public class StudentCourseController {
         return studentCourseService.update(gradeId, request, JwtUtils.toAuth(token));
     }
 
-    @DeleteMapping("{gradeId}")
+    @DeleteMapping("")
     public void deleteGrade(@RequestHeader("Authorization") String token,
-                            @PathVariable Long gradeId){
-        this.studentCourseService.delete(gradeId, JwtUtils.toAuth(token));
+                            @Valid @RequestBody DeleteFromCourseRequest request){
+        this.studentCourseService.delete(request, JwtUtils.toAuth(token));
     }
 }
