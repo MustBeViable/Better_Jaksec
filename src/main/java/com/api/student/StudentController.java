@@ -44,7 +44,9 @@ public class StudentController {
 
     @PutMapping("/{studentID}")
     public StudentDto modifyStudent(@RequestHeader("Authorization") String token,
-                                    @PathVariable int studentID, UpdateStudentRequest request) {
+                                    @PathVariable int studentID,
+                                    @RequestBody @Valid UpdateStudentRequest request) {
+        System.out.println("StudentController.modifyStudent.request: " + request);
         return studentService.update(studentID, request,JwtUtils.toAuth(token));
     }
 

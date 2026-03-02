@@ -122,4 +122,18 @@ public class Student extends User {
     public void setLessons(Set<StudentLesson> lessons) {
         this.lessons = lessons;
     }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "studentID=" + studentID +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", assignments=" + assignments +
+                ", courses=" + courses +
+                ", lessons=" + lessons +
+                '}';
+    }
 }

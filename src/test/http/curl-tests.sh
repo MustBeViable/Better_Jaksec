@@ -235,4 +235,54 @@ admin_delete_resp=$(curl -s -o /dev/null -w "%{http_code}" -X DELETE "$BASE_URL/
 
 echo "Admin delete HTTP status: $admin_delete_resp"
 
+# =========================
+# CHANGE PASSWORD (ADMIN)
+# =========================
+# =========================
+# ADMIN UPDATES STUDENT PASSWORD
+# =========================
+# Admin updates student password
+admin_new_student_pass="studentadminpass_${UNIQUE_SUFFIX}"
+update_resp=$(curl -s -X PUT "$BASE_URL/student/$studentID" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $admin_token" \
+  -d "{
+        \"password\": \"$admin_new_student_pass\",
+        \"firstName\": \"UpdatedName\"
+      }")
+echo "$update_resp" | jq
+
+# Now log in as student with new password
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"$studentEmail\",
+        \"password\": \"$admin_new_student_pass\"
+      }")
+echo $login_resp | jq
+student_token=$(echo "$login_resp" | jq -r '.token')
+echo "New Student Token after Admin Password Change: $student_token"
+# =========================
+# CHANGE PASSWORD (STUDENT)
+# =========================
+echo "Student Changing Own Password..."
+student_new_pass="studentnewpass_${UNIQUE_SUFFIX}"
+change_resp=$(curl -s -X PUT "$BASE_URL/student/$studentID" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $student_token" \
+  -d "{
+        \"password\": \"$student_new_pass\"
+      }")
+echo "$change_resp" | jq
+
+echo "Logging In Student With New Password..."
+login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
+  -H "Content-Type: application/json" \
+  -d "{
+        \"email\": \"$studentEmail\",
+        \"password\": \"$student_new_pass\"
+      }")
+student_token=$(echo "$login_resp" | jq -r '.token')
+echo "New Student Token: $student_token"
+
 echo "===== API TEST COMPLETE ====="

@@ -11,6 +11,15 @@ public class UpdateStudentRequest {
     private String email;
     private String password;
 
+    public UpdateStudentRequest(String firstName, String lastName, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+    }
+
+    public UpdateStudentRequest(){}
+
     public String getFirstName() {
         return firstName;
     }
@@ -42,5 +51,15 @@ public class UpdateStudentRequest {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "UpdateStudentRequest{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
