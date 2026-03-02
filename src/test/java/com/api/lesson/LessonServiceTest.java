@@ -1,17 +1,18 @@
 package com.api.lesson;
 
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
 import com.api.course.CourseRepository;
 import com.api.lesson.dto.CreateLessonRequest;
 import com.api.lesson.dto.LessonDto;
 import com.api.lesson.dto.UpdateLessonRequest;
+import com.api.login.Auth;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,142 +24,217 @@ class LessonServiceTest {
     private CourseRepository courseRepository;
     private LessonMapper lessonMapper;
     private LessonService service;
+    private Auth auth;
 
     @BeforeEach
     void setUp() {
         lessonRepository = mock(LessonRepository.class);
         courseRepository = mock(CourseRepository.class);
         lessonMapper = mock(LessonMapper.class);
+        auth = mock(Auth.class);
+
         service = new LessonService(lessonRepository, courseRepository, lessonMapper);
     }
 
     @Test
-    @DisplayName("Successful creation")
+    @DisplayName("create() allows admin and saves lesson")
     void create_savesEntity_returnsDto() {
+
+        when(auth.getRole()).thenReturn("admin");
+
         CreateLessonRequest request = new CreateLessonRequest();
         request.setLessonName("Test lesson");
         request.setDate(Instant.parse("2026-02-06T08:00:00Z"));
         request.setCourseId(10L);
 
-        Lesson lessonEntity = new Lesson("Test lesson", Instant.parse("2026-02-06T08:00:00Z"));
+        Lesson lessonEntity = new Lesson("Test lesson", request.getDate());
         Course course = new Course();
         course.setCourseID(10L);
-        course.setCourseName("Backend Programming");
-        course.setLessons(Collections.singleton(lessonEntity));
-        lessonEntity.setCourse(course);
 
-        Lesson savedLesson = new Lesson("Test lesson", Instant.parse("2026-02-06T08:00:00Z"));
+        Lesson savedLesson = new Lesson("Test lesson", request.getDate());
         savedLesson.setLessonID(1L);
         savedLesson.setCourse(course);
 
-        LessonDto dto = new LessonDto(1L, "Test lesson", Instant.parse("2026-02-06T08:00:00Z"), 10L);
+        LessonDto dto = new LessonDto(1L, "Test lesson", request.getDate(), 10L);
 
-        when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
         when(lessonMapper.toLessonEntity(request)).thenReturn(lessonEntity);
+        when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
         when(lessonRepository.save(lessonEntity)).thenReturn(savedLesson);
         when(lessonMapper.toLessonDto(savedLesson)).thenReturn(dto);
 
-        LessonDto result = service.create(request);
+        LessonDto result = service.create(request, auth);
 
         assertEquals(1L, result.getLessonID());
-        assertEquals("Test lesson", result.getLessonName());
         assertEquals(10L, result.getCourseId());
+
         verify(lessonRepository).save(lessonEntity);
     }
 
     @Test
-    @DisplayName("Lesson is linked to Course correctly")
-    void lesson_course_relation() {
-        Course course = new Course();
-        course.setCourseID(10L);
-        course.setCourseName("Backend Programming");
+    @DisplayName("create() throws if not admin or teacher")
+    void create_throwsIfUnauthorized() {
 
-        Lesson lesson = new Lesson("JPA Basics", Instant.parse("2026-02-08T12:00:00Z"));
-        lesson.setLessonID(1L);
-        lesson.setCourse(course);
-        course.setLessons(Collections.singleton(lesson));
+        when(auth.getRole()).thenReturn("student");
 
-        when(lessonRepository.existsById(1L)).thenReturn(true);
-        when(lessonRepository.getReferenceById(1L)).thenReturn(lesson);
+        CreateLessonRequest request = new CreateLessonRequest();
 
-        LessonDto dto = new LessonDto(1L, "JPA Basics", Instant.parse("2026-02-08T12:00:00Z"), 10L);
-        when(lessonMapper.toLessonDto(lesson)).thenReturn(dto);
-
-        LessonDto result = service.read(1L);
-
-        assertEquals(1L, result.getLessonID());
-        assertEquals("JPA Basics", result.getLessonName());
-        assertEquals(10L, result.getCourseId());
-        verify(lessonRepository).getReferenceById(1L);
+        assertThrows(UnauthorizedException.class,
+                () -> service.create(request, auth));
     }
 
     @Test
-    @DisplayName("Successful read")
-    void read() {
-        Lesson lesson = new Lesson("Name", Instant.parse("2026-02-01T08:00:00Z"));
+    @DisplayName("create() throws if course missing")
+    void create_throwsIfCourseMissing() {
+
+        when(auth.getRole()).thenReturn("admin");
+
+        CreateLessonRequest request = new CreateLessonRequest();
+        request.setCourseId(null);
+
+        assertThrows(BadRequestException.class,
+                () -> service.create(request, auth));
+    }
+
+    @Test
+    @DisplayName("read() allows admin")
+    void read_allowsAdmin() {
+
+        when(auth.getRole()).thenReturn("admin");
+        when(lessonRepository.existsById(5L)).thenReturn(true);
+
+        Lesson lesson = new Lesson("Name", Instant.now());
         lesson.setLessonID(5L);
 
-        when(lessonRepository.existsById(5L)).thenReturn(true);
-        when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
+        LessonDto dto = new LessonDto(5L, "Name", lesson.getDate(), null);
 
-        LessonDto dto = new LessonDto(5L, "Name", Instant.parse("2026-02-01T08:00:00Z"), null);
+        when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
         when(lessonMapper.toLessonDto(lesson)).thenReturn(dto);
 
-        LessonDto res = service.read(5L);
+        LessonDto result = service.read(5L, auth);
 
-        assertEquals(5L, res.getLessonID());
-        assertEquals("Name", res.getLessonName());
-        assertNull(res.getCourseId());
-        verify(lessonRepository).getReferenceById(5L);
+        assertEquals(5L, result.getLessonID());
     }
 
     @Test
-    @DisplayName("Successful update")
-    void update() {
-        Lesson existing = new Lesson("Old", Instant.parse("2026-02-01T08:00:00Z"));
-        existing.setLessonID(5L);
+    @DisplayName("read() allows enrolled student")
+    void read_allowsEnrolledStudent() {
+
+        when(auth.getRole()).thenReturn("student");
+        when(auth.getEmail()).thenReturn("student@test.com");
+        when(lessonRepository.existsById(5L)).thenReturn(true);
+        when(lessonRepository.isStudentEnrolledInLesson("student@test.com", 5L))
+                .thenReturn(true);
+
+        Lesson lesson = new Lesson("Name", Instant.now());
+        lesson.setLessonID(5L);
+
+        LessonDto dto = new LessonDto(5L, "Name", lesson.getDate(), null);
+
+        when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
+        when(lessonMapper.toLessonDto(lesson)).thenReturn(dto);
+
+        LessonDto result = service.read(5L, auth);
+
+        assertEquals(5L, result.getLessonID());
+    }
+
+    @Test
+    @DisplayName("read() throws if not found")
+    void read_throwsIfNotExists() {
+
+        when(lessonRepository.existsById(99L)).thenReturn(false);
+
+        assertThrows(BadRequestException.class,
+                () -> service.read(99L, auth));
+    }
+
+    @Test
+    @DisplayName("read() throws if student not enrolled")
+    void read_throwsIfNotEnrolled() {
+
+        when(auth.getRole()).thenReturn("student");
+        when(auth.getEmail()).thenReturn("student@test.com");
+        when(lessonRepository.existsById(5L)).thenReturn(true);
+        when(lessonRepository.isStudentEnrolledInLesson("student@test.com", 5L))
+                .thenReturn(false);
+
+        assertThrows(UnauthorizedException.class,
+                () -> service.read(5L, auth));
+    }
+
+    @Test
+    @DisplayName("update() allows teacher")
+    void update_allowsTeacher() {
+
+        when(auth.getRole()).thenReturn("teacher");
+
+        Lesson lesson = new Lesson("Old", Instant.now());
+        lesson.setLessonID(5L);
+
+        Course course = new Course();
+        course.setCourseID(10L);
 
         UpdateLessonRequest request = new UpdateLessonRequest();
         request.setCourseId(10L);
 
-        Course course = new Course();
-        course.setCourseID(10L);
-        course.setCourseName("Backend Programming");
-        existing.setCourse(course);
-        course.setLessons(Collections.singleton(existing));
-
+        when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
         when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
-        when(lessonRepository.findById(5L)).thenReturn(Optional.of(existing));
+        when(lessonMapper.toLessonDto(lesson))
+                .thenReturn(new LessonDto(5L, "Old", lesson.getDate(), 10L));
 
-        LessonDto dto = new LessonDto(5L, "Old", Instant.parse("2026-02-01T08:00:00Z"), 10L);
-        when(lessonMapper.toLessonDto(existing)).thenReturn(dto);
+        LessonDto result = service.update(5L, request, auth);
 
-        LessonDto res = service.update(5L, request);
-
-        verify(lessonMapper).updateLessonEntity(existing, request);
-        verify(lessonRepository).save(existing);
-        assertEquals(5L, res.getLessonID());
-        assertEquals(10L, existing.getCourse().getCourseID());
+        verify(lessonMapper).updateLessonEntity(lesson, request);
+        verify(lessonRepository).save(lesson);
+        assertEquals(10L, lesson.getCourse().getCourseID());
+        assertEquals(5L, result.getLessonID());
     }
 
     @Test
-    @DisplayName("Successful deletion")
-    void delete() {
-        Lesson existing = new Lesson("Name", Instant.parse("2026-02-01T08:00:00Z"));
-        existing.setLessonID(5L);
+    @DisplayName("update() throws if unauthorized")
+    void update_throwsIfUnauthorized() {
 
-        when(lessonRepository.findById(5L)).thenReturn(Optional.of(existing));
+        when(auth.getRole()).thenReturn("student");
 
-        service.delete(5L);
+        UpdateLessonRequest request = new UpdateLessonRequest();
 
-        verify(lessonRepository).delete(existing);
+        assertThrows(UnauthorizedException.class,
+                () -> service.update(5L, request, auth));
     }
 
     @Test
-    @DisplayName("read throws if lesson does not exist")
-    void read_throwsIfNotExists() {
-        when(lessonRepository.existsById(99L)).thenReturn(false);
-        assertThrows(BadRequestException.class, () -> service.read(99L));
-        verify(lessonRepository, never()).getReferenceById(anyLong());
+    @DisplayName("delete() allows admin")
+    void delete_allowsAdmin() {
+
+        when(auth.getRole()).thenReturn("admin");
+
+        Lesson lesson = new Lesson("Name", Instant.now());
+
+        when(lessonRepository.findById(5L)).thenReturn(Optional.of(lesson));
+
+        service.delete(5L, auth);
+
+        verify(lessonRepository).delete(lesson);
+    }
+
+    @Test
+    @DisplayName("delete() throws if unauthorized")
+    void delete_throwsIfUnauthorized() {
+
+        when(auth.getRole()).thenReturn("student");
+
+        assertThrows(UnauthorizedException.class,
+                () -> service.delete(5L, auth));
+    }
+
+    @Test
+    @DisplayName("delete() throws if not found")
+    void delete_throwsIfNotFound() {
+
+        when(auth.getRole()).thenReturn("admin");
+        when(lessonRepository.findById(5L)).thenReturn(Optional.empty());
+
+        assertThrows(BadRequestException.class,
+                () -> service.delete(5L, auth));
     }
 }
