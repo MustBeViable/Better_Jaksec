@@ -72,11 +72,16 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker image..."
-                sh "${DOCKER_CMD} build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                echo "Building multi-arch Docker image..."
+                sh """
+                    ${DOCKER_CMD} buildx create --use --name mybuilder || true
+                    ${DOCKER_CMD} buildx build \
+                        --platform linux/amd64,linux/arm64,linux/arm/v7 \
+                        -t ${DOCKER_IMAGE}:${DOCKER_TAG} \
+                        --push .
+                """
             }
         }
-
         stage('Push to Docker Hub') {
             steps {
                 echo "Pushing Docker image to Docker Hub..."
