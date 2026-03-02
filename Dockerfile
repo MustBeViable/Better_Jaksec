@@ -12,4 +12,5 @@ WORKDIR /app
 COPY --from=builder /app/target/Better_Jaksec-1.0-SNAPSHOT.jar app.jar
 COPY wait-for-db.sh ./wait-for-db.sh
 RUN chmod +x ./wait-for-db.sh
+COPY init.sql ./init.sql
 CMD ["java","-jar","app.jar"]
