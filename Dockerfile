@@ -10,6 +10,6 @@ FROM eclipse-temurin:21-jdk
 RUN apt-get update && apt-get install -y default-mysql-client && rm -rf /var/lib/apt/lists/*
 WORKDIR /app
 COPY --from=builder /app/target/Better_Jaksec-1.0-SNAPSHOT.jar app.jar
-COPY wait-for-db.sh /app/wait-for-db.sh
-RUN chmod +x /app/wait-for-db.sh
+COPY wait-for-db.sh ./wait-for-db.sh
+RUN chmod +x ./wait-for-db.sh
 CMD ["java","-jar","app.jar"]
