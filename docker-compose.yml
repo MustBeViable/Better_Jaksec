@@ -16,7 +16,7 @@ services:
       - db_data:/var/lib/mysql
 
   api:
-    build: .
+    image: leevivl/better-jaksec-api:latest
     container_name: spring-api
     depends_on:
       - db
@@ -26,6 +26,14 @@ services:
       SPRING_DATASOURCE_PASSWORD: apppass
     ports:
       - "8081:8080"
-
+    entrypoint:
+      - /app/wait-for-db.sh
+      - db
+      - --timeout
+      - "30"
+      - --
+      - java
+      - -jar
+      - /app/app.jar
 volumes:
   db_data:

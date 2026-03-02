@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     environment {
+        PATH = "/opt/homebrew/bin:${env.PATH}"
+        DOCKER_CMD = "/opt/homebrew/bin/docker"
         DOCKER_IMAGE = "leevivl/better-jaksec-api"
         DOCKER_TAG = "latest"
         DOCKER_CREDENTIALS_ID = "docker-pat"
@@ -38,13 +40,15 @@ pipeline {
                 echo "Generating JaCoCo coverage report..."
                 sh 'mvn jacoco:report'
             }
-            post {
-                always {
-                    jacoco execPattern: 'target/jacoco.exec',
-                           classPattern: 'target/classes',
-                           sourcePattern: 'src/main/java',
-                           exclusionPattern: ''
-                }
+        }
+
+        stage('Copy JaCoCo to Server') {
+            steps {
+                echo "Copying JaCoCo to server ${REMOTE_HOST}"
+                sh """
+                    chmod 600 ${SSH_KEY_PATH}
+                    scp -i ${SSH_KEY_PATH} -o StrictHostKeyChecking=no -r target/site ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}
+                """
             }
         }
 
@@ -55,25 +59,35 @@ pipeline {
             }
         }
 
+        stage('Docker Login') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: "${DOCKER_CREDENTIALS_ID}",
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS')]) {
+                    sh "${DOCKER_CMD} login -u $DOCKER_USER --password-stdin <<< $DOCKER_PASS"
+                }
+            }
+        }
+
         stage('Build Docker Image') {
             steps {
                 echo "Building Docker image..."
-                sh "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                sh "${DOCKER_CMD} build -t ${DOCKER_IMAGE}:${DOCKER_TAG} ."
             }
         }
 
         stage('Push to Docker Hub') {
             steps {
-                echo "Logging into Docker Hub..."
+                echo "Pushing Docker image to Docker Hub..."
                 withCredentials([usernamePassword(
                     credentialsId: "${DOCKER_CREDENTIALS_ID}",
                     usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS'
-                )]) {
+                    passwordVariable: 'DOCKER_PASS')]) {
                     sh """
-                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                        docker push ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        docker logout
+                        ${DOCKER_CMD} login -u $DOCKER_USER --password-stdin <<< $DOCKER_PASS
+                        ${DOCKER_CMD} push ${DOCKER_IMAGE}:${DOCKER_TAG}
+                        ${DOCKER_CMD} logout
                     """
                 }
             }
