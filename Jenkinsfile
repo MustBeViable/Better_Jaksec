@@ -70,29 +70,23 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build & Push Multi-Arch Docker Image') {
             steps {
-                echo "Building multi-arch Docker image..."
-                sh """
-                    ${DOCKER_CMD} buildx create --use --name mybuilder || true
-                    ${DOCKER_CMD} buildx build \
-                        --platform linux/amd64,linux/arm64,linux/arm/v7 \
-                        -t ${DOCKER_IMAGE}:${DOCKER_TAG} \
-                        --push .
-                """
-            }
-        }
-        stage('Push to Docker Hub') {
-            steps {
-                echo "Pushing Docker image to Docker Hub..."
                 withCredentials([usernamePassword(
-                    credentialsId: "${DOCKER_CREDENTIALS_ID}",
+                    credentialsId: "${DOCKERHUB_CREDENTIALS_ID}",
                     usernameVariable: 'DOCKER_USER',
-                    passwordVariable: 'DOCKER_PASS')]) {
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
                     sh """
-                        ${DOCKER_CMD} login -u $DOCKER_USER --password-stdin <<< $DOCKER_PASS
-                        ${DOCKER_CMD} push ${DOCKER_IMAGE}:${DOCKER_TAG}
-                        ${DOCKER_CMD} logout
+                        # Login to Docker Hub
+                        echo $DOCKER_PASS | /opt/homebrew/bin/docker login -u $DOCKER_USER --password-stdin
+
+                        # Build multi-arch image and push directly
+                        /opt/homebrew/bin/docker buildx build \
+                            --platform linux/amd64,linux/arm64 \
+                            -t ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG} \
+                            --push \
+                            .
                     """
                 }
             }
