@@ -7,6 +7,7 @@ import com.api.login.dto.LoginRequest;
 import com.api.login.dto.UserDto;
 import com.api.login.mapper.UserMapper;
 import com.api.student.StudentRepository;
+import com.api.teacher.Teacher;
 import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +61,21 @@ public class LoginService {
                 .orElseThrow(() -> new UnauthorizedException("Invalid email"));
 
         return this.userMapper.toDto(user);
+    }
+
+    @Transactional
+    public boolean createAdmin(){
+        if(this.teacherRepository.findAll().isEmpty()){
+            Teacher teacher = new Teacher();
+            teacher.setFirstName("BetterJaksec");
+            teacher.setLastName("Admin");
+            teacher.setEmail("admin@betterjaksec.com");
+            teacher.setPassword(HashUtils.hash("adminpassword"));
+            teacher.setAdmin(true);
+            this.teacherRepository.save(teacher);
+            return true;
+        }
+        return false;
     }
 
 }
