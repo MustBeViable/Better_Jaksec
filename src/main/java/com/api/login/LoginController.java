@@ -33,4 +33,8 @@ public class LoginController {
     public UserDto getMe(@RequestHeader("Authorization") String token) {
         return this.service.me(JwtUtils.toAuth(token));
     }
+    @GetMapping("/admin/init")
+    public String getInitAdmin(){
+        return "{\"isAvailable\":"+service.createAdmin()+"}";
+    }
 }
