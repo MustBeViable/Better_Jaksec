@@ -2,10 +2,6 @@ package com.api.jointable.student_lesson;
 
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.UnauthorizedException;
-import com.api.jointable.student_lesson.StudentLesson;
-import com.api.jointable.student_lesson.StudentLessonMapper;
-import com.api.jointable.student_lesson.StudentLessonRepository;
-import com.api.jointable.student_lesson.StudentLessonService;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
