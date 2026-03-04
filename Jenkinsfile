@@ -12,6 +12,7 @@ pipeline {
     tools {
         maven "Maven3"
         jdk "JDK17"
+        nodejs "Node20"
     }
 
     stages {
@@ -49,6 +50,42 @@ pipeline {
                     chmod 600 ${SSH_KEY_PATH}
                     scp -i ${SSH_KEY_PATH} -o StrictHostKeyChecking=no -r target/site ${REMOTE_USER}@${REMOTE_HOST}:${REMOTE_PATH}
                 """
+            }
+        }
+
+        stage('Checkout Site Repo and Build') {
+            steps {
+                dir('site') {
+                    git branch: 'main',
+                        credentialsId: 'github-credentials-id',
+                        url: 'https://github.com/MustBeViable/BetterJaksec_frontend.git'
+                }
+
+                dir('site/BetterJaksec') {
+                    sh '''
+                        echo "Installing npm dependencies..."
+                        npm ci
+
+                        echo "Setting up .env for Vite build..."
+                        cp -f .env.sample .env
+
+                        echo "Building Vite production build..."
+                        npm run build
+                    '''
+                }
+
+                sh '''
+                    echo "Copying frontend build into Spring Boot resources..."
+
+                    # Ensure the static folder exists
+                    mkdir -p src/main/resources/static
+
+                    # Remove old static files
+                    rm -rf src/main/resources/static/*
+
+                    # Copy new build
+                    cp -r site/BetterJaksec/dist/* src/main/resources/static/
+                '''
             }
         }
 
