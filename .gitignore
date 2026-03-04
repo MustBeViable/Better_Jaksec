@@ -4,7 +4,10 @@ target
 .DS_Store
 **/.DS_Store
 .env
+nginx.conf
+
 
 src/test/http/http-client.env.json
+src/main/resources/static
 http.client.env.json
 /.mvn/
