@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping("/api/student/{studentID}/attendance")
 public class StudentLessonController {
@@ -31,6 +33,12 @@ public class StudentLessonController {
     public StudentLessonDto getAttendance(@RequestHeader("Authorization") String token,
                                           @PathVariable Long attendanceID) {
         return studentLessonService.read(attendanceID, JwtUtils.toAuth(token));
+    }
+
+    @GetMapping("/forlesson/{lessonID}")
+    public Set<StudentLessonDto> getAttendanceForLesson(@RequestHeader("Authorization") String token,
+                                                        @PathVariable Long lessonID){
+        return studentLessonService.findAllByLessonId(lessonID, JwtUtils.toAuth(token));
     }
 
     @PutMapping("{attendanceID}")

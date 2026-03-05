@@ -1,6 +1,6 @@
 #!/bin/bash
 
-BASE_URL="http://localhost:8081/api"
+BASE_URL="http://localhost:8082/api"
 UNIQUE_SUFFIX="$(date +%s)_$RANDOM"
 
 echo "===== START API TEST ====="
@@ -34,7 +34,7 @@ teacher_resp=$(curl -s -X POST "$BASE_URL/teacher" \
         \"lastName\": \"Smith\",
         \"email\": \"$teacherEmail\",
         \"password\": \"$teacherPass\",
-        \"isAdmin\": true
+        \"isAdmin\": false
       }")
 
 echo "$teacher_resp" | jq
@@ -284,5 +284,19 @@ login_resp=$(curl -s -X POST "$BASE_URL/auth/login" \
       }")
 student_token=$(echo "$login_resp" | jq -r '.token')
 echo "New Student Token: $student_token"
+
+# =========================
+# FETCH ATTENDANCE FOR LESSON (Teacher)
+# =========================
+echo "Fetching Attendance for Lesson as Teacher..."
+curl -s "$BASE_URL/student/$studentID/attendance/forlesson/$lessonID" \
+  -H "Authorization: Bearer $teacher_token" | jq
+
+# =========================
+# ATTEMPT FETCH AS STUDENT (Should Fail / Empty)
+# =========================
+echo "Fetching Attendance for Lesson as Student (should fail)..."
+curl -s "$BASE_URL/student/$studentID/attendance/forlesson/$lessonID" \
+  -H "Authorization: Bearer $student_token" | jq
 
 echo "===== API TEST COMPLETE ====="
