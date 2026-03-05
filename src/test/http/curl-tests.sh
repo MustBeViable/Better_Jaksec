@@ -187,6 +187,16 @@ curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
         \"reason\": \"\"
       }" | jq
 
+echo "Marking Own Attendance2 (shouldnt duplicate)..."
+curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $student_token" \
+  -d "{
+        \"lessonId\": $lessonID,
+        \"present\": true,
+        \"reason\": \"\"
+      }" | jq
+
 echo "Attempting to Mark Other Student Attendance (should fail)..."
 curl -s -X POST "$BASE_URL/student/$studentID/attendance" \
   -H "Content-Type: application/json" \
