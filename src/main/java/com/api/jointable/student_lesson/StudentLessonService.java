@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Service
 public class StudentLessonService {
 
@@ -41,6 +44,24 @@ public class StudentLessonService {
         }
         this.studentLessonRepository.save(attendance);
         return this.mapper.toDto(attendance);
+    }
+
+    @Transactional
+    public Set<StudentLessonDto> findAllByLessonId(Long lessonId, Auth auth){
+        if(auth.getRole().equalsIgnoreCase("admin")){
+            return this.studentLessonRepository.findAll()
+                    .stream()
+                    .map(mapper::toDto)
+                    .collect(Collectors.toSet());
+        } else if(auth.getRole().equalsIgnoreCase("teacher")){
+            return this.studentLessonRepository.getStudentLessonByLessonId(lessonId)
+                    .stream()
+                    .map(mapper::toDto)
+                    .collect(Collectors.toSet());
+        }
+        else{
+            throw new UnauthorizedException("You are a student");
+        }
     }
 
     @Transactional
