@@ -24,4 +24,20 @@ public interface StudentLessonRepository extends JpaRepository<StudentLesson, Lo
         WHERE l.lessonID = :lessonId
     """)
     Set<StudentLesson> getStudentLessonByLessonId(Long lessonId);
+
+    @Query("""
+        SELECT COUNT(sl) > 0
+        FROM StudentLesson sl
+        WHERE sl.student.studentID = :studentId
+        AND sl.lesson.lessonID = :lessonId
+        """)
+    boolean existsByStudentIdAndLessonId(Integer studentId, Long lessonId);
+
+    @Query("""
+        SELECT sl
+        FROM StudentLesson sl
+        WHERE sl.student.studentID = :studentId
+        AND sl.lesson.lessonID = :lessonId
+        """)
+    StudentLesson findByStudentIdAndLessonId(Integer studentId, Long lessonId);
 }
