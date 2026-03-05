@@ -42,7 +42,16 @@ public class StudentLessonService {
                 && !attendance.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
             throw new UnauthorizedException("Students can only mark their own attendance");
         }
-        this.studentLessonRepository.save(attendance);
+        if(!studentLessonRepository.existsByStudentIdAndLessonId(request.getStudentId(),
+                request.getLessonId())){
+            this.studentLessonRepository.save(attendance);
+        }else {
+            attendance = this.studentLessonRepository.findByStudentIdAndLessonId(request.getStudentId(),
+                    request.getLessonId());
+            attendance.setPresent(request.getPresent());
+            attendance.setReasonForAbsence(request.getReason());
+            this.studentLessonRepository.save(attendance);
+        }
         return this.mapper.toDto(attendance);
     }
 
