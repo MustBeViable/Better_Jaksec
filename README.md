@@ -134,7 +134,7 @@ pass=adminpassword <br>
 
 Entity relation diagram:
 
-![Use case]()
+![Use case](https://raw.githubusercontent.com/MustBeViable/Better_Jaksec/refs/heads/main/Documents/diagrams/use_case/better_jaksec_usecase.png?token=GHSAT0AAAAAADTJRA5VKMBZISR7JNNBTRZK2NLDYVA)
   - Illustrates users and heir use cases for the program. Student councelor notification is not implemented.
 
 ![Entity relation diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-er.png)
