@@ -1,6 +1,31 @@
 # Better_Jaksec
 
+Link to the sprint Report folder
 ***[Front end here](https://github.com/MustBeViable?tab=repositories)***
+
+***Project Description***
+
+Better jaksec provides a attendance tracking system for schools. It provides key features such:
+  - Courses/lessons:
+    - Creatin new
+    - Updating already existing one
+    - Deleting
+  - Attendance marking:
+    - For now only teacher is able to mark students attendace
+      - In the future student is able to mark it via QR-code
+  - Attendance tracking and reports:
+    - teacher can create report:
+      - Individual course overall attendance percentage
+      - Individual students attendance percentag per course/ per lesson
+      - Individual students reason for absence
+    - studen can:
+      - Students own courses overal percentage
+      - Check students own lessons reason for absence and mark it
+ 
+**Idea:**
+
+
+-----------------------------------
 
 ***Project techstack***
 
@@ -104,3 +129,18 @@ after the service is running, send a request to <br>
 Default admin login is <br>
 email=admin@betterjaksec.com <br>
 pass=adminpassword <br>
+
+***Arichteture Design (ER and Use Case diagram) very short elaboration of the image***
+
+Entity relation diagram:
+
+![Use case]()
+  - Illustrates users and heir use cases for the program. Student councelor notification is not implemented.
+
+![Entity relation diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-er.png)
+  - Entity relation diagram made with [ERDplus](ERDplus.com). Picture illustrates entity relation diagram. Users have been divided to students and teachers. Teachers contain admins.
+
+Relational schema:
+
+![Relational schema](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-relational.png)
+  - Relational schema for our database. Database is created using object relational mapping when initiating API. 
