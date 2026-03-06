@@ -144,3 +144,5 @@ Relational schema:
 
 ![Relational schema](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-relational.png)
   - Relational schema for our database. Database is created using object relational mapping when initiating API. 
+
+[Link to sprint report folder](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/Sprint_reports)
