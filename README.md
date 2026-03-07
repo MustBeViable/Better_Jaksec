@@ -11,8 +11,8 @@ Better jaksec provides a attendance tracking system for schools. It provides key
     - Updating already existing one
     - Deleting
   - Attendance marking:
-    - For now only teacher is able to mark students attendace
-      - In the future student is able to mark it via QR-code
+    - Teacher is able to mark students attendace manually in the browser
+    - Student is able to mark it via QR-code
   - Attendance tracking and reports:
     - teacher can create report:
       - Individual course overall attendance percentage
