@@ -64,8 +64,9 @@ Decision reasons:
 
 **Additional APIs, Framework etc**
 
-1. [QR code API](https://goqr.me/api/)
-2. [Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt)
+1. [QR code API(html5-qrcode)](https://github.com/mebjas/html5-qrcode))
+   - [React QR code for generating](https://www.npmjs.com/package/react-qr-code)
+3. [Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt)
 
 Decision reasons:
   - QR code API for QR code generation for attendance sessions
