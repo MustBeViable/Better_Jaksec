@@ -1,15 +1,16 @@
 # Better_Jaksec
 
-Link to the sprint Report folder
+***This is backend repository. It contains our documenation also.***
 ***[Front end here](https://github.com/MustBeViable?tab=repositories)***
 
 ***Project Description***
 
 Better jaksec provides a attendance tracking system for schools. It provides key features such:
-  - Courses/lessons:
+  - For courses/lessons:
     - Creatin new
     - Updating already existing one
     - Deleting
+  - Managing students in a course.
   - Attendance marking:
     - Teacher is able to mark students attendace manually in the browser
     - Student is able to mark it via QR-code
@@ -21,8 +22,6 @@ Better jaksec provides a attendance tracking system for schools. It provides key
     - studen can:
       - Students own courses overal percentage
       - Check students own lessons reason for absence and mark it
- 
-**Idea:**
 
 
 -----------------------------------
@@ -65,11 +64,11 @@ Decision reasons:
 **Additional APIs, Framework etc**
 
 1. [QR code API(html5-qrcode)](https://github.com/mebjas/html5-qrcode))
-   - [React QR code for generating](https://www.npmjs.com/package/react-qr-code)
+   - [React QR code for generating the QR code](https://www.npmjs.com/package/react-qr-code)
 3. [Java JWT: JSON Web Token for Java and Android](https://github.com/jwtk/jjwt)
 
 Decision reasons:
-  - QR code API for QR code generation for attendance sessions
+  - QR code for better and more robust way to let students mark their attendance.
   - JJWT for authentication and authorization (JWT-based authentication)
 
 ## Running docker image locally
