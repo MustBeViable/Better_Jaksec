@@ -86,15 +86,20 @@ public class StudentLessonService {
 
     @Transactional
     public StudentLessonDto update(Long attendanceId, UpdateStudentLesson request, Auth auth){
-        if(!auth.getRole().equalsIgnoreCase("admin")
-                && !auth.getRole().equalsIgnoreCase("teacher")){
-            throw new UnauthorizedException("Only admins and teachers can update attendance");
-        }
         StudentLesson attendance = this.studentLessonRepository.findById(attendanceId)
                 .orElseThrow(() -> new BadRequestException("Attendance record doesnt exist"));
-        this.mapper.updateEntity(attendance,request);
-        attendance = this.studentLessonRepository.save(attendance);
-        return this.mapper.toDto(attendance);
+        if(auth.getRole().equalsIgnoreCase("admin")
+                || auth.getRole().equalsIgnoreCase("teacher")){
+            this.mapper.updateEntity(attendance,request);
+            attendance = this.studentLessonRepository.save(attendance);
+            return this.mapper.toDto(attendance);
+        }else if(attendance.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
+            attendance.setReasonForAbsence(request.getReason());
+            attendance = this.studentLessonRepository.save(attendance);
+            return this.mapper.toDto(attendance);
+        }else{
+            throw new UnauthorizedException("Only admins and teachers can update attendance");
+        }
     }
 
     @Transactional
