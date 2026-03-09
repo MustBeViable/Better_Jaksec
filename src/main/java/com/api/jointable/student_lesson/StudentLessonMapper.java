@@ -24,9 +24,9 @@ public class StudentLessonMapper {
     }
 
     public StudentLessonDto toDto(StudentLesson entity){
-        return new StudentLessonDto(entity.isPresent(),
+        return new StudentLessonDto(entity.getId(),entity.isPresent(),
                 entity.getLesson().getLessonID(),
                 entity.getStudent().getStudentID(),
-                entity.getLesson().getDate());
+                entity.getLesson().getDate(),entity.getReasonForAbsence());
     }
 }

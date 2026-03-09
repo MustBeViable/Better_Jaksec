@@ -43,10 +43,11 @@ public class StudentMapper {
             Set<StudentLessonDto> attendance = student.getLessons()
                     .stream()
                     .map(sl -> new StudentLessonDto(
+                            sl.getId(),
                             sl.isPresent(),
                             sl.getLesson().getLessonID(),
                             sl.getStudent().getStudentID(),
-                            sl.getLesson().getDate()
+                            sl.getLesson().getDate(),sl.getReasonForAbsence()
                     )).collect(Collectors.toSet());
             dto.setAttendance(attendance);
         }
