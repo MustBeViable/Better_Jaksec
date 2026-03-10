@@ -73,6 +73,8 @@ Decision reasons:
   - QR code for better and more robust way to let students mark their attendance.
   - JJWT for authentication and authorization (JWT-based authentication)
 
+-----------------------------------
+
 ## Running docker image locally
 ### Via docker-compose
 
@@ -131,6 +133,8 @@ after the service is running, send a request to <br>
 Default admin login is <br>
 email=admin@betterjaksec.com <br>
 pass=adminpassword <br>
+
+-----------------------------------
 
 ***Arichteture Design (ER and Use Case diagram) very short elaboration of the image***
 
