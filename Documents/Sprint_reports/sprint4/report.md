@@ -109,7 +109,7 @@
 |---------------------|-------|
 | Elias Rinne         | 24    |
 | Leevi Laune         |     |
-| Sakari Honkavaara   |     |
+| Sakari Honkavaara   |   21  |
 | **Total**           | **24** |
 
 [Link](https://docs.google.com/spreadsheets/d/1HFDWiWYRwTxyEjorwcDlE9QLuKnTcRi-xflHvprkv5E/edit?gid=0#gid=0) to the google sheet
