@@ -1,81 +1,115 @@
-### Sprint 1 review/report 15.1.2026 - 28.1.2026
-
-------------------------------------------------------------
-
-***First hand stuff: Were we meant to backlog all our sprints tasks to the backlog first or did we do correctly by separating sprint 1-4 in own tables and go sprint by sprint and deciding what we prioritize and what can be done next sprint etc?***
+### Sprint 4 review/report 5.3.2026 - 12.3.2026
 
 ------------------------------------------------------------
 
 ***Sprint Goal***
 
-1. Create base for the product/project:
-    - set up repository, tools like [trello](https://trello.com/w/usertyotila64449059/home)
-    - [figma](https://www.figma.com/design/o0aGmeemZQrOMVFLy9aPOk/Better-jaksec?node-id=19-3&t=a2GSdsw98twjii1o-0)
+1. Finalize the functionality of the prototype:
+    - ensure planned features are implemented and working correctly
+    - fix bugs, improve error handling, and verify the user flow
 
-2. Create initial [backlog](https://trello.com/b/NImxPprN/to-be-announced-prokkis)
+2. Containerize the whole project using Docker:
+    - create Docker image for the application
+    - test the image locally
 
-3. Create [product vision](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/project_vision_and_planning/Product%20Vision%20-%20Better%20jaksec.pdf) and [product plan](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/project_vision_and_planning/Product%20plan%20-%20Better%20jaksec.pdf)
-4. Decide [technology selection](https://github.com/MustBeViable/Better_Jaksec/blob/main/README.md) for the project
+3. Push the Docker image to Docker Hub:
+    - tag and publish the image
+    - verify that the image is publicly available
 
-5. Complete [User Stories](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/project_vision_and_planning/Sprint1_meeting_and_user_stories.pdf)  / Tasks
+4. Share the functional prototype with the class:
+    - present the project and demonstrate the main functionality
+    - collect feedback and finalize project documentation
+
+5. Prepare the project for the final demonstration:
+    - complete README
+    - update GitHub documentation and sprint reports
 
 ------------------------------------------------------------
 
 ***Selected backlog items***
 
-- We did plan *project/programs* backlog, but not the overall backlog.
-- We did complete all sprint 1 goals and did the extra for figma low fidelity wireframe
+- Finalizing the full prototype functionality
+- Debugging and testing the application
+- Creating and testing Docker image
+- Publishing Docker image to Docker Hub
+- Sharing the finished prototype with classmates
+- Updating README, GitHub documentation, and sprint reports
 
 ------------------------------------------------------------
 
 ***Completed in first Sprint***
 
-**Set up project tools**
+**Finalized the product functionality**
 
-- [trello](https://trello.com/w/usertyotila64449059/home)
-- [figma](https://www.figma.com/design/o0aGmeemZQrOMVFLy9aPOk/Better-jaksec?node-id=19-3&t=a2GSdsw98twjii1o-0)
+- Completed the planned prototype features
+- Improved functionality through debugging and testing
+- Verified that the main user flow works correctly
+- Ensured data input, storage, retrieval, and display behave as expected
+- Checked UI rendering and interaction correctness
 
-**Create initial backlog and set initial userstories**
+**Containerized the project with Docker**
 
-- [backlog](https://trello.com/b/NImxPprN/to-be-announced-prokkis)
-- [sprint 1 meeting with user stories](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/project_vision_and_planning/Sprint1_meeting_and_user_stories.pdf)
+- Created Docker configuration for the project
+- Built Docker image successfully
+- Tested the Docker image locally
+- Verified that the application runs in the containerized environment
 
-**Made product vision, plan and finished preparation for [presentation](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/presentation/Koodin%20luonti%20AI_n%20avulla_%20Tuottavuuden%20tehostaja%20vai%20tekninen%20velka_.pdf)**
-- Created product [backlog](https://trello.com/b/NImxPprN/to-be-announced-prokkis)
-- Created initial [low fidelity wireframe](https://www.figma.com/design/o0aGmeemZQrOMVFLy9aPOk/Better-jaksec?node-id=0-1&p=f&t=Q2MM4PCKu5qdBZGZ-0) for the front end/UI
+**Published Docker image**
 
-**Draft first edition for [use case diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/use_case/K%C3%A4ytt%C3%B6kaavio_Better_jaksec.pdf)**
+- Tagged the Docker image properly
+- Pushed the image to Docker Hub
+- Confirmed that the image is publicly available
+- Tested deployment in a suitable environment
+- [image](https://hub.docker.com/r/leevivl/better-jaksec-api)
+- [Instructions how to use in readme](https://github.com/MustBeViable/Better_Jaksec/blob/main/README.md)
+
+**Shared the functional prototype**
+
+- Presentation completed and demo prepared
+- Demonstrated the working application and major features
+
+**Finalized project documentation**
+
+- Updated project documentation in GitHub
+- Completed README with required sections:
+  - project description
+  - technology stack
+  - architecture design
+  - sprint report links
+- Updated sprint reports in GitHub
 
 ------------------------------------------------------------
 
 **Demo Summary (what was shown in the review)**
-- To be implemented during/after the review
+
+- Functional prototype with core features completed
+- Main user flow of the application
+- Dockerized version of the project
+- Public Docker Hub image
+- Deployment/testing results
+- Updated documentation and README
 
 **What Went Well**
 
-- We managed to do all task withing the time frame and managed to do extra
+- We managed to complete all sprint goals
+- The prototype reached a functional final state (MVP)
+- Dockerization and image publishing were completed successfully
+- The final presentation material and project documentation were finalized on time
 
 **What Could Be Improved**
 
-- Meeting preplanning, preparation and deciding what to do in those meetings
+- Missing features such as assignmet and grading
 
-**Next Sprint Focus**
-
-- Design and implement relational database of our product
-- Create final wireframe for our project frontend
-    - Create first UI prototype
-- Start implementing JUnit tests
 
 ------------------------------------------------------------
 
-## Sprint 1 – Time Tracking (hours)
+## Sprint 4 – Time Tracking (hours)
 
 | Team member         | Hours |
 |---------------------|-------|
-| Elias Rinne         | 30    |
-| Leevi Laune         | 24    |
-| Sakari Honkavaara   | 16    |
-| Juho Molin          | 18    |
-| **Total**           | **90** |
+| Elias Rinne         | 24    |
+| Leevi Laune         |     |
+| Sakari Honkavaara   |     |
+| **Total**           | **24** |
 
 [Link](https://docs.google.com/spreadsheets/d/1HFDWiWYRwTxyEjorwcDlE9QLuKnTcRi-xflHvprkv5E/edit?gid=0#gid=0) to the google sheet
