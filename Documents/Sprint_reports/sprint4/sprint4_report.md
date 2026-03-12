@@ -61,7 +61,7 @@
 - Confirmed that the image is publicly available
 - Tested deployment in a suitable environment
 - [image](https://hub.docker.com/r/leevivl/better-jaksec-api)
-- [Instructions how to use in readme](https://github.com/MustBeViable/Better_Jaksec/blob/main/README.md)
+  - [Instructions how to use in readme](https://github.com/MustBeViable/Better_Jaksec/blob/main/README.md)
 
 **Shared the functional prototype**
 
