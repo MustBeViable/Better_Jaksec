@@ -43,14 +43,6 @@
 - Completed README with required sections
 - Updated sprint reports in GitHub
 
-## Demo Summary
-- Functional prototype with core features completed
-- Main user flow of the application was demonstrated
-- Dockerized version of the project was shown
-- Public Docker Hub image was presented
-- Deployment/testing results were shown
-- Updated documentation and README were presented
-
 ## Team Capacity & Outcome
 
 ### Team Capacity
