@@ -108,8 +108,8 @@
 | Team member         | Hours |
 |---------------------|-------|
 | Elias Rinne         | 24    |
-| Leevi Laune         |     |
+| Leevi Laune         |  21   |
 | Sakari Honkavaara   |   21  |
-| **Total**           | **24** |
+| **Total**           | **66** |
 
 [Link](https://docs.google.com/spreadsheets/d/1HFDWiWYRwTxyEjorwcDlE9QLuKnTcRi-xflHvprkv5E/edit?gid=0#gid=0) to the google sheet
