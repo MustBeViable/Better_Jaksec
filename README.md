@@ -1,7 +1,7 @@
 # Better_Jaksec
 
 ***This is backend repository. It contains our documenation also.***
-***[Front end here](https://github.com/MustBeViable?tab=repositories)***
+***[Front end here](https://github.com/MustBeViable/BetterJaksec_frontend)***
 
 **[Docker image in dockerhub](https://hub.docker.com/r/leevivl/better-jaksec-api)**
 
