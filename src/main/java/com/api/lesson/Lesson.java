@@ -28,7 +28,7 @@ public class Lesson {
     @ManyToMany
     private Set<Teacher> teachers = new HashSet<>();
 
-    @OneToMany(mappedBy = "lesson")
+    @OneToMany(mappedBy = "lesson", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<StudentLesson> students = new HashSet<>();
 
     public Lesson() {}

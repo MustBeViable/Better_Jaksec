@@ -192,6 +192,12 @@ public class CourseService {
         if(course.getTeachers().stream().filter(t -> t.getEmail().equalsIgnoreCase(auth.getEmail())).toList().isEmpty()){
             throw new UnauthorizedException("Only teachers of this course can delete it");
         }
+
+        for (Teacher t : course.getTeachers()) {
+            t.getCourses().remove(course);
+        }
+        course.getTeachers().clear();
+
         this.courseRepository.deleteById(courseId);
     }
 }
