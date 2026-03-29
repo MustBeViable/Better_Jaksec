@@ -73,6 +73,26 @@ Decision reasons:
   - QR code for better and more robust way to let students mark their attendance.
   - JJWT for authentication and authorization (JWT-based authentication)
 
+**i18n, l10n**
+
+1. [react-i18n](https://react.i18next.com/)
+2. chatgpt for translations
+3. browser features
+
+Supported languages
+  - fi-FI
+  - de-DE
+  - en-US
+  - ja-JP
+  - zh-CN
+  - fa-IR
+
+Adding languages
+  - in frontend repo add language file to src/i18n
+  - if language is right to left add it to i18nDirections.js
+  - add language to i18n/index.json
+  - add language to LanguageSwitcher.jsx
+
 -----------------------------------
 
 ## Running docker image locally
@@ -149,6 +169,10 @@ Entity relation diagram:
 Relational schema:
 
 ![Relational schema](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-relational.png)
-  - Relational schema for our database. Database is created using object relational mapping when initiating API. 
+  - Relational schema for our database. Database is created using object relational mapping when initiating API.
+    
+![Class diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-class-example.png)
+  - Class diagram example illustrates how a single endpoint is implemented, same class structure is applied for all
+
 
 [Link to sprint report folder](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/Sprint_reports)
