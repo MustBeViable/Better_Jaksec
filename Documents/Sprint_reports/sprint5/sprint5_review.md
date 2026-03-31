@@ -37,6 +37,6 @@
 
 | Name               | Time (h) | Assigned Tasks |
 |--------------------|-------------|--------------
-| Elias Rinne        | 22          | String externalization (UI), Translations to japanese, chinese, finnish, german, farsi (support for 3 non-latin text), RTL/LTR functionality, Language change component
-| Leevi Laune        | 21          | frontend i18n implementation, trello, sprint planning and review document for sprint 5
-| Sakari Honkavaara  | ~          | number and date localization, spring planning doc for sprint 6
+| Elias Rinne        | 20          | String externalization (UI), Translations to japanese, chinese, finnish, german, farsi (support for 3 non-latin text), RTL/LTR functionality, Language change component
+| Leevi Laune        | 22          | frontend i18n implementation, trello, sprint planning and review document for sprint 5
+| Sakari Honkavaara  | 20          | number and date localization, spring planning doc for sprint 6
