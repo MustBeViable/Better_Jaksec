@@ -1,6 +1,6 @@
 ### Accessibility
 
-This markdown file is for user centered course assignment about accessibility
+This Markdown file is for user centered course assignment about accessibility
 
 -----------------
 
