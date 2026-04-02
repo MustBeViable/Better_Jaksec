@@ -217,7 +217,6 @@ class CourseServiceTest {
     @Test
     @DisplayName("delete() deletes course when teacher belongs to course")
     void delete_removesCourseWhenExists() {
-
         when(auth.getRole()).thenReturn("teacher");
         when(auth.getEmail()).thenReturn("teacher@school.com");
 
@@ -226,8 +225,9 @@ class CourseServiceTest {
 
         Teacher teacher = new Teacher();
         teacher.setEmail("teacher@school.com");
+        teacher.setCourses(new HashSet<>(Set.of(course)));
 
-        course.setTeachers(Set.of(teacher));
+        course.setTeachers(new HashSet<>(Set.of(teacher)));
 
         when(courseRepository.findById(1L)).thenReturn(Optional.of(course));
 
