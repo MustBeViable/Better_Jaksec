@@ -4,6 +4,7 @@ target
 .DS_Store
 **/.DS_Store
 .env
+sonar-project.properties
 nginx.conf
 
 
