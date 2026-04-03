@@ -1,0 +1,6 @@
+projectKey=betterJakSec
+serverUrl=http://localhost:9000
+serverVersion=26.3.0.120487
+dashboardUrl=http://localhost:9000/dashboard?id=betterJakSec
+ceTaskId=50aec8bf-554a-450b-946f-170ac5efb6bb
+ceTaskUrl=http://localhost:9000/api/ce/task?id=50aec8bf-554a-450b-946f-170ac5efb6bb
