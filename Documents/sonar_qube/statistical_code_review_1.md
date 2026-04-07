@@ -6,7 +6,7 @@ First SonarQube/SonarScanner report with no fixes made
 
 - **Project name:** BetterJakSec
 - **Team members:** Sakari Honkavaara, Leevi Laune, Elias Rinne
-- **Analysis date:**
+- **Analysis date:** 2.4.2026
 
 ---
 
