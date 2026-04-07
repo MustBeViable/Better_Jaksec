@@ -2,6 +2,7 @@ package com.api.course;
 
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.dto.CourseDto;
@@ -27,6 +28,7 @@ class CourseServiceTest {
     private LessonRepository lessonRepository;
     private TeacherRepository teacherRepository;
     private AssignmentRepository assignmentRepository;
+    private LanguageRepository languageRespository;
     private CourseMapper mapper;
     private CourseService service;
     private Auth auth;
@@ -37,6 +39,7 @@ class CourseServiceTest {
         lessonRepository = mock(LessonRepository.class);
         teacherRepository = mock(TeacherRepository.class);
         assignmentRepository = mock(AssignmentRepository.class);
+        languageRespository = mock(LanguageRepository.class);
         mapper = mock(CourseMapper.class);
         auth = mock(Auth.class);
 
@@ -45,6 +48,7 @@ class CourseServiceTest {
                 lessonRepository,
                 teacherRepository,
                 assignmentRepository,
+                languageRespository,
                 mapper
         );
     }

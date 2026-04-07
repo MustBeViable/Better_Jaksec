@@ -10,6 +10,7 @@ public class CreateCourseRequest {
 
     @NotBlank
     private String courseName;
+    private String locale;
 
     private Set<Long> lessonIds = new HashSet<>();
     private Set<Long> assignmentIds = new HashSet<>();
@@ -21,6 +22,14 @@ public class CreateCourseRequest {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public Set<Long> getLessonIds() {
@@ -46,4 +55,5 @@ public class CreateCourseRequest {
     public void setTeacherIds(Set<Integer> teacherIds) {
         this.teacherIds = teacherIds;
     }
+
 }
