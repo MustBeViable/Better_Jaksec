@@ -1,6 +1,9 @@
 package com.api.lesson;
 
+import com.api.common.Language;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.NotFoundException;
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
 import com.api.course.CourseRepository;
@@ -16,11 +19,13 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
+    private final LanguageRepository languageRepository;
     private final LessonMapper lessonMapper;
 
-    public LessonService(LessonRepository lessonRepository, CourseRepository courseRepository, LessonMapper lessonMapper) {
+    public LessonService(LessonRepository lessonRepository, CourseRepository courseRepository, LanguageRepository languageRepository, LessonMapper lessonMapper) {
         this.lessonRepository = lessonRepository;
         this.courseRepository = courseRepository;
+        this.languageRepository = languageRepository;
         this.lessonMapper = lessonMapper;
     }
 
@@ -30,14 +35,20 @@ public class LessonService {
                 && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create lessons");
         }
+
+        Language language = this.languageRepository.findById(request.getLocale())
+                .orElseThrow(()-> new NotFoundException("Unknown language"));
+
         //Checkers here if needed (like if unique lesson names)
         Lesson lesson = this.lessonMapper.toLessonEntity(request);
+        lesson.setLanguage(language);
         System.out.println("LessonService.create:"+request.getCourseId());
         if (request.getCourseId() != null) {
             Course course = this.courseRepository.findById(request.getCourseId())
                     .orElseThrow(() -> new BadRequestException("Course not found"));
 
             lesson.setCourse(course);
+
         }else{
             throw new BadRequestException("Course id is missing");
         }

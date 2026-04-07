@@ -10,6 +10,7 @@ import java.time.Instant;
 public class CreateLessonRequest {
     @NotBlank
     private String lessonName;
+    private String locale;
 
     @NotNull
     private Instant date;
@@ -22,6 +23,14 @@ public class CreateLessonRequest {
 
     public void setLessonName(String lessonName) {
         this.lessonName = lessonName;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
     }
 
     public Instant getDate() {

@@ -1,6 +1,7 @@
 package com.api.common;
 
 import com.api.course.Course;
+import com.api.lesson.Lesson;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
@@ -20,6 +21,8 @@ public class Language {
 
     @OneToMany(mappedBy = "language")
     private Set<Course> courses;
+    @OneToMany(mappedBy = "language")
+    private Set<Lesson> lessons;
 
     public Language(String locale) {
         this.locale = locale;
@@ -41,6 +44,14 @@ public class Language {
 
     public void setCourses(Set<Course> courses) {
         this.courses = courses;
+    }
+
+    public Set<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(Set<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     @Override
