@@ -48,8 +48,10 @@ public class AssignmentService {
                 .orElseThrow(()->new BadRequestException("Assignment doesnt exit"));
         this.mapper.updateEntity(assignment,request);
 
-        if(request.getCourseId() != null && this.courseRepository.findById(request.getCourseId()).isPresent()){
-            assignment.setCourse(this.courseRepository.findById(request.getCourseId()).get());
+        if (request.getCourseId() != null) {
+            Course course = this.courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new BadRequestException("Course doesn't exist."));
+            assignment.setCourse(course);
         }
         this.assignmentRepository.save(assignment);
         return this.mapper.toDto(assignment);

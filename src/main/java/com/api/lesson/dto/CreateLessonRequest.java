@@ -1,7 +1,6 @@
 package com.api.lesson.dto;
 
 
-import com.api.course.Course;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

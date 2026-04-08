@@ -5,7 +5,6 @@ import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;
 import com.api.lesson.Lesson;
-import com.api.teacher.Teacher;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;

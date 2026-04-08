@@ -161,7 +161,7 @@ class AssignmentServiceTest {
 
         verify(assignmentRepository).findById(assignmentId);
         verify(mapper).updateEntity(assignment, request);
-        verify(courseRepository, times(2)).findById(20L);
+        verify(courseRepository).findById(20L);
         verify(assignmentRepository).save(assignment);
         verify(mapper).toDto(assignment);
     }
@@ -197,8 +197,8 @@ class AssignmentServiceTest {
     }
 
     @Test
-    @DisplayName("update() does not change course when given courseId is not found")
-    void update_doesNotChangeCourseWhenCourseNotFound() {
+    @DisplayName("update() throws BadRequestException when given courseId is not found")
+    void update_throwsWhenCourseNotFound() {
         Long assignmentId = 8L;
 
         UpdateAssignmentRequest request = new UpdateAssignmentRequest();
@@ -207,21 +207,16 @@ class AssignmentServiceTest {
         Assignment assignment = new Assignment();
         assignment.setAssignmentID(assignmentId);
 
-        AssignmentDto dto = new AssignmentDto(assignmentId, "Name", "Desc", 3L);
-
         when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(assignment));
         when(courseRepository.findById(55L)).thenReturn(Optional.empty());
-        when(assignmentRepository.save(assignment)).thenReturn(assignment);
-        when(mapper.toDto(assignment)).thenReturn(dto);
 
-        AssignmentDto result = service.update(assignmentId, request);
+        assertThrows(BadRequestException.class, () -> service.update(assignmentId, request));
 
-        assertEquals(assignmentId, result.getId());
-
+        verify(assignmentRepository).findById(assignmentId);
         verify(mapper).updateEntity(assignment, request);
         verify(courseRepository).findById(55L);
-        verify(assignmentRepository).save(assignment);
-        verify(mapper).toDto(assignment);
+        verify(assignmentRepository, never()).save(any());
+        verify(mapper, never()).toDto(any());
     }
 
     @Test

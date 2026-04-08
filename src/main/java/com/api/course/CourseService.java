@@ -108,13 +108,8 @@ public class CourseService {
 
     @Transactional
     public CourseDto read(Long courseId, Auth auth){
-        System.out.println("CourseService.read.auth: " + auth);
         Course course =  this.courseRepository.findById(courseId)
                 .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
-        course.getGrades().stream()
-                .map(StudentCourse::getStudent)
-                .map(Student::getEmail)
-                .toList().contains(auth.getEmail());
         if(!auth.getRole().equalsIgnoreCase("admin") &&
             !course.getTeachers().stream()
                     .map(Teacher::getEmail)

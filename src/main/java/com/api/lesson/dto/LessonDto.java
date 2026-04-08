@@ -18,6 +18,7 @@ public class LessonDto {
         this.lessonName = lessonName;
         this.date = date;
         this.courseId = courseId;
+        this.locale = locale;
     }
 
     public Long getLessonID() {

@@ -1,6 +1,5 @@
 package com.api.teacher;
 
-import com.api.assignment.Assignment;
 import com.api.course.Course;
 import com.api.lesson.Lesson;
 import com.api.login.User;

@@ -8,7 +8,6 @@ import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.student.dto.UpdateStudentRequest;
-import com.api.teacher.TeacherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,8 +73,7 @@ public class StudentService {
         String role = auth.getRole() == null ? "" : auth.getRole().toLowerCase();
 
         switch (role) {
-            case "admin":
-            case "teacher":
+            case "admin", "teacher":
                 return studentMapper.toDto(student);
 
             case "student":

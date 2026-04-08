@@ -2,7 +2,6 @@ package com.api.common.util;
 
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.login.Auth;
-import com.api.login.User;
 import com.api.login.dto.UserDto;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
