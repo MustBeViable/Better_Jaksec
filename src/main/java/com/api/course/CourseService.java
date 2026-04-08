@@ -2,6 +2,8 @@ package com.api.course;
 
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
+import com.api.common.Language;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.NotFoundException;
 import com.api.common.error.exceptions.UnauthorizedException;
@@ -30,13 +32,15 @@ public class CourseService {
     private final LessonRepository lessonRepository;
     private final TeacherRepository teacherRepository;
     private final AssignmentRepository assignmentRepository;
+    private final LanguageRepository languageRepository;
     private final CourseMapper mapper;
 
-    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRepository assignmentRespository, CourseMapper mapper) {
+    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRepository assignmentRespository, LanguageRepository languageRespository, CourseMapper mapper) {
         this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
         this.teacherRepository = teacherRepository;
         this.assignmentRepository = assignmentRespository;
+        this.languageRepository = languageRespository;
         this.mapper = mapper;
     }
 
@@ -49,6 +53,12 @@ public class CourseService {
 
         System.out.println("CourseService.create.auth: " + auth);
         Course course = mapper.toEmptyCourseEntity(request);
+
+        Language language = this.languageRepository.findById(request.getLocale())
+                .orElseThrow(()-> new NotFoundException("Unknown language"));
+
+        course.setLanguage(language);
+        language.getCourses().add(course);
 
         Set<Lesson> lessons = new HashSet<>(lessonRepository.findAllById(request.getLessonIds()));
         for (Lesson lesson : lessons) {
