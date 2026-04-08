@@ -194,7 +194,10 @@ Acceptance criteria are based on the original project requirements and sprint re
 ### AT-09 – Admin Login
 - **Type:** Functional  
 - **Requirement:** R9  
-- **Description:** Verify admin login.  
+- **Description:** Verify admin login.
+- **Steps:**
+  1. Open login page
+  2. Enter valid admin credentials      
 - **Expected Result:** Admin dashboard opens.
 
 ---
