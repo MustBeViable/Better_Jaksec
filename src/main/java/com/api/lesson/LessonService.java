@@ -45,7 +45,6 @@ public class LessonService {
 
         Lesson lesson = this.lessonMapper.toLessonEntity(request);
         lesson.setLanguage(language);
-        System.out.println("LessonService.create courseId: " + request.getCourseId());
 
         if (request.getCourseId() != null) {
             Course course = this.courseRepository.findById(request.getCourseId())
@@ -56,7 +55,6 @@ public class LessonService {
             throw new BadRequestException("Course id is missing");
         }
 
-        System.out.println("LessonService.create course: " + lesson.getCourse());
         lesson = this.lessonRepository.save(lesson);
         return this.lessonMapper.toLessonDto(lesson);
     }
