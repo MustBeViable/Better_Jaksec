@@ -1,5 +1,6 @@
 package com.api.course;
 import com.api.assignment.Assignment;
+import com.api.common.Language;
 import com.api.jointable.student_course.StudentCourse;
 import com.api.lesson.Lesson;
 import com.api.teacher.Teacher;
@@ -16,6 +17,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long courseID;
     private String courseName;
+
+    @ManyToOne
+    private Language language;
 
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Lesson> lessons = new HashSet<>();
@@ -54,6 +58,14 @@ public class Course {
         this.courseName = courseName;
     }
 
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
+    }
+
     public Set<Lesson> getLessons() {
         return lessons;
     }
@@ -85,4 +97,5 @@ public class Course {
     public void setGrades(Set<StudentCourse> grades) {
         this.grades = grades;
     }
+
 }

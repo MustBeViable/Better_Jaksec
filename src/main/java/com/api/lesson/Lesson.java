@@ -1,5 +1,6 @@
 package com.api.lesson;
 
+import com.api.common.Language;
 import com.api.course.Course;
 import com.api.jointable.student_lesson.StudentLesson;
 import com.api.teacher.Teacher;
@@ -21,6 +22,9 @@ public class Lesson {
     private String lessonName;
     @Column(name = "date")
     private Instant date;
+
+    @ManyToOne
+    private Language language;
 
     @ManyToOne
     private Course course;
@@ -52,6 +56,14 @@ public class Lesson {
 
     public void setDate(Instant date) {
         this.date = date;
+    }
+
+    public Language getLanguage() {
+        return language;
+    }
+
+    public void setLanguage(Language language) {
+        this.language = language;
     }
 
     public String getLessonName() {
