@@ -211,7 +211,8 @@ Acceptance criteria are based on the original project requirements and sprint re
   2. Create, edit, delete user  
 - **Expected Result:** Changes are saved and visible.
 
-—
+---
+
 
 ### AT-11 – Attendance Statistics
 - **Type:** Functional  
@@ -223,7 +224,8 @@ Acceptance criteria are based on the original project requirements and sprint re
   3. View statistics 
 - **Expected Result:** Attendance statistics (e.g., percentages per student or course) are displayed correctly.
 
-—
+---
+
 
 
 ## 6. Summary
