@@ -2,6 +2,7 @@ package com.api.course;
 
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
+import com.api.common.Language;
 import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.UnauthorizedException;
@@ -61,6 +62,7 @@ class CourseServiceTest {
 
         CreateCourseRequest request = new CreateCourseRequest();
         request.setCourseName("Math 101");
+        request.setLocale("en");
         request.setLessonIds(Set.of(1L, 2L));
         request.setAssignmentIds(Set.of(10L));
         request.setTeacherIds(Set.of(100));
@@ -68,12 +70,24 @@ class CourseServiceTest {
         Course courseEntity = new Course();
         when(mapper.toEmptyCourseEntity(request)).thenReturn(courseEntity);
 
-        Lesson l1 = new Lesson(); l1.setLessonID(1L);
-        Lesson l2 = new Lesson(); l2.setLessonID(2L);
+        Language language = new Language();
+        language.setLocale("en");
+        language.setCourses(new HashSet<>());
+        when(languageRespository.findById("en"))
+                .thenReturn(Optional.of(language));
+
+        Lesson l1 = new Lesson();
+        l1.setLessonID(1L);
+
+        Lesson l2 = new Lesson();
+        l2.setLessonID(2L);
+
         when(lessonRepository.findAllById(request.getLessonIds()))
                 .thenReturn(List.of(l1, l2));
 
-        Assignment a1 = new Assignment(); a1.setAssignmentID(10L);
+        Assignment a1 = new Assignment();
+        a1.setAssignmentID(10L);
+
         when(assignmentRepository.findAllById(request.getAssignmentIds()))
                 .thenReturn(List.of(a1));
 
@@ -83,6 +97,7 @@ class CourseServiceTest {
         t1.setLastName("Doe");
         t1.setEmail("john@school.com");
         t1.setCourses(new HashSet<>());
+
         when(teacherRepository.findAllById(request.getTeacherIds()))
                 .thenReturn(List.of(t1));
 
@@ -91,7 +106,7 @@ class CourseServiceTest {
         CourseDto dto = new CourseDto(
                 1L,
                 "Math 101",
-                "en_US",
+                "en",
                 Set.of(1L, 2L),
                 Set.of(10L),
                 Set.of("John Doe")
@@ -106,6 +121,7 @@ class CourseServiceTest {
         assertEquals(Set.of(10L), result.getAssignmentIds());
         assertEquals(Set.of("John Doe"), result.getTeacherNames());
 
+        verify(languageRespository).findById("en");
         verify(courseRepository).save(courseEntity);
     }
 

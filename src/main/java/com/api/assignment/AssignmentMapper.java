@@ -3,7 +3,6 @@ package com.api.assignment;
 import com.api.assignment.dto.AssignmentDto;
 import com.api.assignment.dto.CreateAssignmentRequest;
 import com.api.assignment.dto.UpdateAssignmentRequest;
-import com.api.course.dto.CourseDto;
 import org.springframework.stereotype.Component;
 
 @Component

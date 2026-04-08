@@ -1,6 +1,5 @@
 package com.api.assignment.dto;
 
-import jakarta.validation.constraints.NotBlank;
 
 public class UpdateAssignmentRequest {
 

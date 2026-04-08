@@ -3,8 +3,6 @@ package com.api.jointable.student_lesson;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
-import com.api.lesson.LessonRepository;
-import com.api.student.StudentRepository;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,7 +1,6 @@
 package com.api.course.dto;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;

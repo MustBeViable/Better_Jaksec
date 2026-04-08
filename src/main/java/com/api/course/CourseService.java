@@ -47,15 +47,19 @@ public class CourseService {
     @Transactional
     public CourseDto create(CreateCourseRequest request, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-            && !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create courses");
         }
 
         System.out.println("CourseService.create.auth: " + auth);
         Course course = mapper.toEmptyCourseEntity(request);
 
-        Language language = this.languageRepository.findById(request.getLocale())
-                .orElseThrow(()-> new NotFoundException("Unknown language"));
+        String locale = (request.getLocale() == null || request.getLocale().isBlank())
+                ? "en_US"
+                : request.getLocale();
+
+        Language language = this.languageRepository.findById(locale)
+                .orElseThrow(() -> new NotFoundException("Unknown language"));
 
         course.setLanguage(language);
         language.getCourses().add(course);
@@ -108,13 +112,8 @@ public class CourseService {
 
     @Transactional
     public CourseDto read(Long courseId, Auth auth){
-        System.out.println("CourseService.read.auth: " + auth);
         Course course =  this.courseRepository.findById(courseId)
                 .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
-        course.getGrades().stream()
-                .map(StudentCourse::getStudent)
-                .map(Student::getEmail)
-                .toList().contains(auth.getEmail());
         if(!auth.getRole().equalsIgnoreCase("admin") &&
             !course.getTeachers().stream()
                     .map(Teacher::getEmail)

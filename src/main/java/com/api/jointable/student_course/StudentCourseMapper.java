@@ -16,9 +16,7 @@ public class StudentCourseMapper {
     }
 
     public void updateEntity(StudentCourse entity, UpdateStudentCourse request){
-        if(request.getGrade() != null){
             entity.setGrade(request.getGrade());
-        }
     }
 
     public StudentCourseDto toDto(StudentCourse entity){

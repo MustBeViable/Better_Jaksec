@@ -36,23 +36,27 @@ public class LessonService {
             throw new UnauthorizedException("Only admins and teachers can create lessons");
         }
 
-        Language language = this.languageRepository.findById(request.getLocale())
-                .orElseThrow(()-> new NotFoundException("Unknown language"));
+        String locale = (request.getLocale() == null || request.getLocale().isBlank())
+                ? "en_US"
+                : request.getLocale();
 
-        //Checkers here if needed (like if unique lesson names)
+        Language language = this.languageRepository.findById(locale)
+                .orElseThrow(() -> new NotFoundException("Unknown language"));
+
         Lesson lesson = this.lessonMapper.toLessonEntity(request);
         lesson.setLanguage(language);
-        System.out.println("LessonService.create:"+request.getCourseId());
+        System.out.println("LessonService.create courseId: " + request.getCourseId());
+
         if (request.getCourseId() != null) {
             Course course = this.courseRepository.findById(request.getCourseId())
                     .orElseThrow(() -> new BadRequestException("Course not found"));
 
             lesson.setCourse(course);
-
-        }else{
+        } else {
             throw new BadRequestException("Course id is missing");
         }
-        System.out.println("LessonService.create:"+lesson.getCourse());
+
+        System.out.println("LessonService.create course: " + lesson.getCourse());
         lesson = this.lessonRepository.save(lesson);
         return this.lessonMapper.toLessonDto(lesson);
     }
