@@ -64,14 +64,14 @@ class AssignmentServiceTest {
         );
 
         verify(mapper).toEntity(request);
-        verify(courseRepository, times(2)).findById(10L);
+        verify(courseRepository).findById(10L);
         verify(assignmentRepository).save(assignment);
         verify(mapper).toDto(assignment);
     }
 
     @Test
-    @DisplayName("create() saves even when course is not found and then mapper dto may fail")
-    void create_withoutCourseFound_throwsBecauseMapperNeedsCourse() {
+    @DisplayName("create() throws BadRequestException when course does not exist")
+    void create_throwsWhenCourseNotFound() {
         CreateAssignmentRequest request = new CreateAssignmentRequest();
         request.setAssignmentName("Assignment 1");
         request.setAssignmentDescription("Description");
@@ -83,13 +83,13 @@ class AssignmentServiceTest {
 
         when(mapper.toEntity(request)).thenReturn(assignment);
         when(courseRepository.findById(10L)).thenReturn(Optional.empty());
-        when(assignmentRepository.save(assignment)).thenReturn(assignment);
-        when(mapper.toDto(assignment)).thenThrow(new NullPointerException());
 
-        assertThrows(NullPointerException.class, () -> service.create(request));
+        assertThrows(BadRequestException.class, () -> service.create(request));
 
-        verify(assignmentRepository).save(assignment);
-        verify(mapper).toDto(assignment);
+        verify(mapper).toEntity(request);
+        verify(courseRepository).findById(10L);
+        verify(assignmentRepository, never()).save(any());
+        verify(mapper, never()).toDto(any());
     }
 
     @Test
