@@ -1,13 +1,9 @@
 package com.api.login;
 
-import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.common.util.JwtUtils;
-import com.api.login.dto.LoginDto;
 import com.api.login.dto.LoginRequest;
 import com.api.login.dto.UserDto;
-import com.api.login.mapper.UserMapper;
 import jakarta.validation.Valid;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

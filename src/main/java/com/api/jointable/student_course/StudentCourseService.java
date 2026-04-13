@@ -11,7 +11,6 @@ import com.api.jointable.student_course.dto.UpdateStudentCourse;
 import com.api.login.Auth;
 import com.api.student.Student;
 import com.api.student.StudentRepository;
-import org.hibernate.sql.Delete;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

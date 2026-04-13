@@ -2,6 +2,8 @@ package com.api.course;
 
 import com.api.assignment.Assignment;
 import com.api.assignment.AssignmentRepository;
+import com.api.common.Language;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.NotFoundException;
 import com.api.common.error.exceptions.UnauthorizedException;
@@ -30,25 +32,37 @@ public class CourseService {
     private final LessonRepository lessonRepository;
     private final TeacherRepository teacherRepository;
     private final AssignmentRepository assignmentRepository;
+    private final LanguageRepository languageRepository;
     private final CourseMapper mapper;
 
-    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRepository assignmentRespository, CourseMapper mapper) {
+    public CourseService(CourseRepository courseRepository, LessonRepository lessonRepository, TeacherRepository teacherRepository, AssignmentRepository assignmentRespository, LanguageRepository languageRespository, CourseMapper mapper) {
         this.courseRepository = courseRepository;
         this.lessonRepository = lessonRepository;
         this.teacherRepository = teacherRepository;
         this.assignmentRepository = assignmentRespository;
+        this.languageRepository = languageRespository;
         this.mapper = mapper;
     }
 
     @Transactional
     public CourseDto create(CreateCourseRequest request, Auth auth) {
         if(!auth.getRole().equalsIgnoreCase("admin")
-            && !auth.getRole().equalsIgnoreCase("teacher")){
+                && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create courses");
         }
 
         System.out.println("CourseService.create.auth: " + auth);
         Course course = mapper.toEmptyCourseEntity(request);
+
+        String locale = (request.getLocale() == null || request.getLocale().isBlank())
+                ? "en_US"
+                : request.getLocale();
+
+        Language language = this.languageRepository.findById(locale)
+                .orElseThrow(() -> new NotFoundException("Unknown language"));
+
+        course.setLanguage(language);
+        language.getCourses().add(course);
 
         Set<Lesson> lessons = new HashSet<>(lessonRepository.findAllById(request.getLessonIds()));
         for (Lesson lesson : lessons) {
@@ -98,13 +112,8 @@ public class CourseService {
 
     @Transactional
     public CourseDto read(Long courseId, Auth auth){
-        System.out.println("CourseService.read.auth: " + auth);
         Course course =  this.courseRepository.findById(courseId)
                 .orElseThrow( () -> new BadRequestException("Course doesn't exist."));
-        course.getGrades().stream()
-                .map(StudentCourse::getStudent)
-                .map(Student::getEmail)
-                .toList().contains(auth.getEmail());
         if(!auth.getRole().equalsIgnoreCase("admin") &&
             !course.getTeachers().stream()
                     .map(Teacher::getEmail)

@@ -4,6 +4,7 @@ import com.api.assignment.dto.AssignmentDto;
 import com.api.assignment.dto.CreateAssignmentRequest;
 import com.api.assignment.dto.UpdateAssignmentRequest;
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.course.Course;
 import com.api.course.CourseRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,11 +23,14 @@ public class AssignmentService {
     }
 
     @Transactional
-    public AssignmentDto create(CreateAssignmentRequest request){
+    public AssignmentDto create(CreateAssignmentRequest request) {
         Assignment assignment = this.mapper.toEntity(request);
-        if(this.courseRepository.findById(request.getCourseId()).isPresent()){
-            assignment.setCourse(this.courseRepository.findById(request.getCourseId()).get());
-        }
+
+        Course course = this.courseRepository.findById(request.getCourseId())
+                .orElseThrow(() -> new BadRequestException("Course doesn't exist"));
+
+        assignment.setCourse(course);
+
         this.assignmentRepository.save(assignment);
         return this.mapper.toDto(assignment);
     }
@@ -44,8 +48,10 @@ public class AssignmentService {
                 .orElseThrow(()->new BadRequestException("Assignment doesnt exit"));
         this.mapper.updateEntity(assignment,request);
 
-        if(request.getCourseId() != null && this.courseRepository.findById(request.getCourseId()).isPresent()){
-            assignment.setCourse(this.courseRepository.findById(request.getCourseId()).get());
+        if (request.getCourseId() != null) {
+            Course course = this.courseRepository.findById(request.getCourseId())
+                    .orElseThrow(() -> new BadRequestException("Course doesn't exist."));
+            assignment.setCourse(course);
         }
         this.assignmentRepository.save(assignment);
         return this.mapper.toDto(assignment);

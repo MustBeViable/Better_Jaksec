@@ -173,6 +173,10 @@ Relational schema:
     
 ![Class diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-class-example.png)
   - Class diagram example illustrates how a single endpoint is implemented, same class structure is applied for all
+    
+
+![Sequence diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/modeling-sequence-diagram.png)
+- Sequence diagram showing student QR-based attendance marking flow through controller and service layers, including authentication and creation of an attendance record in the StudentLesson entity.
 
 
 [Link to sprint report folder](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/Sprint_reports)

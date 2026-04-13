@@ -1,12 +1,10 @@
 package com.api.jointable.student_lesson;
 
 import com.api.common.util.JwtUtils;
-import com.api.jointable.student_lesson.StudentLessonService;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;

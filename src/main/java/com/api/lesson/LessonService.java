@@ -1,6 +1,9 @@
 package com.api.lesson;
 
+import com.api.common.Language;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
+import com.api.common.error.exceptions.NotFoundException;
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
 import com.api.course.CourseRepository;
@@ -16,11 +19,13 @@ public class LessonService {
 
     private final LessonRepository lessonRepository;
     private final CourseRepository courseRepository;
+    private final LanguageRepository languageRepository;
     private final LessonMapper lessonMapper;
 
-    public LessonService(LessonRepository lessonRepository, CourseRepository courseRepository, LessonMapper lessonMapper) {
+    public LessonService(LessonRepository lessonRepository, CourseRepository courseRepository, LanguageRepository languageRepository, LessonMapper lessonMapper) {
         this.lessonRepository = lessonRepository;
         this.courseRepository = courseRepository;
+        this.languageRepository = languageRepository;
         this.lessonMapper = lessonMapper;
     }
 
@@ -30,18 +35,26 @@ public class LessonService {
                 && !auth.getRole().equalsIgnoreCase("teacher")){
             throw new UnauthorizedException("Only admins and teachers can create lessons");
         }
-        //Checkers here if needed (like if unique lesson names)
+
+        String locale = (request.getLocale() == null || request.getLocale().isBlank())
+                ? "en_US"
+                : request.getLocale();
+
+        Language language = this.languageRepository.findById(locale)
+                .orElseThrow(() -> new NotFoundException("Unknown language"));
+
         Lesson lesson = this.lessonMapper.toLessonEntity(request);
-        System.out.println("LessonService.create:"+request.getCourseId());
+        lesson.setLanguage(language);
+
         if (request.getCourseId() != null) {
             Course course = this.courseRepository.findById(request.getCourseId())
                     .orElseThrow(() -> new BadRequestException("Course not found"));
 
             lesson.setCourse(course);
-        }else{
+        } else {
             throw new BadRequestException("Course id is missing");
         }
-        System.out.println("LessonService.create:"+lesson.getCourse());
+
         lesson = this.lessonRepository.save(lesson);
         return this.lessonMapper.toLessonDto(lesson);
     }

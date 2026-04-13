@@ -4,6 +4,7 @@ target
 .DS_Store
 **/.DS_Store
 .env
+sonar-project.properties
 nginx.conf
 
 
@@ -11,3 +12,4 @@ src/test/http/http-client.env.json
 src/main/resources/static
 http.client.env.json
 /.mvn/
+/.scannerwork/

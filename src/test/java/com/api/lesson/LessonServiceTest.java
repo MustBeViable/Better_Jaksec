@@ -1,5 +1,7 @@
 package com.api.lesson;
 
+import com.api.common.Language;
+import com.api.common.LanguageRepository;
 import com.api.common.error.exceptions.BadRequestException;
 import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.course.Course;
@@ -23,6 +25,7 @@ class LessonServiceTest {
     private LessonRepository lessonRepository;
     private CourseRepository courseRepository;
     private LessonMapper lessonMapper;
+    private LanguageRepository languageRepository;
     private LessonService service;
     private Auth auth;
 
@@ -31,9 +34,10 @@ class LessonServiceTest {
         lessonRepository = mock(LessonRepository.class);
         courseRepository = mock(CourseRepository.class);
         lessonMapper = mock(LessonMapper.class);
+        languageRepository = mock(LanguageRepository.class);
         auth = mock(Auth.class);
 
-        service = new LessonService(lessonRepository, courseRepository, lessonMapper);
+        service = new LessonService(lessonRepository, courseRepository, languageRepository, lessonMapper);
     }
 
     @Test
@@ -46,6 +50,10 @@ class LessonServiceTest {
         request.setLessonName("Test lesson");
         request.setDate(Instant.parse("2026-02-06T08:00:00Z"));
         request.setCourseId(10L);
+        request.setLocale("en");
+
+        Language language = new Language();
+        language.setLocale("en");
 
         Lesson lessonEntity = new Lesson("Test lesson", request.getDate());
         Course course = new Course();
@@ -54,9 +62,11 @@ class LessonServiceTest {
         Lesson savedLesson = new Lesson("Test lesson", request.getDate());
         savedLesson.setLessonID(1L);
         savedLesson.setCourse(course);
+        savedLesson.setLanguage(language);
 
-        LessonDto dto = new LessonDto(1L, "Test lesson", request.getDate(), 10L);
+        LessonDto dto = new LessonDto(1L, "Test lesson", "en_US", request.getDate(), 10L);
 
+        when(languageRepository.findById("en")).thenReturn(Optional.of(language));
         when(lessonMapper.toLessonEntity(request)).thenReturn(lessonEntity);
         when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
         when(lessonRepository.save(lessonEntity)).thenReturn(savedLesson);
@@ -67,6 +77,7 @@ class LessonServiceTest {
         assertEquals(1L, result.getLessonID());
         assertEquals(10L, result.getCourseId());
 
+        verify(languageRepository).findById("en");
         verify(lessonRepository).save(lessonEntity);
     }
 
@@ -89,7 +100,18 @@ class LessonServiceTest {
         when(auth.getRole()).thenReturn("admin");
 
         CreateLessonRequest request = new CreateLessonRequest();
+        request.setLessonName("Test lesson");
+        request.setDate(Instant.parse("2026-02-06T08:00:00Z"));
+        request.setLocale("en");
         request.setCourseId(null);
+
+        Language language = new Language();
+        language.setLocale("en");
+
+        Lesson lessonEntity = new Lesson("Test lesson", request.getDate());
+
+        when(languageRepository.findById("en")).thenReturn(Optional.of(language));
+        when(lessonMapper.toLessonEntity(request)).thenReturn(lessonEntity);
 
         assertThrows(BadRequestException.class,
                 () -> service.create(request, auth));
@@ -105,7 +127,7 @@ class LessonServiceTest {
         Lesson lesson = new Lesson("Name", Instant.now());
         lesson.setLessonID(5L);
 
-        LessonDto dto = new LessonDto(5L, "Name", lesson.getDate(), null);
+        LessonDto dto = new LessonDto(5L, "Name", "en_US", lesson.getDate(), null);
 
         when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
         when(lessonMapper.toLessonDto(lesson)).thenReturn(dto);
@@ -128,7 +150,7 @@ class LessonServiceTest {
         Lesson lesson = new Lesson("Name", Instant.now());
         lesson.setLessonID(5L);
 
-        LessonDto dto = new LessonDto(5L, "Name", lesson.getDate(), null);
+        LessonDto dto = new LessonDto(5L, "Name", "en_US", lesson.getDate(), null);
 
         when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
         when(lessonMapper.toLessonDto(lesson)).thenReturn(dto);
@@ -180,7 +202,7 @@ class LessonServiceTest {
         when(lessonRepository.getReferenceById(5L)).thenReturn(lesson);
         when(courseRepository.findById(10L)).thenReturn(Optional.of(course));
         when(lessonMapper.toLessonDto(lesson))
-                .thenReturn(new LessonDto(5L, "Old", lesson.getDate(), 10L));
+                .thenReturn(new LessonDto(5L, "Old", "en_US", lesson.getDate(), 10L));
 
         LessonDto result = service.update(5L, request, auth);
 

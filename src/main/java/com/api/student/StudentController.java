@@ -1,7 +1,6 @@
 package com.api.student;
 
 import com.api.common.util.JwtUtils;
-import com.api.login.Auth;
 import com.api.student.dto.CreateStudentRequest;
 import com.api.student.dto.StudentDto;
 import com.api.student.dto.UpdateStudentRequest;

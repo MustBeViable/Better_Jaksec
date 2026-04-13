@@ -1,7 +1,7 @@
 package com.api.course;
 
-import static org.junit.jupiter.api.Assertions.*;
 import com.api.assignment.Assignment;
+import com.api.common.Language;
 import com.api.course.dto.CourseDto;
 import com.api.course.dto.CreateCourseRequest;
 import com.api.course.dto.UpdateCourseRequest;
@@ -86,13 +86,24 @@ class CourseMapperTest {
         Course course = new Course();
         course.setCourseID(1L);
         course.setCourseName("History 101");
+        Language language = new Language();
+        language.setLocale("en");
+        course.setLanguage(language);
 
-        Lesson l1 = new Lesson(); l1.setLessonID(10L);
-        Lesson l2 = new Lesson(); l2.setLessonID(20L);
+        Lesson l1 = new Lesson();
+        l1.setLessonID(10L);
+
+        Lesson l2 = new Lesson();
+        l2.setLessonID(20L);
+
         course.setLessons(new HashSet<>(Set.of(l1, l2)));
 
-        Assignment a1 = new Assignment(); a1.setAssignmentID(100L);
-        Assignment a2 = new Assignment(); a2.setAssignmentID(200L);
+        Assignment a1 = new Assignment();
+        a1.setAssignmentID(100L);
+
+        Assignment a2 = new Assignment();
+        a2.setAssignmentID(200L);
+
         course.setAssignments(new HashSet<>(Set.of(a1, a2)));
 
         Teacher t1 = new Teacher();
@@ -112,6 +123,7 @@ class CourseMapperTest {
         assertAll(
                 () -> assertEquals(1L, dto.getId()),
                 () -> assertEquals("History 101", dto.getName()),
+                () -> assertEquals("en", dto.getLanguage()),
                 () -> assertEquals(Set.of(10L, 20L), dto.getLessonIds()),
                 () -> assertEquals(Set.of(100L, 200L), dto.getAssignmentIds()),
                 () -> assertEquals(Set.of("John Doe", "Jane Smith"), dto.getTeacherNames())

@@ -23,7 +23,6 @@ class StudentCourseMapperTest {
     @Test
     @DisplayName("toEntity() maps values correctly")
     void toEntity() {
-
         CreateStudentCourse request = new CreateStudentCourse();
         request.setGrade(5);
 
@@ -33,9 +32,8 @@ class StudentCourseMapperTest {
     }
 
     @Test
-    @DisplayName("updateEntity() updates grade and does nothing if null")
+    @DisplayName("updateEntity() updates grade, including null")
     void updateEntity() {
-
         StudentCourse entity = new StudentCourse();
         entity.setGrade(1);
 
@@ -45,15 +43,16 @@ class StudentCourseMapperTest {
         mapper.updateEntity(entity, update);
         assertEquals(3, entity.getGrade());
 
-        UpdateStudentCourse noChange = new UpdateStudentCourse(); // grade null
-        mapper.updateEntity(entity, noChange);
-        assertEquals(3, entity.getGrade()); // unchanged
+        UpdateStudentCourse clearGrade = new UpdateStudentCourse();
+        clearGrade.setGrade(null);
+
+        mapper.updateEntity(entity, clearGrade);
+        assertNull(entity.getGrade());
     }
 
     @Test
     @DisplayName("toDto() maps entity to DTO correctly")
     void toDto() {
-
         Student student = new Student();
         student.setStudentID(10);
 

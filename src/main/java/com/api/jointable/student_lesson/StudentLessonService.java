@@ -5,8 +5,10 @@ import com.api.common.error.exceptions.UnauthorizedException;
 import com.api.jointable.student_lesson.dto.CreateStudentLesson;
 import com.api.jointable.student_lesson.dto.StudentLessonDto;
 import com.api.jointable.student_lesson.dto.UpdateStudentLesson;
+import com.api.lesson.Lesson;
 import com.api.lesson.LessonRepository;
 import com.api.login.Auth;
+import com.api.student.Student;
 import com.api.student.StudentRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -34,24 +36,27 @@ public class StudentLessonService {
     @Transactional
     public StudentLessonDto create(CreateStudentLesson request, Auth auth){
         StudentLesson attendance = this.mapper.toEntity(request);
-        if(this.studentRepository.findById(request.getStudentId()).isPresent())
-            attendance.setStudent(this.studentRepository.findById(request.getStudentId()).get());
-        if(this.lessonRepository.findById(request.getLessonId()).isPresent())
-            attendance.setLesson(this.lessonRepository.findById(request.getLessonId()).get());
+
+        Student student = this.studentRepository.findById(request.getStudentId())
+                .orElseThrow(() -> new BadRequestException("Student doesn't exist."));
+
+        Lesson lesson = this.lessonRepository.findById(request.getLessonId())
+                .orElseThrow(() -> new BadRequestException("Lesson doesn't exist."));
+
+        attendance.setStudent(student);
+        attendance.setLesson(lesson);
+
         if(auth.getRole().equalsIgnoreCase("student")
                 && !attendance.getStudent().getEmail().equalsIgnoreCase(auth.getEmail())){
             throw new UnauthorizedException("Students can only mark their own attendance");
         }
-        if(!studentLessonRepository.existsByStudentIdAndLessonId(request.getStudentId(),
+
+        if(!studentLessonRepository.existsByStudentIdAndLessonId(
+                request.getStudentId(),
                 request.getLessonId())){
             this.studentLessonRepository.save(attendance);
-        }else {
-            attendance = this.studentLessonRepository.findByStudentIdAndLessonId(request.getStudentId(),
-                    request.getLessonId());
-            attendance.setPresent(request.getPresent());
-            attendance.setReasonForAbsence(request.getReason());
-            this.studentLessonRepository.save(attendance);
         }
+
         return this.mapper.toDto(attendance);
     }
 
