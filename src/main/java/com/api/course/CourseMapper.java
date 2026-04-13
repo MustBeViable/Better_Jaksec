@@ -34,8 +34,7 @@ public class CourseMapper {
         return new CourseDto(
                 course.getCourseID(),
                 course.getCourseName(),
-                course.getLanguage().toString(),
-                course.getLessons()
+                course.getLanguage() != null ? course.getLanguage().toString() : "en_US",                course.getLessons()
                         .stream()
                         .map(Lesson::getLessonID)
                         .collect(Collectors.toSet()),
