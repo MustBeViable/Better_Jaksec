@@ -93,6 +93,14 @@ Adding languages
   - add language to i18n/index.json
   - add language to LanguageSwitcher.jsx
 
+Database localization
+  - The localized tables have locale column indicating the locale of the row, this allows us to query content based on content
+  - Since all rows on localized tables are user generated this approach is feasible since we have reasonable assumption no duplicates were to occur
+  - "Duplicates" are handled as new entities with a different locale
+
+![better-jaksec-er-wl10n.png](Documents/diagrams/better-jaksec-er-wl10n.png)
+updated ER diagram showing changes in data structure
+
 -----------------------------------
 
 ## Running docker image locally
