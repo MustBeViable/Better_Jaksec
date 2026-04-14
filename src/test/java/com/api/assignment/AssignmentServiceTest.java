@@ -141,8 +141,6 @@ class AssignmentServiceTest {
 
         Assignment assignment = new Assignment();
         assignment.setAssignmentID(assignmentId);
-        assignment.setAssignmentName("Old");
-        assignment.setAssignmentDescription("Old desc");
 
         Course newCourse = new Course();
         newCourse.setCourseID(20L);
@@ -234,6 +232,10 @@ class AssignmentServiceTest {
         verifyNoInteractions(courseRepository, mapper);
     }
 
+    // =========================
+    // FIXED DELETE TESTS
+    // =========================
+
     @Test
     @DisplayName("delete() deletes by id when assignment exists")
     void delete_deletesByIdWhenFound() {
@@ -243,13 +245,11 @@ class AssignmentServiceTest {
         assignment.setAssignmentID(assignmentId);
 
         when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(assignment));
-        when(assignmentRepository.existsById(assignmentId)).thenReturn(true);
 
         service.delete(assignmentId);
 
         verify(assignmentRepository).findById(assignmentId);
-        verify(assignmentRepository).existsById(assignmentId);
-        verify(assignmentRepository).deleteById(assignmentId);
+        verify(assignmentRepository).delete(assignment);
     }
 
     @Test
@@ -262,25 +262,6 @@ class AssignmentServiceTest {
         assertThrows(BadRequestException.class, () -> service.delete(assignmentId));
 
         verify(assignmentRepository).findById(assignmentId);
-        verify(assignmentRepository, never()).existsById(anyLong());
-        verify(assignmentRepository, never()).deleteById(anyLong());
-    }
-
-    @Test
-    @DisplayName("delete() does nothing after find when existsById returns false")
-    void delete_doesNothingWhenExistsByIdFalseAfterFind() {
-        Long assignmentId = 4L;
-
-        Assignment assignment = new Assignment();
-        assignment.setAssignmentID(assignmentId);
-
-        when(assignmentRepository.findById(assignmentId)).thenReturn(Optional.of(assignment));
-        when(assignmentRepository.existsById(assignmentId)).thenReturn(false);
-
-        assertDoesNotThrow(() -> service.delete(assignmentId));
-
-        verify(assignmentRepository).findById(assignmentId);
-        verify(assignmentRepository).existsById(assignmentId);
-        verify(assignmentRepository, never()).deleteById(assignmentId);
+        verify(assignmentRepository, never()).delete(any());
     }
 }

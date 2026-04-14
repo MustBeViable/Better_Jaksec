@@ -58,11 +58,11 @@ public class AssignmentService {
     }
 
     @Transactional
-    public void delete(Long assignmentId){
-        this.assignmentRepository.findById(assignmentId)
-                .orElseThrow( () -> new BadRequestException("Assignment doesn't exist."));
-        if(this.assignmentRepository.existsById(assignmentId)){
-            this.assignmentRepository.deleteById(assignmentId);
-        }
+    public void delete(Long assignmentId) {
+        Assignment assignment = this.assignmentRepository.findById(assignmentId)
+                .orElseThrow(() -> new BadRequestException("Assignment doesn't exist."));
+
+        this.assignmentRepository.delete(assignment);
+
     }
 }
