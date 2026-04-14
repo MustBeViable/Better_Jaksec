@@ -179,12 +179,16 @@ Relational schema:
 ![Relational schema](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-relational.png)
   - Relational schema for our database. Database is created using object relational mapping when initiating API.
     
-![Class diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/better-jaksec-class-example.png)
+![Class diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/package_diagram/updated_class_diagram.png)
   - Class diagram example illustrates how a single endpoint is implemented, same class structure is applied for all
+  - Include updated interface realization
     
 
 ![Sequence diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/modeling-sequence-diagram.png)
 - Sequence diagram showing student QR-based attendance marking flow through controller and service layers, including authentication and creation of an attendance record in the StudentLesson entity.
+
+![Package diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/package_diagram/package_diagram.png)
+- Package diagram from course endpoint. Does not include whole import cycle -> would be hard to read
 
 
 [Link to sprint report folder](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/Sprint_reports)
