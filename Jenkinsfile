@@ -80,11 +80,6 @@ pipeline {
 
         stage('Docker Login') {
             steps {
-                script {
-                    env.DOCKER_HOME = tool 'Docker'
-                    env.PATH = "${env.DOCKER_HOME}/bin:${env.PATH}"
-                }
-
                 withCredentials([usernamePassword(
                     credentialsId: "${DOCKER_CREDENTIALS_ID}",
                     usernameVariable: 'DOCKER_USER',
@@ -97,7 +92,7 @@ pipeline {
                         echo '{}' > $WORKSPACE/.docker/config.json
                         export DOCKER_CONFIG=$WORKSPACE/.docker
 
-                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                        echo "$DOCKER_PASS" | /usr/local/bin/docker login -u "$DOCKER_USER" --password-stdin
                     '''
                 }
             }
@@ -105,11 +100,6 @@ pipeline {
 
         stage('Build & Push Multi-Arch Docker Image') {
             steps {
-                script {
-                    env.DOCKER_HOME = tool 'Docker'
-                    env.PATH = "${env.DOCKER_HOME}/bin:${env.PATH}"
-                }
-
                 withCredentials([usernamePassword(
                     credentialsId: "${DOCKER_CREDENTIALS_ID}",
                     usernameVariable: 'DOCKER_USER',
@@ -120,9 +110,9 @@ pipeline {
 
                         export DOCKER_CONFIG=$WORKSPACE/.docker
 
-                        docker buildx create --use || true
+                        /usr/local/bin/docker buildx create --use || true
 
-                        docker buildx build \
+                        /usr/local/bin/docker buildx build \
                             --platform linux/amd64,linux/arm64 \
                             -t ${DOCKER_IMAGE}:${DOCKER_TAG} \
                             --push \
@@ -132,7 +122,6 @@ pipeline {
             }
         }
     }
-
     post {
         success {
             echo "Pipeline completed successfully!"
