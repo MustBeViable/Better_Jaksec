@@ -81,16 +81,18 @@ pipeline {
         stage('Docker Login') {
             steps {
                 script {
-                    def dockerHome = tool 'Docker'
-                    env.PATH = "${dockerHome}/bin:${env.PATH}"
+                    env.DOCKER_HOME = tool 'Docker'
+                    env.PATH = "${env.DOCKER_HOME}/bin:${env.PATH}"
                 }
+
                 withCredentials([usernamePassword(
                     credentialsId: "${DOCKER_CREDENTIALS_ID}",
                     usernameVariable: 'DOCKER_USER',
                     passwordVariable: 'DOCKER_PASS'
                 )]) {
                     sh '''
-                        # Avoid broken credential helpers
+                        set -e
+
                         mkdir -p $WORKSPACE/.docker
                         echo '{}' > $WORKSPACE/.docker/config.json
                         export DOCKER_CONFIG=$WORKSPACE/.docker
@@ -103,17 +105,30 @@ pipeline {
 
         stage('Build & Push Multi-Arch Docker Image') {
             steps {
-                sh '''
-                    export DOCKER_CONFIG=$WORKSPACE/.docker
+                script {
+                    env.DOCKER_HOME = tool 'Docker'
+                    env.PATH = "${env.DOCKER_HOME}/bin:${env.PATH}"
+                }
 
-                    docker buildx create --use || true
+                withCredentials([usernamePassword(
+                    credentialsId: "${DOCKER_CREDENTIALS_ID}",
+                    usernameVariable: 'DOCKER_USER',
+                    passwordVariable: 'DOCKER_PASS'
+                )]) {
+                    sh '''
+                        set -e
 
-                    docker buildx build \
-                        --platform linux/amd64,linux/arm64 \
-                        -t ${DOCKER_IMAGE}:${DOCKER_TAG} \
-                        --push \
-                        .
-                '''
+                        export DOCKER_CONFIG=$WORKSPACE/.docker
+
+                        docker buildx create --use || true
+
+                        docker buildx build \
+                            --platform linux/amd64,linux/arm64 \
+                            -t ${DOCKER_IMAGE}:${DOCKER_TAG} \
+                            --push \
+                            .
+                    '''
+                }
             }
         }
     }
