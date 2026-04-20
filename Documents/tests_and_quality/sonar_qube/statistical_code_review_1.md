@@ -64,7 +64,7 @@ still require attention before the code can be considered stable and easy to mai
 
 **Overview**
 
-![Overview](./initial_report_images/overview.png)
+![Overview](initial_report_images/overview.png)
 
 The overview shows that the project passed the Quality Gate. The project has no reported security issues and no security
 hotspots, which is a positive result. However, the report still shows 5 reliability issues and 90 maintainability issues.
@@ -76,7 +76,7 @@ of regressions in more complex or duplicated areas.
 
 *Security*
 
-![Security](./initial_report_images/security.png)
+![Security](initial_report_images/security.png)
 
 No security issues were found. Based on this report, there are also no security hotspots, so there are no urgent 
 security-related corrective actions required at this stage.
@@ -84,7 +84,7 @@ security-related corrective actions required at this stage.
 
 *Reliability*
 
-![Reliability](./initial_report_images/reliability.png)
+![Reliability](initial_report_images/reliability.png)
 
 The reliability report shows 5 open issues, all of them classified as medium severity. This means the project has a 
 limited number of possible bugs, but each of them should still be reviewed because reliability problems can affect 
@@ -99,7 +99,7 @@ Recommended actions for reliability issues:
 
 *Maintainability*
 
-![Maintainability](./initial_report_images/maintainability.png)
+![Maintainability](initial_report_images/maintainability.png)
 
 The maintainability report shows 90 open issues in total. Their severity distribution is:
 - High: 19
@@ -112,11 +112,11 @@ This indicates that the main quality problem in the project is maintainability r
 defects. The 19 high-severity maintainability issues should be treated as the highest priority in the clean-up phase
 because they are the most likely to reduce readability, increase technical debt, and make future changes harder.
 
-![LongMethods](./initial_report_images/s138.png)
+![LongMethods](initial_report_images/s138.png)
 
 No issues were reported for methods exceeding the configured long-method rule.
 
-![Unused](./initial_report_images/issues_unusedTag.png)
+![Unused](initial_report_images/issues_unusedTag.png)
 
 Filtering issues with the tag `unused` revealed **47 issues** related to unused code elements.  
 These include unused imports and other unnecessary code fragments, which reduce maintainability and make the codebase harder to read and clean up.
@@ -144,7 +144,7 @@ Recommended actions for maintainability issues:
 
 *Complexity*
 
-![Complexity](./initial_report_images/complexity.png)
+![Complexity](initial_report_images/complexity.png)
 
 The overall cyclomatic complexity of the analyzed package is 588. The screenshot also shows that complexity is distributed unevenly across folders. The highest value in the screenshot appears in the `jointable` package (147), followed by `course` and `student` (87 each), `teacher` (76), `lesson` (66), and `assignment` (55). This suggests that the most complicated logic is concentrated in a few specific parts of the backend.
 
@@ -161,7 +161,7 @@ Recommended actions for complexity:
 
 *Duplications*
 
-![Duplications](./initial_report_images/duplications.png)
+![Duplications](initial_report_images/duplications.png)
 
 The duplication report shows:
 - Duplication density: 6.4%
@@ -179,7 +179,7 @@ Recommended actions for duplications:
 
 *Lines of code*
 
-![Lines of Code](./initial_report_images/lines_of_code.png)
+![Lines of Code](initial_report_images/lines_of_code.png)
 
 The size measures show that the project contains 3,008 lines of code and 3,932 total lines, spread across 78 files and 77 classes. There are 461 functions and 785 statements. The report also shows only 24 comment lines, which equals 0.8% comments.
 
