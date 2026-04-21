@@ -7,6 +7,8 @@
 - Sakari Honkavaara: 10/11 passed, 1/11 failed
 - Elias Rinne: 10/11 passed, 1/11 failed
 - Current team-level status: 10/11 passed, 1/11 failed
+  - Test failed due no up and running server
+  - Test was successfully working with server running as intended
 
 ## UAT summary table
 
