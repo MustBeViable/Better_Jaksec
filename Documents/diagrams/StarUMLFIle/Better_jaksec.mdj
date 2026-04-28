@@ -21408,7 +21408,7 @@
 											"top": 367,
 											"width": 717,
 											"height": 13,
-											"text": "«raspberry-pi»"
+											"text": "«Server»"
 										},
 										{
 											"_type": "LabelView",
@@ -21421,7 +21421,7 @@
 											"top": 382,
 											"width": 717,
 											"height": 13,
-											"text": "Server"
+											"text": "Raspberry-pi"
 										},
 										{
 											"_type": "LabelView",
@@ -22113,9 +22113,9 @@
 										"$ref": "AAAAAAGd0vLJ/kOboCo="
 									},
 									"font": "Arial;13;0",
-									"left": 1173,
+									"left": 1167,
 									"top": 535,
-									"width": 39.38720703125,
+									"width": 50.20361328125,
 									"height": 13,
 									"alpha": 1.5707963267948966,
 									"distance": 15,
@@ -22123,7 +22123,7 @@
 										"$ref": "AAAAAAGd0vLKAkOfj4A="
 									},
 									"edgePosition": 1,
-									"text": "+https"
+									"text": "+HTTPS"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -22574,9 +22574,9 @@
 											"font": "Arial;13;0",
 											"left": 1353,
 											"top": 509,
-											"width": 69.3798828125,
+											"width": 78.78076171875,
 											"height": 13,
-											"text": "«react-app»"
+											"text": "«component»"
 										},
 										{
 											"_type": "LabelView",
@@ -22587,9 +22587,9 @@
 											"font": "Arial;13;1",
 											"left": 1353,
 											"top": 524,
-											"width": 69.3798828125,
+											"width": 78.78076171875,
 											"height": 13,
-											"text": "webpage"
+											"text": "React app"
 										},
 										{
 											"_type": "LabelView",
@@ -22622,7 +22622,7 @@
 									"font": "Arial;13;0",
 									"left": 1348,
 									"top": 504,
-									"width": 79.3798828125,
+									"width": 88.78076171875,
 									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0wWSnlPjetA="
@@ -22706,7 +22706,7 @@
 							"containerChangeable": true,
 							"left": 1328,
 							"top": 504,
-							"width": 99.3798828125,
+							"width": 108.78076171875,
 							"height": 89,
 							"nameCompartment": {
 								"$ref": "AAAAAAGd0wWSnlPiS2k="
@@ -24016,11 +24016,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGd0xn0h6TQuRs="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": 16,
-											"top": -112,
-											"height": 13
+											"left": 985,
+											"top": 477,
+											"width": 85.28076171875,
+											"height": 13,
+											"text": "«component»"
 										},
 										{
 											"_type": "LabelView",
@@ -24030,7 +24031,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 985,
-											"top": 479,
+											"top": 492,
 											"width": 85.28076171875,
 											"height": 13,
 											"text": "reverse proxy"
@@ -24067,7 +24068,7 @@
 									"left": 980,
 									"top": 472,
 									"width": 95.28076171875,
-									"height": 25,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0xn0h6TRSN4="
 									},
@@ -24196,11 +24197,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGd0xpmAKqT8rU="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": -16,
-											"top": -16,
-											"height": 13
+											"left": 985,
+											"top": 581,
+											"width": 90,
+											"height": 13,
+											"text": "«component»"
 										},
 										{
 											"_type": "LabelView",
@@ -24210,7 +24212,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 985,
-											"top": 583,
+											"top": 596,
 											"width": 90,
 											"height": 13,
 											"text": "routing"
@@ -24247,7 +24249,7 @@
 									"left": 980,
 									"top": 576,
 									"width": 100,
-									"height": 25,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0xpmAKqUzOo="
 									},
@@ -24380,7 +24382,7 @@
 										"$ref": "AAAAAAGd0xqZDawnlMQ="
 									},
 									"edgePosition": 1,
-									"text": "+TCP/IP"
+									"text": "+HTTP"
 								},
 								{
 									"_type": "EdgeLabelView",
@@ -24631,8 +24633,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Server",
-					"stereotype": "raspberry-pi"
+					"name": "Raspberry-pi",
+					"stereotype": "Server"
 				},
 				{
 					"_type": "UMLNode",
@@ -24648,7 +24650,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGd0u83iUJqqVg="
 							},
-							"name": "https",
+							"name": "HTTPS",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAGd0vLKAEOc3ik=",
@@ -24730,7 +24732,7 @@
 							"_parent": {
 								"$ref": "AAAAAAGd0vBGB0L/sZo="
 							},
-							"name": "TCP/IP",
+							"name": "HTTP",
 							"end1": {
 								"_type": "UMLAssociationEnd",
 								"_id": "AAAAAAGd0xqZC6wkREo=",
@@ -24779,8 +24781,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "webpage",
-					"stereotype": "react-app"
+					"name": "React app",
+					"stereotype": "component"
 				},
 				{
 					"_type": "UMLNode",
@@ -24814,7 +24816,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "init.sql"
+					"name": "init.sql",
+					"stereotype": "artifact"
 				},
 				{
 					"_type": "UMLNode",
@@ -24830,7 +24833,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "reverse proxy"
+					"name": "reverse proxy",
+					"stereotype": "component"
 				},
 				{
 					"_type": "UMLComponent",
@@ -24838,7 +24842,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "routing"
+					"name": "routing",
+					"stereotype": "component"
 				}
 			]
 		}
