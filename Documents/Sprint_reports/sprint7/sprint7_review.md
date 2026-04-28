@@ -6,7 +6,7 @@
 - Evaluate usability and acceptance against Sprint 6 criteria
 - Document testing results, identified issues, and technical changes
 
-## Completed User Stories / Tasks
+## Completed Tasks
 - Created test plan including objective, resources, test environment, and test tasks
 - Conducted final functional testing of implemented features
 - Conducted final unit testing after code cleanup
@@ -102,7 +102,7 @@ The following documentation was updated during Sprint 7:
 ## Time spent by each member and Contributions
 
 | Name | Time (h) | Assigned Tasks |
-|---|---:|---|
-| Elias Rinne | 21 | Acceptance test, acceptance test summary, heuristic report form, heuristic report, heuristic report summary |
-| Leevi Laune | 13 |  |
-| Sakari Honkavaara | 0 |  |
+|---|---------:|---|
+| Elias Rinne |       21 | Acceptance test, acceptance test summary, heuristic report form, heuristic report, heuristic report summary |
+| Leevi Laune |       13 |  |
+| Sakari Honkavaara |       16 |  |
