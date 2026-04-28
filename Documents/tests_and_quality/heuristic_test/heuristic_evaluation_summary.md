@@ -18,6 +18,17 @@ Severity was selected using the agreed rule:
 - when all three values differed, the middle value was used
 - if an issue was missing from an individual report, it was treated as **0** for aggregation
 
+## Evaluation Process
+
+Each team member completed the heuristic evaluation independently. After that, the team held a joint review session to compare the results. During the session, duplicate findings were removed, unclear observations were clarified, related issues were grouped, and the final list of confirmed problems was agreed on.
+
+The confirmed usability issues and bugs are documented in the summary table below.
+
+## Confirmed Findings and Sprint 9 Follow-up
+
+The confirmed issues and bugs will be reviewed, prioritized, and assigned during Sprint 9. During the sprint, the team will decide which issues will be fixed immediately, which require further analysis, and which will be added to the product backlog for later development.
+
+
 ## Summary Table
 
 | No | Heuristic | Description of the Issue | Screenshot | Severity | Suggested Improvement |
