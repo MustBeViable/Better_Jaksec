@@ -190,5 +190,7 @@ Relational schema:
 ![Package diagram](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/package_diagram/package_diagram.png)
 - Package diagram from course endpoint. Does not include whole import cycle -> would be hard to read
 
+![Deployment diagra,](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/diagrams/package_diagram/package_diagram.png)
+- Server runs 2 different docker containers that are bundled together with docker-compose. Proxy server runs between server and client.
 
 [Link to sprint report folder](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/Sprint_reports)
