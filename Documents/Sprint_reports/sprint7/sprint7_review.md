@@ -15,7 +15,6 @@
 - Generated Jenkins build, Docker deployment, and SonarQube static analysis report
 - Completed heuristic evaluation
 - Completed User Acceptance Testing (UAT) based on Sprint 6 acceptance criteria
-- Documented technical changes based on test findings
 - Updated project documentation in GitHub and Trello
 
 ## Postponed
@@ -101,8 +100,8 @@ The following documentation was updated during Sprint 7:
 
 ## Time spent by each member and Contributions
 
-| Name | Time (h) | Assigned Tasks |
-|---|---------:|---|
+| Name | Time (h) | Assigned Tasks                                                                                         |
+|---|---------:|--------------------------------------------------------------------------------------------------------|
 | Elias Rinne |       21 | Acceptance test, acceptance test summary, heuristic report form, heuristic report, heuristic report summary |
-| Leevi Laune |       13 |  |
-| Sakari Honkavaara |       16 |  |
+| Leevi Laune |       13 | acceptance testing, heuristic testing, update jenkinsfile to use sonar                                 |
+| Sakari Honkavaara |       16 | acceptance test, heuristic test, revise user stories                                                   |
