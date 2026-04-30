@@ -660,7 +660,7 @@
 									"font": "Arial;13;0",
 									"left": 1182.5,
 									"top": 331,
-									"width": 145.82080078125,
+									"width": 145,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGbwbaTDgulthY="
@@ -1328,7 +1328,7 @@
 									"font": "Arial;13;0",
 									"left": 855,
 									"top": 847,
-									"width": 187.00439453125,
+									"width": 186,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGbwbllAxv9Nuw="
@@ -1521,7 +1521,7 @@
 									"font": "Arial;13;0",
 									"left": 886,
 									"top": 260.5,
-									"width": 104.58642578125,
+									"width": 103,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGbwbm8Ox7PY8k="
@@ -2790,7 +2790,7 @@
 									"font": "Arial;13;0",
 									"left": 1187.5,
 									"top": 839,
-									"width": 169.630859375,
+									"width": 168,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGbwbrShEfc1nM="
@@ -4355,7 +4355,7 @@
 									"font": "Arial;13;0",
 									"left": 1335,
 									"top": 643,
-									"width": 109.70263671875,
+									"width": 109,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGbwcKyXMzgAgw="
@@ -9999,9 +9999,9 @@
 														"$ref": "AAAAAAGdPhecYqJlMYY="
 													},
 													"font": "Arial;13;0",
-													"left": 32.72998046875,
+													"left": 30.55908203125,
 													"top": 13,
-													"width": 114.45166015625,
+													"width": 106.4345703125,
 													"height": 13,
 													"text": "StudentSelfMarking"
 												},
@@ -10014,7 +10014,7 @@
 													"font": "Arial;13;1",
 													"left": 13,
 													"top": 13,
-													"width": 14.72998046875,
+													"width": 12.55908203125,
 													"height": 13,
 													"text": "sd"
 												}
@@ -10838,9 +10838,9 @@
 														"$ref": "AAAAAAGdPiEaj7Zf+X0="
 													},
 													"font": "Arial;13;0",
-													"left": 120.72998046875,
+													"left": 119.99365234375,
 													"top": 213,
-													"width": 64.5908203125,
+													"width": 60.2109375,
 													"height": 13,
 													"text": "AuthCheck"
 												},
@@ -10853,7 +10853,7 @@
 													"font": "Arial;13;1",
 													"left": 101,
 													"top": 213,
-													"width": 14.72998046875,
+													"width": 13.99365234375,
 													"height": 13,
 													"text": "alt"
 												},
@@ -10886,7 +10886,7 @@
 																	"font": "Arial;13;0",
 																	"left": 116,
 																	"top": 246,
-																	"width": 138.7470703125,
+																	"width": 124.53466796875,
 																	"height": 13,
 																	"text": "[authentication success]"
 																}
@@ -10919,7 +10919,7 @@
 																	"font": "Arial;13;0",
 																	"left": 116,
 																	"top": 328,
-																	"width": 122.865234375,
+																	"width": 115.14013671875,
 																	"height": 13,
 																	"text": "[authentication failed]"
 																}
@@ -11936,7 +11936,7 @@
 											"font": "Arial;13;1",
 											"left": 829,
 											"top": 1046,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "lesson"
 										},
@@ -11949,7 +11949,7 @@
 											"font": "Arial;13;0",
 											"left": 829,
 											"top": 1061,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "(from Springboot REST API)"
 										},
@@ -11970,7 +11970,7 @@
 									"font": "Arial;13;0",
 									"left": 824,
 									"top": 1039,
-									"width": 173.998046875,
+									"width": 164.19091796875,
 									"height": 40,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGdi9MjGpOJfIE="
@@ -11990,7 +11990,7 @@
 							"containerChangeable": true,
 							"left": 824,
 							"top": 1024,
-							"width": 65.6181640625,
+							"width": 164.19091796875,
 							"height": 55,
 							"showNamespace": true,
 							"nameCompartment": {
@@ -12038,7 +12038,7 @@
 											"font": "Arial;13;1",
 											"left": 645,
 											"top": 766,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "student"
 										},
@@ -12051,7 +12051,7 @@
 											"font": "Arial;13;0",
 											"left": 645,
 											"top": 781,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "(from Springboot REST API)"
 										},
@@ -12072,7 +12072,7 @@
 									"font": "Arial;13;0",
 									"left": 640,
 									"top": 759,
-									"width": 173.998046875,
+									"width": 164.19091796875,
 									"height": 40,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGdi9M0JZOgjAE="
@@ -12092,7 +12092,7 @@
 							"containerChangeable": true,
 							"left": 640,
 							"top": 744,
-							"width": 65.6181640625,
+							"width": 164.19091796875,
 							"height": 55,
 							"showNamespace": true,
 							"nameCompartment": {
@@ -12140,7 +12140,7 @@
 											"font": "Arial;13;1",
 											"left": 621,
 											"top": 870,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "common"
 										},
@@ -12153,7 +12153,7 @@
 											"font": "Arial;13;0",
 											"left": 621,
 											"top": 885,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "(from Springboot REST API)"
 										},
@@ -12174,7 +12174,7 @@
 									"font": "Arial;13;0",
 									"left": 616,
 									"top": 863,
-									"width": 173.998046875,
+									"width": 164.19091796875,
 									"height": 40,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGdi9M8nJO36ck="
@@ -12194,7 +12194,7 @@
 							"containerChangeable": true,
 							"left": 616,
 							"top": 848,
-							"width": 65.6181640625,
+							"width": 164.19091796875,
 							"height": 55,
 							"showNamespace": true,
 							"nameCompartment": {
@@ -12242,7 +12242,7 @@
 											"font": "Arial;13;1",
 											"left": 829,
 											"top": 934,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "teacher"
 										},
@@ -12255,7 +12255,7 @@
 											"font": "Arial;13;0",
 											"left": 829,
 											"top": 949,
-											"width": 55.6181640625,
+											"width": 154.19091796875,
 											"height": 13,
 											"text": "(from Springboot REST API)"
 										},
@@ -12276,7 +12276,7 @@
 									"font": "Arial;13;0",
 									"left": 824,
 									"top": 927,
-									"width": 173.998046875,
+									"width": 164.19091796875,
 									"height": 40,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGdi9NczpPlBxg="
@@ -12296,7 +12296,7 @@
 							"containerChangeable": true,
 							"left": 824,
 							"top": 912,
-							"width": 65.6181640625,
+							"width": 164.19091796875,
 							"height": 55,
 							"showNamespace": true,
 							"nameCompartment": {
@@ -12601,7 +12601,7 @@
 								"$ref": "AAAAAAGdi78RTY9U8dA="
 							},
 							"lineStyle": 1,
-							"points": "636:991;645:903",
+							"points": "643:991;684:903",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGdi9PtS5QwvNM="
@@ -12791,7 +12791,7 @@
 								"$ref": "AAAAAAGdi78RTY9U8dA="
 							},
 							"lineStyle": 1,
-							"points": "663:1016;823:1045",
+							"points": "663:1015;823:1039",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGdi9QWSpRTnDg="
@@ -12886,7 +12886,7 @@
 								"$ref": "AAAAAAGdi78RTY9U8dA="
 							},
 							"lineStyle": 1,
-							"points": "663:1002;823:950",
+							"points": "663:1003;823:961",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGdi9QuWpRmo/o="
@@ -12981,7 +12981,7 @@
 								"$ref": "AAAAAAGdi9M0JZOer7M="
 							},
 							"lineStyle": 1,
-							"points": "706:789;791:833",
+							"points": "759:799;803:831",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGdi+joa8AY5nQ="
@@ -13076,7 +13076,7 @@
 								"$ref": "AAAAAAGdi9M0JZOer7M="
 							},
 							"lineStyle": 1,
-							"points": "706:773;791:777",
+							"points": "804:777;840:779",
 							"showVisibility": true,
 							"nameLabel": {
 								"$ref": "AAAAAAGdi+m+IsBHMP4="
@@ -21584,10 +21584,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGd0u83jkJt0Zc="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": -48,
-											"height": 13
+											"left": 413,
+											"top": 431,
+											"width": 189,
+											"height": 13,
+											"text": "«execution environment»"
 										},
 										{
 											"_type": "LabelView",
@@ -21597,7 +21599,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 413,
-											"top": 433,
+											"top": 446,
 											"width": 189,
 											"height": 13,
 											"text": "Docker Container"
@@ -21632,7 +21634,7 @@
 									"left": 408,
 									"top": 426,
 									"width": 199,
-									"height": 25,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0u83j0Ju9+4="
 									},
@@ -21757,12 +21759,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGd0vBGDEMC9qc="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": 765,
+											"left": 709,
 											"top": 431,
-											"width": 156,
-											"height": 13
+											"width": 173,
+											"height": 13,
+											"text": "«execution environment»"
 										},
 										{
 											"_type": "LabelView",
@@ -21772,7 +21774,7 @@
 											},
 											"font": "Arial;13;1",
 											"left": 709,
-											"top": 433,
+											"top": 446,
 											"width": 173,
 											"height": 13,
 											"text": "Docker container"
@@ -21809,7 +21811,7 @@
 									"left": 704,
 									"top": 426,
 									"width": 183,
-									"height": 25,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0vBGDEMDKQs="
 									},
@@ -23843,10 +23845,12 @@
 											"_parent": {
 												"$ref": "AAAAAAGd0xkDZKJyo/E="
 											},
-											"visible": false,
 											"font": "Arial;13;0",
-											"left": 32,
-											"height": 13
+											"left": 957,
+											"top": 431,
+											"width": 145.259765625,
+											"height": 13,
+											"text": "«execution environment»"
 										},
 										{
 											"_type": "LabelView",
@@ -23856,8 +23860,8 @@
 											},
 											"font": "Arial;13;1",
 											"left": 957,
-											"top": 433,
-											"width": 140,
+											"top": 446,
+											"width": 145.259765625,
 											"height": 13,
 											"text": "Proxy-server"
 										},
@@ -23890,8 +23894,8 @@
 									"font": "Arial;13;0",
 									"left": 952,
 									"top": 426,
-									"width": 150,
-									"height": 25,
+									"width": 155.259765625,
+									"height": 38,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAGd0xkDZKJzhlc="
 									},
@@ -23970,7 +23974,7 @@
 							"containerChangeable": true,
 							"left": 952,
 							"top": 416,
-							"width": 160,
+							"width": 165.259765625,
 							"height": 288,
 							"nameCompartment": {
 								"$ref": "AAAAAAGd0xkDZKJyo/E="
@@ -24700,7 +24704,8 @@
 								}
 							}
 						}
-					]
+					],
+					"stereotype": "execution environment"
 				},
 				{
 					"_type": "UMLComponent",
@@ -24755,7 +24760,7 @@
 							}
 						}
 					],
-					"stereotype": ""
+					"stereotype": "execution environment"
 				},
 				{
 					"_type": "UMLNode",
@@ -24825,7 +24830,8 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "Proxy-server"
+					"name": "Proxy-server",
+					"stereotype": "execution environment"
 				},
 				{
 					"_type": "UMLComponent",
