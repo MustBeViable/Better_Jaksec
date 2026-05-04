@@ -130,6 +130,8 @@ Entity relation diagram of how localized data is mapped
 
 [Testing reports can be found here](https://github.com/MustBeViable/Better_Jaksec/tree/main/Documents/tests_and_quality)
 
+- [Updated report](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/tests_and_quality/sonar_qube/current_sonarqube_report_image/sonarqube_report_currently.png)
+
 ---
 
 ## 11. Sprint 8 – Documentation & Finalization
