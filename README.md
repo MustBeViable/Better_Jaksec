@@ -205,3 +205,8 @@ Coverage reports are generated during CI pipeline execution.
 ### Course Information
 - Course: Software Engineering Project 1&2
 - Semester: Spring 2026
+
+---
+
+## 16. Other links
+- [trello](https://trello.com/w/usertyotila64449059/home)
