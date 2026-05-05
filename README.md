@@ -210,5 +210,8 @@ Coverage reports are generated during CI pipeline execution.
 
 ---
 
-## 16. Other links
-- [trello](https://trello.com/w/usertyotila64449059/home)
+## 16. Other
+- [trello link](https://trello.com/w/usertyotila64449059/home)
+- [Userjourney map](https://github.com/MustBeViable/Better_Jaksec/blob/main/Documents/customer_journey/userjourney_map.pdf)
+  - In map red circles mark which steps are playwright tested
+  - [Playwright tests here](https://github.com/MustBeViable/user_journey_playwritgh_tests)
